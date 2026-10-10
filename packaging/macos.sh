@@ -25,6 +25,8 @@ gpudir=$runtime/out/gpu-arm64
 for f in "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib"; do
     [[ -f $f ]] || { echo "Missing $f: build first (BB_ARCH=$arch bash runtime/build.sh)" >&2; exit 1; }
 done
+# The real path: the libraries are referenced by it when deps/ is a symbolic link.
+deps=$(cd "$deps" && pwd -P)
 version=${BB_VERSION:-$(git describe --tags --always --dirty 2>/dev/null || echo dev)}
 short_version=$(sed -E 's/^v//; s/[^0-9.].*$//' <<< "$version"); [[ -n $short_version ]] || short_version=0.0.0
 name=bloodborne_mac-$version-$arch
@@ -81,8 +83,8 @@ relink() { # relink FILE RPATH: @rpath references, the build tree's search paths
 relink "$macos/bb-probe" @executable_path/../Frameworks
 relink "$macos/bb-gpu-capabilities" @executable_path/../Frameworks
 for f in "$frameworks/"*.dylib; do relink "$f" @loader_path; done
-if leftovers=$(for f in "$macos/"* "$frameworks/"*.dylib; do otool -L "$f" | awk 'NR > 1 {print $1}'; done |
-               grep "^$PWD" | sort -u) && [[ -n $leftovers ]]; then
+if leftovers=$(for f in "$macos/"* "$frameworks/"*.dylib; do otool -L "$f" | awk '!/:$/ {print $1}'; done |
+               grep -v '^@\|^/usr/lib/\|^/System/' | sort -u) && [[ -n $leftovers ]]; then
     echo "References into the build tree remain:" >&2; echo "$leftovers" >&2; exit 1
 fi
 strip -x "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/"*.dylib 2>/dev/null || true
