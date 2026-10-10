@@ -56,7 +56,7 @@ a mod should replace files but reports `0 game files replaced`, check the folder
 
 Patches change the game's code, for example to unlock the frame rate or skip the intro videos.
 
-- **Built-in patches** (community patches in `patches/Bloodborne.xml`) are set from the
+- **Built-in patches** (community patches in the runtime's `patches/Bloodborne.xml`) are set from the
   launcher's **Game** tab and the in-game menu.
 - **Third-party patches:** put XML patch files in the shadPS4/GoldHEN format into the patches
   folder (**Patches** tab → folder button), then turn each patch on or off in the list.

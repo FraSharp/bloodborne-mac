@@ -34,13 +34,27 @@ cd launcher/app && npm run tauri dev   # the launcher against runtime/ (npm run 
 Release notes say what changed for players. The README's screenshots come from the game
 (`runtime/tools/grab.sh`), in English, never from the user's screen.
 
-## Where things stand
+## This machine (the user's Mac)
 
-- Releases: up to v0.5.0 (bbport 0.5). bbport has released 0.51 since (not merged yet).
-- Known issue: an occasional GPU assertion while loading (`Unimplemented PM4 type 0`), also in the
-  released build.
-- The recompiler: every function generated and running; it still uses more CPU than the
-  translator (R3, speed). Status: bloodborne-recomp's wiki, Recompilation-status.
+- The game dump: `~/Downloads/PS4/Bloodborne/CUSA03173` (1.09 merged). The player's data:
+  `~/Library/Application Support/bloodborne_mac/` (never written by tests: `tools/test_run.sh`).
+- Building `runtime/deps/` takes about an hour; the old combined checkout
+  `~/projects/pablovsouza/bloodborne_pc/deps` has them built: `ln -s` it as `runtime/deps`
+  (ignored by git; the packaging resolves the real path).
+- Metal System Traces need `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
+- An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–62 FPS.
+
+## Where things stand (2026-10-11)
+
+- Releases: up to v0.5.0 (bbport 0.5) on this repository. bbport has released **0.51** since:
+  not merged yet (merge it in bloodborne-runtime, then bump `runtime/` here).
+- Known issue: an occasional GPU assertion while a save loads (`Unimplemented PM4 type 0`, about
+  1 load in 10), also in the released build and without recompiled code. Not investigated yet.
+- The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
+  translator's frame rate but with 20–30% more CPU time (R3, speed, is next). Status and numbers:
+  bloodborne-recomp's wiki, Recompilation-status.
+- Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
+- The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 
 ## Working rules (all three repositories)
 
@@ -49,7 +63,9 @@ Release notes say what changed for players. The README's screenshots come from t
   [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime) ⊃ `recomp/` =
   [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp). Commit in the repository
   that owns the file, push it, then bump the submodule pointer in the parent (runtime → recomp,
-  mac → runtime) and push that too.
+  mac → runtime) and push that too. Submodules are checked out at a commit (detached HEAD):
+  before editing inside `runtime/` or `runtime/recomp/`, run `git checkout main` (and
+  `git pull`) there. Separate clones of each repository side by side work the same way.
 - **Before any push, check `git remote get-url origin`** (a clone once still pointed at a local
   repository and a force-push landed there). Push to `main`; ask before force-pushing anything
   that existed before this session.
