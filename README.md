@@ -63,15 +63,17 @@ The [installation guide](docs/guide/installation.md) has the details.
 ## Status
 
 **Experimental, playable.** The game boots, loads saves and plays with sound, controllers and
-saving. On an Apple M3 Pro it runs at about **44 FPS** at 1080p with FSR 3.1
-([performance](docs/guide/performance.md)). Only one machine has been tested so far. See the
-[known issues](docs/guide/troubleshooting.md#known-issues).
+saving. On an Apple M3 Pro at 1080p with FSR 3.1 it runs at about **60 FPS** in the Hunter's Dream
+and about **44 FPS** in the clinic at the start of the game
+([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
+other Macs are welcome.
 
-**In progress: recompilation.** A recompiler that turns the game's code, from the player's own
-copy, into native code, checked against calls recorded from the original. Every one of the game's
-functions is generated and the game runs on them; the work now is speed. Only the tool is
-published, never the game's code: [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp)
-([status](https://github.com/PabloVSouza/bloodborne-recomp/wiki/Recompilation-status)).
+**New in 0.5** (from bbport 0.5): add-on content (*The Old Hunters*) can be loaded from
+`user/addcont/` (not tested on macOS yet), the online/offline screen is skipped, and damaged game
+extractions are reported instead of hanging. 0.4.1 fixed a heap crash while loading saves.
+
+**Known issues:** an occasional crash while a save loads (start again), and a few more in
+[Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
 
@@ -83,27 +85,34 @@ published, never the game's code: [bloodborne-recomp](https://github.com/PabloVS
 | [Mods and patches](docs/guide/mods-and-patches.md) | Installing mods and third-party patches |
 | [Performance](docs/guide/performance.md) | What to expect, and the settings that matter |
 | [Troubleshooting](docs/guide/troubleshooting.md) | Common problems and known issues |
-| [Building from source](docs/guide/building.md) | For developers: build the app and the DMG |
-| [How it works](docs/guide/how-it-works.md) | The three repositories this app is made of |
 
-## Acknowledgements
+## Under the hood
 
-This app is made of three repositories:
+The app is three repositories:
 
 | Repository | |
 |---|---|
 | **bloodborne-mac** (this one) | The macOS app: launcher, packaging, releases, player guides |
-| [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime) | Loads the game: the PS4 libraries, the renderer (the `runtime/` submodule) |
-| [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp) | The x86-64 → arm64 translator and the recompiler (inside the runtime) |
+| [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime) | Loads the game: the PS4 system libraries and the Vulkan renderer (MoltenVK), here as `runtime/` |
+| [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp) | bbcpu, which translates the game's x86-64 code to arm64 as it runs, and the recompiler (`runtime/recomp/`) |
 
-It started as a fork of [**bbport**](https://github.com/deadinside28/bloodborne_pc) by
-deadinside28, a native Linux port of Bloodborne whose renderer is built on
-[**shadPS4**](https://github.com/shadps4-emu/shadPS4), and it still builds on both: the loader, the
-PS4 runtime, the renderer and its extensions, the upscalers and the patches come from them, and
-bbport's releases keep being merged (now 0.5), their history kept, in bloodborne-runtime. This work
-adds the macOS platform layer, its own x86-64 → arm64 translator, the macOS app and the recompiler.
-None of it would exist without the projects it is built on. Full credits:
-[Credits and licenses](docs/CREDITS.md).
+**The recompiler** turns the game's code, from the player's own copy, into native code ahead of
+time, checked against calls recorded from the original. Every one of the game's functions is
+generated and the game runs on them; the work now is making that faster than the translator.
+Only the tool is published, never the game's code
+([status](https://github.com/PabloVSouza/bloodborne-recomp/wiki/Recompilation-status)). The
+recompiler and its CPU layer don't depend on macOS: other platforms can build on them.
+
+[Building from source](docs/guide/building.md) · [How it works](docs/guide/how-it-works.md)
+
+## Credits
+
+Built on [**bbport**](https://github.com/deadinside28/bloodborne_pc) by deadinside28, the native
+Linux port this project started from as a fork, and on [**shadPS4**](https://github.com/shadps4-emu/shadPS4):
+the loader, the PS4 runtime, the renderer and its extensions, the upscalers and the game patches
+come from them, and bbport's releases keep being merged (now 0.5). This work adds the macOS
+platform layer, the arm64 translator, the app and the recompiler. None of it would exist without
+the projects it is built on. Full list: [Credits and licenses](docs/CREDITS.md).
 
 Licensed under the [GNU GPL v2 or later](LICENSE).
 

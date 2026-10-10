@@ -34,8 +34,8 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 - **Switching FSR on and off while playing with character motion vectors on** can crash the GPU
   ("Invalid Resource"). It does not happen with them off, the default.
 - Two of the game's pipelines fail to compile in MoltenVK; their draws are skipped.
-- *The Old Hunters* is only available with the Game of the Year editions: add-on packages are not
-  loaded yet.
+- *The Old Hunters*: the Game of the Year editions include it. Since 0.5, add-on packages can be
+  loaded from `user/addcont/` (as in bbport); this is not tested on macOS yet.
 - FSR 4 / 4.1.1 and upstream's experimental PC memory model are not available on macOS.
 
 ## Starting fresh
