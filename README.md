@@ -1,9 +1,8 @@
-<h1 align="center">bloodborne-recomp</h1>
+<h1 align="center">bloodborne-mac</h1>
 
 <p align="center">
   <strong>Bloodborne, running natively on Apple Silicon.</strong><br>
-  A macOS port of the PS4 game, with a launcher app and an in-game settings menu. No Rosetta 2.<br>
-  And a recompiler on its way to turning the game's code, from your own copy, into native code.
+  A macOS port of the PS4 game, with a launcher app and an in-game settings menu. No Rosetta 2.
 </p>
 
 <p align="center">
@@ -11,13 +10,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PabloVSouza/bloodborne-recomp/releases/latest"><strong>Download</strong></a>
+  <a href="https://github.com/PabloVSouza/bloodborne-mac/releases/latest"><strong>Download</strong></a>
   ·
   <a href="docs/guide/installation.md">Installation</a>
   ·
   <a href="docs/README.md">Documentation</a>
   ·
-  <a href="https://github.com/PabloVSouza/bloodborne-recomp/issues">Report a problem</a>
+  <a href="https://github.com/PabloVSouza/bloodborne-mac/issues">Report a problem</a>
 </p>
 
 <p align="center">
@@ -53,7 +52,7 @@
 
 ## Getting started
 
-1. [Download the latest release](https://github.com/PabloVSouza/bloodborne-recomp/releases/latest)
+1. [Download the latest release](https://github.com/PabloVSouza/bloodborne-mac/releases/latest)
    and drag **Bloodborne** to Applications.
 2. The first time, right-click the app and choose **Open** (the app is not signed with an Apple
    Developer ID).
@@ -71,8 +70,8 @@ saving. On an Apple M3 Pro it runs at about **44 FPS** at 1080p with FSR 3.1
 **In progress: recompilation.** A recompiler that turns the game's code, from the player's own
 copy, into native code, checked against calls recorded from the original. Every one of the game's
 functions is generated and the game runs on them; the work now is speed. Only the tool is
-published, never the game's code ([plan](docs/RECOMPILATION.md),
-[status](https://github.com/PabloVSouza/bloodborne-recomp/wiki/Recompilation-status)).
+published, never the game's code: [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp)
+([status](https://github.com/PabloVSouza/bloodborne-recomp/wiki/Recompilation-status)).
 
 ## Documentation
 
@@ -84,20 +83,27 @@ published, never the game's code ([plan](docs/RECOMPILATION.md),
 | [Mods and patches](docs/guide/mods-and-patches.md) | Installing mods and third-party patches |
 | [Performance](docs/guide/performance.md) | What to expect, and the settings that matter |
 | [Troubleshooting](docs/guide/troubleshooting.md) | Common problems and known issues |
-| [Building from source](docs/guide/building.md) | For developers: build, run, package |
-| [How it works](docs/guide/how-it-works.md) | The translator, the runtime and the renderer |
-| [Recompilation](docs/RECOMPILATION.md) | Turning the game's code into native code (in progress) |
+| [Building from source](docs/guide/building.md) | For developers: build the app and the DMG |
+| [How it works](docs/guide/how-it-works.md) | The three repositories this app is made of |
 
 ## Acknowledgements
 
-This project (formerly the bloodborne_mac repository) started as a fork of [**bbport**](https://github.com/deadinside28/bloodborne_pc) by
+This app is made of three repositories:
+
+| Repository | |
+|---|---|
+| **bloodborne-mac** (this one) | The macOS app: launcher, packaging, releases, player guides |
+| [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime) | Loads the game: the PS4 libraries, the renderer (the `runtime/` submodule) |
+| [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp) | The x86-64 → arm64 translator and the recompiler (inside the runtime) |
+
+It started as a fork of [**bbport**](https://github.com/deadinside28/bloodborne_pc) by
 deadinside28, a native Linux port of Bloodborne whose renderer is built on
 [**shadPS4**](https://github.com/shadps4-emu/shadPS4), and it still builds on both: the loader, the
 PS4 runtime, the renderer and its extensions, the upscalers and the patches come from them, and
-bbport's releases are merged here as they come out (now 0.5), its history kept. This project adds
-the macOS platform layer, its own x86-64 → arm64 translator, the macOS app and the recompiler. It
-became a separate repository as those grew apart from a Linux port's; none of this would exist
-without the projects it is built on. Full credits: [Credits and licenses](docs/CREDITS.md).
+bbport's releases keep being merged (now 0.5), their history kept, in bloodborne-runtime. This work
+adds the macOS platform layer, its own x86-64 → arm64 translator, the macOS app and the recompiler.
+None of it would exist without the projects it is built on. Full credits:
+[Credits and licenses](docs/CREDITS.md).
 
 Licensed under the [GNU GPL v2 or later](LICENSE).
 

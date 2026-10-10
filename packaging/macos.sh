@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# macOS: packages the current build (bash build.sh first) as Bloodborne.app in
+# macOS: packages the current build (bash runtime/build.sh first) as Bloodborne.app in
 # dist/bloodborne_mac-<version>-<arch>.dmg. No game files are included. The app needs nothing
 # installed: the Tauri launcher (launcher/app, built here with npm and cargo) carries the game,
 # bash, Python and the libraries.
@@ -15,13 +15,15 @@ cd -- "$(dirname -- "$0")/.."
 [[ $(uname -s) == Darwin ]] || { echo 'macOS only' >&2; exit 1; }
 arch=${BB_ARCH:-$( [[ $(sysctl -n hw.optional.arm64 2>/dev/null) == 1 ]] && echo arm64 || echo x86_64 )}
 [[ $arch == arm64 ]] || { echo 'The app is built for Apple Silicon (arm64) only' >&2; exit 1; }
-deps=$PWD/deps/macos-$arch
-gpudir=out/gpu-arm64
-# The app's own bash and Python (scripts/macos/build-deps.sh builds what is missing).
+# The game itself comes from the runtime/ submodule (bloodborne-runtime) and its build.
+runtime=$PWD/runtime
+deps=$runtime/deps/macos-$arch
+gpudir=$runtime/out/gpu-arm64
+# The app's own bash and Python (the runtime's scripts/macos/build-deps.sh builds what is missing).
 [[ -x $deps/app-runtime/bin/bash && -x $deps/app-runtime/python/bin/python3 ]] ||
-    BB_ARCH=$arch bash scripts/macos/build-deps.sh
-for f in out/bb-probe out/bb-gpu-capabilities "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib"; do
-    [[ -f $f ]] || { echo "Missing $f: build first (BB_ARCH=$arch bash build.sh)" >&2; exit 1; }
+    (cd "$runtime" && BB_ARCH=$arch bash scripts/macos/build-deps.sh)
+for f in "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib"; do
+    [[ -f $f ]] || { echo "Missing $f: build first (BB_ARCH=$arch bash runtime/build.sh)" >&2; exit 1; }
 done
 version=${BB_VERSION:-$(git describe --tags --always --dirty 2>/dev/null || echo dev)}
 short_version=$(sed -E 's/^v//; s/[^0-9.].*$//' <<< "$version"); [[ -n $short_version ]] || short_version=0.0.0
@@ -40,7 +42,7 @@ cp -R launcher/app/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
 plutil -replace CFBundleShortVersionString -string "$short_version" "$app/Contents/Info.plist"
 plutil -replace CFBundleVersion -string "$version" "$app/Contents/Info.plist"
 mkdir -p "$frameworks" "$game/share/vulkan/icd.d"
-install -m755 out/bb-probe out/bb-gpu-capabilities "$deps/app-runtime/bin/bash" "$macos/"
+install -m755 "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$deps/app-runtime/bin/bash" "$macos/"
 install -m755 "$gpudir/libbbgpu.dylib" "$frameworks/"
 copy_deps() { # copy_deps FILE: the non-system libraries FILE links against, recursively
     local dep
@@ -85,8 +87,8 @@ if leftovers=$(for f in "$macos/"* "$frameworks/"*.dylib; do otool -L "$f" | awk
 fi
 strip -x "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/"*.dylib 2>/dev/null || true
 
-cp run.sh LICENSE README.md "$game/"
-cp -R scripts patches "$game/"
+cp "$runtime/run.sh" LICENSE README.md "$game/"
+cp -R "$runtime/scripts" "$runtime/patches" "$game/"
 cp -R "$deps/app-runtime/python" "$app/Contents/Resources/python"
 find "$app" -name __pycache__ -type d -prune -exec rm -rf {} +
 # Ad-hoc signatures, inside out (libraries, helpers, Python's binaries, then the bundle).

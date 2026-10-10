@@ -1,5 +1,5 @@
-# Builds the native Apple Silicon program and packages it as Bloodborne.app in a DMG
-# (packaging/macos.sh).
+# Builds the game (the runtime/ submodule, bloodborne-runtime, with bloodborne-recomp inside it) for
+# Apple Silicon and packages it with the launcher as Bloodborne.app in a DMG (packaging/macos.sh).
 # Every push to main and every pull request: the package as a workflow artifact.
 # A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package.
 name: macOS
@@ -62,11 +62,11 @@ jobs:
       - name: Dependency cache
         uses: actions/cache@v4
         with:
-          path: deps/macos-arm64
-          key: deps-macos-arm64-${{ hashFiles('scripts/macos/build-deps.sh') }}
+          path: runtime/deps/macos-arm64
+          key: deps-macos-arm64-${{ hashFiles('runtime/scripts/macos/build-deps.sh') }}
 
       - name: Build
-        run: BB_ARCH=arm64 bash build.sh
+        run: BB_ARCH=arm64 bash runtime/build.sh
 
       - name: Package
         run: |
@@ -89,11 +89,11 @@ jobs:
           Bloodborne for Apple Silicon: open the DMG and drag **Bloodborne** to Applications.
           Nothing else to install. **No game files are included**: you need your own dump of
           Bloodborne with the 1.09 update: see
-          [Game files](https://github.com/PabloVSouza/bloodborne-recomp/blob/main/docs/guide/game-files.md).
+          [Game files](https://github.com/PabloVSouza/bloodborne-mac/blob/main/docs/guide/game-files.md).
 
           The app is not signed with an Apple Developer ID: the first time, right-click it and
           choose **Open** (or System Settings → Privacy & Security → Open Anyway). See
           `First start.txt` in the DMG.
           EOF
-          gh release create "$GITHUB_REF_NAME" "$PACKAGE" --title "bloodborne_mac $GITHUB_REF_NAME" \
+          gh release create "$GITHUB_REF_NAME" "$PACKAGE" --title "bloodborne-mac $GITHUB_REF_NAME" \
             --notes-file notes.md --generate-notes

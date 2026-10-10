@@ -17,4 +17,4 @@ Measured in the clinic area at the start of the game, on an Apple M3 Pro (18-cor
 - Only one machine has been measured so far. Results on other Macs are welcome.
 
 The details of what was measured and changed, and what could still be gained, are in
-[macOS performance](../MACOS_PERFORMANCE.md).
+[macOS performance](https://github.com/PabloVSouza/bloodborne-runtime/blob/main/docs/MACOS_PERFORMANCE.md).
