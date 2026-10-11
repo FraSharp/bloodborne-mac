@@ -38,9 +38,10 @@ Release notes say what changed for players. The README's screenshots come from t
 
 - The game dump: `~/Downloads/PS4/Bloodborne/CUSA03173` (1.09 merged). The player's data:
   `~/Library/Application Support/bloodborne_mac/` (never written by tests: `tools/test_run.sh`).
-- Building `runtime/deps/` takes about an hour; the old combined checkout
-  `~/projects/pablovsouza/bloodborne_pc/deps` has them built: `ln -s` it as `runtime/deps`
-  (ignored by git; the packaging resolves the real path).
+- The clone is `~/projects/pablovsouza/bloodborne-mac` (VS Code workspace:
+  `~/projects/pablovsouza/bloodborne.code-workspace`). `runtime/deps/` is built there (about an
+  hour); its libraries record absolute paths, so a moved or copied `deps/` must be rebuilt
+  (`BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh` after removing `deps/macos-arm64`).
 - Metal System Traces need `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
 - An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–62 FPS.
 
