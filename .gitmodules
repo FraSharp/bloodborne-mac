@@ -1,3 +1,3 @@
 [submodule "runtime"]
 	path = runtime
-	url = https://github.com/PabloVSouza/bloodborne-runtime.git
+	url = https://github.com/bloodborne-native/bloodborne-runtime.git

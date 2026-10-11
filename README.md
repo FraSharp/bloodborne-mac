@@ -10,13 +10,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PabloVSouza/bloodborne-mac/releases/latest"><strong>Download</strong></a>
+  <a href="https://github.com/bloodborne-native/bloodborne-mac/releases/latest"><strong>Download</strong></a>
   ·
   <a href="docs/guide/installation.md">Installation</a>
   ·
   <a href="docs/README.md">Documentation</a>
   ·
-  <a href="https://github.com/PabloVSouza/bloodborne-mac/issues">Report a problem</a>
+  <a href="https://github.com/bloodborne-native/bloodborne-mac/issues">Report a problem</a>
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@
 
 ## Getting started
 
-1. [Download the latest release](https://github.com/PabloVSouza/bloodborne-mac/releases/latest)
+1. [Download the latest release](https://github.com/bloodborne-native/bloodborne-mac/releases/latest)
    and drag **Bloodborne** to Applications.
 2. The first time, right-click the app and choose **Open** (the app is not signed with an Apple
    Developer ID).
@@ -93,14 +93,14 @@ The app is three repositories:
 | Repository | |
 |---|---|
 | **bloodborne-mac** (this one) | The macOS app: launcher, packaging, releases, player guides |
-| [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime) | Loads the game: the PS4 system libraries and the Vulkan renderer (MoltenVK), here as `runtime/` |
-| [bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp) | bbcpu, which translates the game's x86-64 code to arm64 as it runs, and the recompiler (`runtime/recomp/`) |
+| [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | Loads the game: the PS4 system libraries and the Vulkan renderer (MoltenVK), here as `runtime/` |
+| [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) | bbcpu, which translates the game's x86-64 code to arm64 as it runs, and the recompiler (`runtime/recomp/`) |
 
 **The recompiler** turns the game's code, from the player's own copy, into native code ahead of
 time, checked against calls recorded from the original. Every one of the game's functions is
 generated and the game runs on them; the work now is making that faster than the translator.
 Only the tool is published, never the game's code
-([status](https://github.com/PabloVSouza/bloodborne-recomp/wiki/Recompilation-status)). The
+([status](https://github.com/bloodborne-native/bloodborne-recomp/wiki/Recompilation-status)). The
 recompiler and its CPU layer don't depend on macOS: other platforms can build on them.
 
 [Building from source](docs/guide/building.md) · [How it works](docs/guide/how-it-works.md)

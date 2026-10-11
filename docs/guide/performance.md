@@ -19,4 +19,4 @@ GPU) with a 1080p output:
 - Only one machine has been measured so far. Results on other Macs are welcome.
 
 The details of what was measured and changed, and what could still be gained, are in
-[macOS performance](https://github.com/PabloVSouza/bloodborne-runtime/blob/main/docs/MACOS_PERFORMANCE.md).
+[macOS performance](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/MACOS_PERFORMANCE.md).

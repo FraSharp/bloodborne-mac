@@ -17,16 +17,16 @@
 ## Build
 
 ```bash
-git clone --recursive https://github.com/PabloVSouza/bloodborne-mac.git
+git clone --recursive https://github.com/bloodborne-native/bloodborne-mac.git
 cd bloodborne-mac
 bash runtime/build.sh                          # the game; the first run also builds runtime/deps/
 bash packaging/macos.sh                        # Bloodborne.app and its DMG in dist/
 ```
 
-`runtime/` is [bloodborne-runtime](https://github.com/PabloVSouza/bloodborne-runtime), with
-[bloodborne-recomp](https://github.com/PabloVSouza/bloodborne-recomp) inside it as `runtime/recomp/`.
+`runtime/` is [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime), with
+[bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) inside it as `runtime/recomp/`.
 To run the game without the app: `BB_GAME_DIR=/path/to/your/game bash runtime/run.sh` (its
-[building guide](https://github.com/PabloVSouza/bloodborne-runtime/blob/main/docs/guide/building.md)
+[building guide](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/guide/building.md)
 lists the environment variables and developer tools).
 
 The launcher lives in [`launcher/app`](../../launcher/app). Its
