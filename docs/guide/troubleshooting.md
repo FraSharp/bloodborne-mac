@@ -29,14 +29,15 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 ## Known issues
 
-- **Crash while a save loads**, roughly 1 load in 10 (a corrupted GPU command buffer). Starting
-  again works.
+- **Yharnam:** the sky behind some gates can be black, with streaks, and some objects pop in.
+  Being looked into.
 - **Switching FSR on and off while playing with character motion vectors on** can crash the GPU
   ("Invalid Resource"). It does not happen with them off, the default.
 - Two of the game's pipelines fail to compile in MoltenVK; their draws are skipped.
 - *The Old Hunters*: the Game of the Year editions include it. Since 0.5, add-on packages can be
   loaded from `user/addcont/` (as in bbport); this is not tested on macOS yet.
-- FSR 4 / 4.1.1 and upstream's experimental PC memory model are not available on macOS.
+- FSR 4 / 4.1.1 and upstream's experimental PC memory model are not available on macOS, nor is
+  bbport's online play (shadNet) yet: the game plays offline.
 
 ## Starting fresh
 

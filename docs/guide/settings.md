@@ -13,7 +13,7 @@ other.
 | Tab | What it has |
 |---|---|
 | **Home** | The game folder, its edition and whether it is ready to play, and a summary of the main settings |
-| **Graphics** | Output resolution, fullscreen, frame presentation (V-Sync), FPS counter, upscaler and its quality preset, sharpening, character motion vectors, model detail |
+| **Graphics** | Output resolution, monitor (where the game window and fullscreen open), fullscreen, frame presentation (V-Sync), FPS counter, upscaler and its quality preset, sharpening, character motion vectors, model detail |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
 | **Game** | The game's language, game effects (motion blur, depth of field, shadows, ...), frame rate, extras (skip the intro, debug camera and menu) and the saves folder |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |

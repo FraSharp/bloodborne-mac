@@ -68,12 +68,14 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.5** (from bbport 0.5): add-on content (*The Old Hunters*) can be loaded from
-`user/addcont/` (not tested on macOS yet), the online/offline screen is skipped, and damaged game
-extractions are reported instead of hanging. 0.4.1 fixed a heap crash while loading saves.
+**New in 0.5.1:** the crash while loading (a save, a lantern back to the Hunter's Dream, a death)
+is fixed; the launcher window can be dragged, and *Graphics → Monitor* chooses the screen the game
+opens on. From bbport 0.51: every retail release of the game is recognized, an `eboot.bin` with a
+built-in 60 FPS patch is reported (it crashes the gestures menu), and the in-game menu (F1 or
+L3+R3) has *Quit game*.
 
-**Known issues:** an occasional crash while a save loads (start again), and a few more in
-[Troubleshooting](docs/guide/troubleshooting.md#known-issues).
+**Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in; a
+few more in [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
 
@@ -110,7 +112,7 @@ recompiler and its CPU layer don't depend on macOS: other platforms can build on
 Built on [**bbport**](https://github.com/deadinside28/bloodborne_pc) by deadinside28, the native
 Linux port this project started from as a fork, and on [**shadPS4**](https://github.com/shadps4-emu/shadPS4):
 the loader, the PS4 runtime, the renderer and its extensions, the upscalers and the game patches
-come from them, and bbport's releases keep being merged (now 0.5). This work adds the macOS
+come from them, and bbport's releases keep being merged (now 0.51). This work adds the macOS
 platform layer, the arm64 translator, the app and the recompiler. None of it would exist without
 the projects it is built on. Full list: [Credits and licenses](docs/CREDITS.md).
 

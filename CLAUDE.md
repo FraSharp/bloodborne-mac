@@ -53,10 +53,14 @@ Release notes say what changed for players. The README's screenshots come from t
 
 ## Where things stand (2026-10-11)
 
-- Releases: up to v0.5.0 (bbport 0.5) on this repository. bbport has released **0.51** since:
-  not merged yet (merge it in bloodborne-runtime, then bump `runtime/` here).
-- Known issue: an occasional GPU assertion while a save loads (`Unimplemented PM4 type 0`, about
-  1 load in 10), also in the released build and without recompiled code. Not investigated yet.
+- Releases: up to v0.5.1 (bbport 0.51) on this repository.
+- Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
+  Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
+  (bloodborne-runtime CLAUDE.md, "Command buffers").
+- Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
+  user's report, not investigated): bisect bbport's optimizations with the user watching.
+- bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
+  nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
   translator's frame rate but with 20–30% more CPU time (R3, speed, is next). Status and numbers:
   bloodborne-recomp's wiki, Recompilation-status.
