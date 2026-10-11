@@ -43,6 +43,12 @@ Release notes say what changed for players. The README's screenshots come from t
   hour); its libraries record absolute paths, so a moved or copied `deps/` must be rebuilt
   (`BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh` after removing `deps/macos-arm64`).
 - Metal System Traces need `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
+- **REA** (https://github.com/morluto/rea) is registered as an MCP server for Claude Code, with
+  the Ghidra provider (Ghidra 12.1.4, Java 21; `JAVA_HOME` and `GHIDRA_INSTALL_DIR` in
+  `~/.zshrc`): decompiling, cross-references and call graphs of the game's code
+  (`runtime/recomp/out/eboot.elf`, or `out/eboot.elf` after `runtime/run.sh`). The first
+  analysis of the 93 MB executable takes a long time. Its output is decompiled game code: use it
+  to understand, never commit it or paste it into docs, issues or wikis.
 - An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–62 FPS.
 
 ## Where things stand (2026-10-11)
