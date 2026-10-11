@@ -64,6 +64,11 @@ Release notes say what changed for players. The README's screenshots come from t
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
   translator's frame rate but with 20–30% more CPU time (R3, speed, is next). Status and numbers:
   bloodborne-recomp's wiki, Recompilation-status.
+- The native renderer (R5, in bloodborne-runtime `docs/NATIVE_RENDERER.md`): the engine's graphics
+  on each platform's own GPU API, multiplatform (Vulkan and Metal backends, never Metal-only).
+  Scoping done; next is N1, frame planning in today's renderer.
+- A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
+  trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 
