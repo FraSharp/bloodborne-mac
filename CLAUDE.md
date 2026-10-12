@@ -67,8 +67,8 @@ Release notes say what changed for players. The README's screenshots come from t
 - The native renderer (R5, in bloodborne-runtime `docs/NATIVE_RENDERER.md`): the engine's graphics
   on each platform's own GPU API, multiplatform (Vulkan and Metal backends, never Metal-only).
   N1 is closed: deferred clears are on by default; fixed-quad triangles remain opt-in and native
-  tessellation is planned for N5. N4's backend interface is approved and starting with a Linux
-  compile gate and a measured Vulkan baseline.
+  tessellation is planned for N5. N4's backend interface is approved; Linux CI passes and the
+  Vulkan baseline is measured. The first buffer-resource slice is opt-in with its CPU gate open.
 - A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
   trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
 - Another GPU assertion occurred once in two opt-in `BB_FIXED_QUAD_TRIANGLES=1` Metal-trace
