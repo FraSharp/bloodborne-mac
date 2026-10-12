@@ -12,7 +12,7 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 
 | Tab | What it has |
 |---|---|
-| **Home** | The game folder, its edition and whether it is ready to play, and a summary of the main settings |
+| **Home** | The active profile and trophy development status, shortcuts to Profiles/Saves, game folder, edition/readiness and a summary of the main settings |
 | **Graphics** | Output resolution, monitor, fullscreen, frame presentation (V-Sync), frame-rate mode/limit, FPS counter, upscaling and sharpening, motion vectors, model detail and visual effects |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
 | **Game** | Game language, skipping intro videos and the active profile’s save-folder location |
