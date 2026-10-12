@@ -57,6 +57,8 @@ jobs:
         run: |
           npm ci
           npm run check
+          cargo test --manifest-path src-tauri/Cargo.toml
+          cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
 
       # The libraries build-deps.sh builds (MoltenVK, SDL3, FFmpeg, ...): ~1 h without the cache.
       - name: Dependency cache

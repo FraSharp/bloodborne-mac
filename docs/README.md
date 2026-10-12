@@ -12,6 +12,8 @@
 5. [Performance](guide/performance.md): what to expect, and the settings that matter.
 6. [Troubleshooting](guide/troubleshooting.md): common problems and known issues.
 
+- [Saves](guide/saves.md): profiles, backups and restore in the development launcher.
+
 ## Developing
 
 - [Building from source](guide/building.md): the app and its DMG.
@@ -20,6 +22,8 @@
 - The game itself: [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime/tree/main/docs)
   (runtime, renderer, macOS performance); the translator and the recompiler:
   [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp).
+
+- [Save manager roadmap](SAVE_MANAGER.md): storage contract and planned previews/editor.
 
 ## Project
 
