@@ -51,7 +51,7 @@ Release notes say what changed for players. The README's screenshots come from t
   to understand, never commit it or paste it into docs, issues or wikis.
 - An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–62 FPS.
 
-## Where things stand (2026-10-11)
+## Where things stand (2026-10-12)
 
 - Releases: up to v0.5.1 (bbport 0.51) on this repository.
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
@@ -66,7 +66,9 @@ Release notes say what changed for players. The README's screenshots come from t
   bloodborne-recomp's wiki, Recompilation-status.
 - The native renderer (R5, in bloodborne-runtime `docs/NATIVE_RENDERER.md`): the engine's graphics
   on each platform's own GPU API, multiplatform (Vulkan and Metal backends, never Metal-only).
-  Scoping done; next is N1, frame planning in today's renderer.
+  N1 is closed: deferred clears are on by default; fixed-quad triangles remain opt-in and native
+  tessellation is planned for N5. N4's backend interface is approved and starting with a Linux
+  compile gate and a measured Vulkan baseline.
 - A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
   trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
 - Another GPU assertion occurred once in two opt-in `BB_FIXED_QUAD_TRIANGLES=1` Metal-trace
