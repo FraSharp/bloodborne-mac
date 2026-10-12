@@ -69,6 +69,11 @@ Release notes say what changed for players. The README's screenshots come from t
   Scoping done; next is N1, frame planning in today's renderer.
 - A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
   trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
+- Another GPU assertion occurred once in two opt-in `BB_FIXED_QUAD_TRIANGLES=1` Metal-trace
+  attempts on 2026-10-12: `runtime/out/bench_n4_trace_on_1012_102807.log` stopped during
+  loading with `GPU [Debug] <Critical> vk_shader_hle.cpp:242 ExecuteCopyShaderHLE: Assertion Failed!`
+  followed by `STOP: GPU library assertion failed (see GPU log above)`. The retry completed;
+  watch for this assertion as well.
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 
