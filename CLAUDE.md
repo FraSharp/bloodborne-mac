@@ -77,6 +77,9 @@ Release notes say what changed for players. The README's screenshots come from t
   on by default; capped gameplay CPU cost was about 0.5%, with no throughput loss in one uncapped
   pair. Released v0.5.1 still has the bug (2/5 faults in the exact-release comparison); the fix
   is not released yet. Runtime `docs/STABILITY.md` has the evidence and assertion watch list.
+- Development opening-video visual issue: four of seven observed openings had one white flash;
+  stuttering was also reported. All seven completed without faults/assertions. The cause is not
+  established; runtime stability docs track the comparisons and host-copy diagnostic.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
