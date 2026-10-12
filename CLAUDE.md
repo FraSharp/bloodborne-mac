@@ -91,7 +91,8 @@ Release notes say what changed for players. The README's screenshots come from t
   and returns on exit; Advanced can keep it visible for logs. Design: launcher's
   `docs/SAVE_MANAGER.md` and `docs/LAUNCHER_LIFECYCLE.md`.
   v0.5.1 does not include these development-launcher features.
-- Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
+- Wikis: bloodborne-mac, runtime and recomp have wikis; keep them in step with their docs.
+  The launcher has no wiki; its player guides are mirrored in the app docs and wiki.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 
 ## Working rules (all four repositories)
