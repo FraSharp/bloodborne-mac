@@ -27,7 +27,8 @@ cd launcher/app && npm run tauri dev   # the launcher against runtime/ (npm run 
 
 1. Bump the version in `launcher/app/package.json`, `package-lock.json` (two places),
    `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
-2. Run the game from this build at least once (`runtime/tools/test_run.sh`), and the user approves.
+2. Run copied-save gameplay (`runtime/tools/test_run.sh`) and the isolated new-save opening
+   (`runtime/tools/test_opening_video.sh`) from this build, and the user approves.
 3. Commit, `git tag -a vX.Y.Z -m "..."`, push `main` and the tag; the workflow builds the DMG and
    publishes the release. Check the run (`gh run list`) and the release's asset.
 
@@ -70,17 +71,17 @@ Release notes say what changed for players. The README's screenshots come from t
   tessellation is planned for N5. N4's backend interface is approved; Linux CI passes and the
   Vulkan baseline is measured. The first buffer-resource slice is opt-in; uncapped and capped
   game gates pass in Central Yharnam. N4 is paused after this slice for opening-video stability.
-- The new-save opening video can fault before character creation in v0.5.1: a 2026-10-12
-  comparison reproduced the null read in 2/5 release and 4/5 current-main trials. Runtime
-  `docs/STABILITY.md` has the run table and assertion inventory. A verified fix or an explicit
-  known issue is needed before the next app release.
-- A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
-  trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
-- Another GPU assertion occurred once in two opt-in `BB_FIXED_QUAD_TRIANGLES=1` Metal-trace
-  attempts on 2026-10-12: `runtime/out/bench_n4_trace_on_1012_102807.log` stopped during
-  loading with `GPU [Debug] <Critical> vk_shader_hle.cpp:242 ExecuteCopyShaderHLE: Assertion Failed!`
-  followed by `STOP: GPU library assertion failed (see GPU log above)`. The retry completed;
-  watch for this assertion as well.
+- The opening-video shared-state race is fixed on main: movie frames and render task lists now
+  hold one buffer lock across state updates and draws. Ten guarded openings completed (five
+  portable, five translated), versus three faults in five alternating controls. The guard is
+  on by default; capped gameplay CPU cost was about 0.5%, with no throughput loss in one uncapped
+  pair. Released v0.5.1 still has the bug (2/5 faults in the exact-release comparison); the fix
+  is not released yet. Runtime `docs/STABILITY.md` has the evidence and assertion watch list.
+- GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
+  during the video), one `Unknown data_format=6 and num_format=1`, and one
+  `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
+  and run for each. None appeared in the video-fix acceptance or gameplay batches; their cause
+  has not been established.
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 

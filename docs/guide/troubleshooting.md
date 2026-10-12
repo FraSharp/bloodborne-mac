@@ -29,6 +29,10 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 ## Known issues
 
+- **Opening video in v0.5.1:** it can crash before character creation. An identified shared-state
+  race is fixed in the development build, with ten successful opening-video checks. The fix
+  has not been released yet.
+
 - **Yharnam:** the sky behind some gates can be black, with streaks, and some objects pop in.
   Being looked into.
 - **Switching FSR on and off while playing with character motion vectors on** can crash the GPU
