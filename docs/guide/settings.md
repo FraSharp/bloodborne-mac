@@ -2,9 +2,9 @@
 
 [← Documentation](../README.md)
 
-Settings can be changed in two places: the launcher, before starting the game, and the in-game
-menu, while playing. Both use the same file (`bbport.ini`), so a change in one shows up in the
-other.
+Renderer and game-patch options can be changed in the launcher before starting, or in the
+in-game menu while playing. These options share `bbport.ini`, so a change in one shows up in
+the other. Launcher startup options use `launcher.json`; profile ownership uses SQLite.
 
 ## The launcher
 
@@ -13,15 +13,20 @@ other.
 | Tab | What it has |
 |---|---|
 | **Home** | The game folder, its edition and whether it is ready to play, and a summary of the main settings |
-| **Graphics** | Output resolution, monitor (where the game window and fullscreen open), fullscreen, frame presentation (V-Sync), FPS counter, upscaler and its quality preset, sharpening, character motion vectors, model detail |
+| **Graphics** | Output resolution, monitor, fullscreen, frame presentation (V-Sync), frame-rate mode/limit, FPS counter, upscaling and sharpening, motion vectors, model detail and visual effects |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
-| **Game** | The game's language, game effects (motion blur, depth of field, shadows, ...), frame rate, extras (skip the intro, debug camera and menu) |
-| **Profiles** | First-profile setup, identity creation, copy, rename and active selection (development launcher) |
+| **Game** | Game language, skipping intro videos and the active profile’s save-folder location |
+| **Profiles** | First-profile setup, fresh profile creation, rename, active selection and confirmed deletion (development launcher) |
 | **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (development launcher) |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |
 | **Patches** | Third-party game patches. See [Mods and patches](mods-and-patches.md) |
-| **Advanced** | Launcher language, performance options, diagnostics, extra environment variables and the data folder |
+| **Advanced** | Launcher language, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
 | **Log** | The game's output while it runs |
+
+The Home frame-rate shortcut opens Graphics. The Game save-folder row shows the active
+profile's location; use Profiles to change the active identity. Saves keeps backup/restore
+and the backup-folder location. Low-level and experimental renderer options remain in Advanced.
+These tab changes are in the development launcher.
 
 ## The in-game menu
 
