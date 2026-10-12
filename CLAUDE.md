@@ -7,8 +7,8 @@ Clone with `--recursive`.
 
 ## Layout
 
-- `launcher/app/`: the launcher (Tauri: React + Rust, `src-tauri/src/main.rs`); its own README has
-  the stack and conventions. 20 languages; settings in `bbport.ini` and `launcher.json` in
+- `launcher/app/`: the bloodborne-launcher submodule (Tauri: React + Rust,
+  `src-tauri/src/main.rs`); its own README has the stack and conventions. 20 languages; settings in `bbport.ini` and `launcher.json` in
   `~/Library/Application Support/bloodborne_mac/` (the app's names stay `bloodborne_mac` so
   players' saves and settings never move).
 - `packaging/macos.sh`: `Bloodborne.app` and its DMG in `dist/`, from `runtime/`'s build.
@@ -39,8 +39,8 @@ Release notes say what changed for players. The README's screenshots come from t
 
 - The game dump: `~/Downloads/PS4/Bloodborne/CUSA03173` (1.09 merged). The player's data:
   `~/Library/Application Support/bloodborne_mac/` (never written by tests: `tools/test_run.sh`).
-- The clone is `~/projects/pablovsouza/bloodborne-mac` (VS Code workspace:
-  `~/projects/pablovsouza/bloodborne.code-workspace`). `runtime/deps/` is built there (about an
+- The clone is `~/projects/bloodborne/bloodborne-mac` (VS Code workspace:
+  `~/projects/bloodborne/bloodborne.code-workspace`). `runtime/deps/` is built there (about an
   hour); its libraries record absolute paths, so a moved or copied `deps/` must be rebuilt
   (`BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh` after removing `deps/macos-arm64`).
 - Metal System Traces need `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
@@ -89,16 +89,18 @@ Release notes say what changed for players. The README's screenshots come from t
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 
-## Working rules (all three repositories)
+## Working rules (all four repositories)
 
-- **The project is three repositories**, nested as submodules:
+- **The project is four repositories**, nested as submodules:
   [bloodborne-mac](https://github.com/bloodborne-native/bloodborne-mac) (the app) ⊃ `runtime/` =
   [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) ⊃ `recomp/` =
   [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp). Commit in the repository
   that owns the file, push it, then bump the submodule pointer in the parent (runtime → recomp,
   mac → runtime) and push that too. Submodules are checked out at a commit (detached HEAD):
   before editing inside `runtime/` or `runtime/recomp/`, run `git checkout main` (and
-  `git pull`) there. Separate clones of each repository side by side work the same way.
+  `git pull`) there. The app also includes `launcher/app/` =
+  [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher); commit/push
+  launcher changes there, then bump its pointer in this app. Separate clones work the same way.
 - **Before any push, check `git remote get-url origin`** (a clone once still pointed at a local
   repository and a force-push landed there). Push to `main`; ask before force-pushing anything
   that existed before this session.

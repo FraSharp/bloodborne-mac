@@ -17,7 +17,7 @@
 ## Developing
 
 - [Building from source](guide/building.md): the app and its DMG.
-- [How it works](guide/how-it-works.md): the three repositories this app is made of.
+- [How it works](guide/how-it-works.md): the four repositories this app is made of.
 - [Launcher](../launcher/app/README.md): the launcher's stack and code conventions.
 - The game itself: [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime/tree/main/docs)
   (runtime, renderer, macOS performance); the translator and the recompiler:

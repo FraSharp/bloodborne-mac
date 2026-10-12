@@ -43,7 +43,7 @@
 
 - **Native on Apple Silicon:** the game's x86-64 code is translated to arm64 as it runs.
 - **One app, nothing else to install:** download, open, choose your game folder, play.
-- **A launcher** with graphics, controls, game options, mods, patches and the game's log.
+- **A launcher** ([bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher)) with graphics, controls, game options, mods, patches and the game's log.
 - **AMD FSR 3.1 upscaling,** the biggest performance gain on Apple GPUs.
 - **An in-game settings menu** (F1, or L3 + R3 on a controller).
 - **Controllers and keyboard,** with button mapping for both.
