@@ -36,3 +36,21 @@ with sample data; `npm run tauri dev` runs it against `runtime/`) and its code c
 Releases are built by GitHub Actions (`.github/workflows/macos.yml`): pushing a `v*` tag builds the
 DMG and publishes a release. To update the game: `git -C runtime pull` (or a newer runtime
 commit), then commit the submodule.
+
+## Moving a development checkout
+
+macOS dependencies contain absolute installation paths, and CMake caches record the original
+source/build directories. A moved checkout can fail before the game starts with a missing
+`@rpath/libbbgpu.dylib`, even when the library exists in the new directory.
+
+Preserve or remove the old `runtime/deps/macos-arm64` prefix and generated CMake build directories
+under `runtime/deps/build-arm64`, retaining downloaded archives. Preserve or remove
+`runtime/out/gpu-arm64` as well. Rebuild dependencies at the new path, then rebuild the runtime:
+
+```sh
+BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh
+bash runtime/build.sh --test
+```
+
+Do not move or reset the player's data directory to fix this build error. Packaged applications
+use rebased library paths and do not depend on the development checkout's location.

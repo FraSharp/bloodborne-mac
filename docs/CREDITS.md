@@ -61,3 +61,8 @@ The independent launcher adapts the Drizzle/Tauri SQL adapter from [leari-mail/l
 The launcher’s shared Dialog and AlertDialog components were generated with shadcn CLI 4.21.4
 from the base-nova registry ([shadcn-ui/ui, base-component reference 30a58d4](https://github.com/shadcn-ui/ui/tree/30a58d4498f270af1c1e981a7d78a15cf5740841/apps/v4/registry/bases/base/ui)).
 The launcher retains the upstream MIT notice in `docs/licenses/shadcn-ui-MIT.txt`.
+
+The launcher’s menu-bar/window restoration and Dock/taskbar handling follow
+[leari-mail/leari 5876482](https://github.com/leari-mail/leari/tree/5876482/src-tauri/src)
+(MIT, Pablo Souza). The launcher retains the original MIT notice; its hunter’s-sigil tray
+artwork is original and does not copy Leari or game assets.

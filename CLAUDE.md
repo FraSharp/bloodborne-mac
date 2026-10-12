@@ -86,7 +86,10 @@ Release notes say what changed for players. The README's screenshots come from t
   Saves tabs backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
   existing saves in place. Native transactions own writes and file-operation recovery; shader
   caches remain shared. Trophy storage is prepared, but collection, previews and editing are
-  future work. Design: launcher's `docs/SAVE_MANAGER.md`. v0.5.1 does not include this feature.
+  future work. Home shows the active profile and trophy development status; Saves shows an editor
+  development badge. The launcher hides to the menu bar/tray during its game process and returns
+  on exit. Design: launcher's `docs/SAVE_MANAGER.md` and `docs/LAUNCHER_LIFECYCLE.md`.
+  v0.5.1 does not include these development-launcher features.
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 

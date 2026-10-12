@@ -12,6 +12,7 @@
 5. [Performance](guide/performance.md): what to expect, and the settings that matter.
 6. [Troubleshooting](guide/troubleshooting.md): common problems and known issues.
 
+- [Launcher during gameplay](guide/launcher-lifecycle.md): menu-bar/tray behaviour and restoring the window.
 - [Profiles and saves](guide/saves.md): first-profile setup, identities, backups and restore in the development launcher.
 
 ## Developing
