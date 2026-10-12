@@ -69,7 +69,11 @@ Release notes say what changed for players. The README's screenshots come from t
   N1 is closed: deferred clears are on by default; fixed-quad triangles remain opt-in and native
   tessellation is planned for N5. N4's backend interface is approved; Linux CI passes and the
   Vulkan baseline is measured. The first buffer-resource slice is opt-in; uncapped and capped
-  game gates pass in Central Yharnam. Handles and imported backing are next.
+  game gates pass in Central Yharnam. N4 is paused after this slice for opening-video stability.
+- The new-save opening video can fault before character creation in v0.5.1: a 2026-10-12
+  comparison reproduced the null read in 2/5 release and 4/5 current-main trials. Runtime
+  `docs/STABILITY.md` has the run table and assertion inventory. A verified fix or an explicit
+  known issue is needed before the next app release.
 - A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
   trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
 - Another GPU assertion occurred once in two opt-in `BB_FIXED_QUAD_TRIANGLES=1` Metal-trace
