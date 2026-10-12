@@ -16,7 +16,8 @@ other.
 | **Graphics** | Output resolution, monitor (where the game window and fullscreen open), fullscreen, frame presentation (V-Sync), FPS counter, upscaler and its quality preset, sharpening, character motion vectors, model detail |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
 | **Game** | The game's language, game effects (motion blur, depth of field, shadows, ...), frame rate, extras (skip the intro, debug camera and menu) |
-| **Saves** | Save profiles, active selection, backups and restore. See [Saves](saves.md) (development launcher) |
+| **Profiles** | First-profile setup, identity creation, copy, rename and active selection (development launcher) |
+| **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (development launcher) |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |
 | **Patches** | Third-party game patches. See [Mods and patches](mods-and-patches.md) |
 | **Advanced** | Launcher language, performance options, diagnostics, extra environment variables and the data folder |

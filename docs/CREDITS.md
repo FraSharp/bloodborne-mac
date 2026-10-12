@@ -53,3 +53,7 @@ By Kyo, Lance McDonald, auser1337, illusion, emoose and other community members
 
 This project is not affiliated with shadPS4, Sony Interactive Entertainment, FromSoftware or AMD.
 *Bloodborne* is a trademark of Sony Interactive Entertainment. No game files are included.
+
+## Launcher profile database
+
+The independent launcher adapts the Drizzle/Tauri SQL adapter from [leari-mail/leari at 5876482](https://github.com/leari-mail/leari/tree/5876482), by Pablo Souza (MIT). The original notice and detailed credits are retained in [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher/blob/main/docs/CREDITS.md).

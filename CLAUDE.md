@@ -82,10 +82,11 @@ Release notes say what changed for players. The README's screenshots come from t
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
   and run for each. None appeared in the video-fix acceptance or gameplay batches; their cause
   has not been established.
-- The development launcher has a Saves tab: complete-save profiles, active selection, fresh
-  and copied sets, automatic pre-launch backups and restore with a recovery copy. Original saves
-  stay in place and shader caches are shared. Character previews and editing are planned in
-  `docs/SAVE_MANAGER.md`; v0.5.1 does not include this feature.
+- The independent development launcher (`launcher/app/`, bloodborne-launcher) has Profiles and
+  Saves tabs backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
+  existing saves in place. Native transactions own writes and file-operation recovery; shader
+  caches remain shared. Trophy storage is prepared, but collection, previews and editing are
+  future work. Design: launcher's `docs/SAVE_MANAGER.md`. v0.5.1 does not include this feature.
 - Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
 

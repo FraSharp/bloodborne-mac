@@ -12,7 +12,7 @@
 5. [Performance](guide/performance.md): what to expect, and the settings that matter.
 6. [Troubleshooting](guide/troubleshooting.md): common problems and known issues.
 
-- [Saves](guide/saves.md): profiles, backups and restore in the development launcher.
+- [Profiles and saves](guide/saves.md): first-profile setup, identities, backups and restore in the development launcher.
 
 ## Developing
 
