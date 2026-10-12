@@ -20,7 +20,7 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 | **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (development launcher) |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |
 | **Patches** | Third-party game patches. See [Mods and patches](mods-and-patches.md) |
-| **Advanced** | Launcher language, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
+| **Advanced** | Launcher language and hiding during gameplay, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
 | **Log** | The game's output while it runs |
 
 The Home frame-rate shortcut opens Graphics. The Game save-folder row shows the active
@@ -44,6 +44,7 @@ English, Português (Brasil), Português (Portugal), Español (España), Españo
 Français, Deutsch, Italiano, Nederlands, Polski, Русский, Türkçe, Suomi, Svenska, Dansk, Norsk,
 日本語, 한국어, 简体中文 and 繁體中文.
 
+- **Hide launcher during gameplay:** Advanced → Launcher. Enabled by default; turn off to keep the Log tab visible. Changes apply during gameplay.
 - **Launcher language:** Advanced → Launcher language. By default it follows macOS.
 - **In-game menu:** follows the launcher's language.
 - **Game language** (the game's own text and voices): Game → Language. Every language the PS4
