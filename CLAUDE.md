@@ -80,13 +80,20 @@ Release notes say what changed for players. The README's screenshots come from t
 - Development opening-video visual issue: four of seven observed openings had one white flash;
   stuttering was also reported. All seven completed without faults/assertions. The cause is not
   established. A playback-clock data race is repaired and passes standalone ThreadSanitizer
-  checks. Four subsequent MipFilter assertions include a translated-SRT run; sampler
+  checks. Five subsequent MipFilter assertions include a translated-SRT run; sampler
   provenance and resource lifetime remain under investigation before release. Runtime
   stability docs record the runs and diagnostic limits. Two further pipeline-off openings were
   observed as perfect and completed; their pipeline-on pairs later faulted on the movie audio
   thread with an invalid-mutex panic, including one with the command-buffer probe disabled.
   The second looked perfect before shutdown failed. Thread stop/completion/destruction ordering
-  is the next stability target; this is separate from sampler provenance.
+  is the next stability target; this is separate from sampler provenance. A further control
+  captured main destroying the mutex slot 13.374 ms before the movie audio thread used it;
+  playback had looked perfect, with only 36 ms maximum periodic lag. There are three such
+  shutdown panics. The fifth sampler assertion was already present at draw enqueue.
+  An AV queue data race is repaired and has a normal-flow test that passes ThreadSanitizer;
+  the original queue reproduced a race. One repaired opening completed, but its visual report
+  is unavailable and broader video acceptance remains open. Strict GPU locking still flashed,
+  so the submission-lock default was not changed.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
