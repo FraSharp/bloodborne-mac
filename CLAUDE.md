@@ -123,6 +123,9 @@ Release notes say what changed for players. The README's screenshots come from t
   caches remain shared. Development main now records local trophy unlocks per profile and displays counts and
   id/timestamp details on Home, Profiles and Saves. Marked edited saves cannot record new
   trophies; earned history survives restores. Online restrictions for edited saves are undecided.
+  A separate React/Tauri overlay helper prototype passed windowed/fullscreen visual checks
+  on this Mac. Runtime spawning, reliable SDL geometry and matched overhead gates remain
+  planned; the helper is opt-in and records no test trophies.
   Trophy names/icons, previews and editing remain future work; Saves shows an editor
   development badge. The launcher hides to the menu bar/tray during its game process by default
   and returns on exit; Advanced can keep it visible for logs. Design: launcher's
@@ -160,6 +163,9 @@ Release notes say what changed for players. The README's screenshots come from t
 - **No game code, ever:** no decompiled or generated game code, no game files, no records of game
   memory in any repository. Docs and wikis talk about the recompiler only (not about decompiled
   code or private folders).
+- **Test language:** use English for all game, launcher and overlay tests
+  (`BB_LANGUAGE=1 BB_UI_LANGUAGE=en` and English UI), unless the maintainer requests a
+  language-specific investigation.
 - **Testing the game:** run it in the background with `runtime/tools/test_run.sh NAME [VAR=...]`
   (bloodborne-runtime's `tools/test_run.sh`): it copies the player's save first and never touches
   the real one. Check `pgrep -x bb-probe` first; one game at a time. Test windows open on the
