@@ -79,7 +79,10 @@ Release notes say what changed for players. The README's screenshots come from t
   is not released yet. Runtime `docs/STABILITY.md` has the evidence and assertion watch list.
 - Development opening-video visual issue: four of seven observed openings had one white flash;
   stuttering was also reported. All seven completed without faults/assertions. The cause is not
-  established; runtime stability docs track the comparisons and host-copy diagnostic.
+  established. A playback-clock data race is repaired and passes standalone ThreadSanitizer
+  checks. Three subsequent MipFilter assertions include a translated-SRT run; sampler
+  provenance and resource lifetime remain under investigation before release. Runtime
+  stability docs record the runs and diagnostic limits.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
