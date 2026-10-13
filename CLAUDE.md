@@ -120,15 +120,17 @@ Release notes say what changed for players. The README's screenshots come from t
 - The independent development launcher (`launcher/app/`, bloodborne-launcher) has Profiles and
   Saves tabs backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
   existing saves in place. Native transactions own writes and file-operation recovery; shader
-  caches remain shared. Trophy storage is prepared, but collection, previews and editing are
-  future work. Home shows the active profile and trophy development status; Saves shows an editor
+  caches remain shared. Development main now records local trophy unlocks per profile and displays counts and
+  id/timestamp details on Home, Profiles and Saves. Marked edited saves cannot record new
+  trophies; earned history survives restores. Online restrictions for edited saves are undecided.
+  Trophy names/icons, previews and editing remain future work; Saves shows an editor
   development badge. The launcher hides to the menu bar/tray during its game process by default
   and returns on exit; Advanced can keep it visible for logs. Design: launcher's
   `docs/SAVE_MANAGER.md` and `docs/LAUNCHER_LIFECYCLE.md`.
   The development launcher also checks stable app releases on GitHub, shows a dismissible
   update banner and changelog modal with a release-page button, and provides automatic/manual
   checks in Advanced. Downloads remain manual.
-  These launcher features are included in the 0.6.0 release.
+  Launcher features other than the new trophy tracking are included in the 0.6.0 release.
 - Wikis: all four repositories have wikis; keep them in step with their docs. Launcher player
   guides also have mirrors in the app docs and wiki.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
