@@ -68,11 +68,11 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.5.1:** the crash while loading (a save, a lantern back to the Hunter's Dream, a death)
-is fixed; the launcher window can be dragged, and *Graphics → Monitor* chooses the screen the game
-opens on. From bbport 0.51: every retail release of the game is recognized, an `eboot.bin` with a
-built-in 60 FPS patch is reported (it crashes the gestures menu), and the in-game menu (F1 or
-L3+R3) has *Quit game*.
+**New in 0.6.0:** the independent launcher has first-profile setup, save backup/restore,
+confirmed profile deletion, a menu-bar mode and release notifications with a changelog modal.
+Opening-video state, clock and queue races are repaired; deferred clears and the native arm64
+SRT walker are enabled by default. See [Release notes](docs/releases/v0.6.0.md) for checks,
+credits and remaining known issues.
 
 **Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in; a
 few more in [Troubleshooting](docs/guide/troubleshooting.md#known-issues).

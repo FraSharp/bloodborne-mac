@@ -87,6 +87,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          notes="docs/releases/${GITHUB_REF_NAME}.md"
+          if [[ ! -f $notes ]]; then
+            notes=notes.md
           cat > notes.md <<'EOF'
           Bloodborne for Apple Silicon: open the DMG and drag **Bloodborne** to Applications.
           Nothing else to install. **No game files are included**: you need your own dump of
@@ -97,5 +100,6 @@ jobs:
           choose **Open** (or System Settings → Privacy & Security → Open Anyway). See
           `First start.txt` in the DMG.
           EOF
+          fi
           gh release create "$GITHUB_REF_NAME" "$PACKAGE" --title "bloodborne-mac $GITHUB_REF_NAME" \
-            --notes-file notes.md --generate-notes
+            --notes-file "$notes"

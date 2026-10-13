@@ -60,7 +60,8 @@ Release notes say what changed for players. The README's screenshots come from t
 
 ## Where things stand (2026-10-13)
 
-- Releases: up to v0.5.1 (bbport 0.51) on this repository.
+- Releases: v0.6.0 is prepared for publication, with the independent launcher and runtime fixes.
+  The imported bbport compatibility level remains 0.51.
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
   Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
   (bloodborne-runtime CLAUDE.md, "Command buffers").
@@ -109,8 +110,8 @@ Release notes say what changed for players. The README's screenshots come from t
   copied-save hold passed at 47.3 FPS, p90 22.9 ms and sampled CPU 511%. One extra package
   opening inherited the development driver and is excluded from self-contained acceptance.
   Runtime tests and current app CI passed. These checks cover the isolated packaged game
-  entry point; full packaged-launcher first-setup/Gatekeeper UI on a clean machine remains
-  untested. Historical fault counts remain on the watch list; no version bump/tag occurred.
+  entry point; packaged first-profile/Home QA subsequently passed with synthetic data on this Mac;
+  clean-machine Gatekeeper/upgrade UI remains untested. Historical fault counts remain on the watch list; no version bump/tag occurred.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
@@ -127,7 +128,7 @@ Release notes say what changed for players. The README's screenshots come from t
   The development launcher also checks stable app releases on GitHub, shows a dismissible
   update banner and changelog modal with a release-page button, and provides automatic/manual
   checks in Advanced. Downloads remain manual.
-  v0.5.1 does not include these development-launcher features.
+  These launcher features are included in the prepared 0.6.0 release.
 - Wikis: all four repositories have wikis; keep them in step with their docs. Launcher player
   guides also have mirrors in the app docs and wiki.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.

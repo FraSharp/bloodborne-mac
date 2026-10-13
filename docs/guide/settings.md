@@ -16,8 +16,8 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 | **Graphics** | Output resolution, monitor, fullscreen, frame presentation (V-Sync), frame-rate mode/limit, FPS counter, upscaling and sharpening, motion vectors, model detail and visual effects |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
 | **Game** | Game language, skipping intro videos and the active profile’s save-folder location |
-| **Profiles** | First-profile setup, fresh profile creation, rename, active selection and confirmed deletion (development launcher) |
-| **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (development launcher) |
+| **Profiles** | First-profile setup, fresh profile creation, rename, active selection and confirmed deletion (0.6.0) |
+| **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (0.6.0) |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |
 | **Patches** | Third-party game patches. See [Mods and patches](mods-and-patches.md) |
 | **Advanced** | Launcher language and hiding during gameplay, new-version checks, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
@@ -26,7 +26,7 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 The Home frame-rate shortcut opens Graphics. The Game save-folder row shows the active
 profile's location; use Profiles to change the active identity. Saves keeps backup/restore
 and the backup-folder location. Low-level and experimental renderer options remain in Advanced.
-These tab changes are in the development launcher.
+These tab changes are included in 0.6.0.
 
 ## The in-game menu
 
@@ -70,6 +70,6 @@ Without a controller, the keyboard can be used; its keys can be remapped on the 
 
 ## New-version notifications
 
-The development launcher checks stable app releases on GitHub and shows a dismissible banner
+The launcher in 0.6.0 checks stable app releases on GitHub and shows a dismissible banner
 when a newer version is available. Advanced includes automatic checks and **Check now**;
 downloads and installation remain manual. See [Updates](updates.md).
