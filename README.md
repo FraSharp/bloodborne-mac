@@ -90,11 +90,12 @@ few more in [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Under the hood
 
-The app is three repositories:
+The app is built from four repositories:
 
 | Repository | |
 |---|---|
-| **bloodborne-mac** (this one) | The macOS app: launcher, packaging, releases, player guides |
+| **bloodborne-mac** (this one) | The macOS app: packaging, releases, player guides |
+| [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher) | The independent launcher source, included here as `launcher/app/` |
 | [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | Loads the game: the PS4 system libraries and the Vulkan renderer (MoltenVK), here as `runtime/` |
 | [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) | bbcpu, which translates the game's x86-64 code to arm64 as it runs, and the recompiler (`runtime/recomp/`) |
 
