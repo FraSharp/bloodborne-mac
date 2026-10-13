@@ -25,6 +25,12 @@ cd launcher/app && npm run tauri dev   # the launcher against runtime/ (npm run 
 
 ## Releases
 
+App versions follow this project's own release scope and compatibility, independently of
+bbport's version. bbport numbers record imported compatibility and merge history. Major
+versions may be chosen for our own compatibility changes or substantial product milestones;
+the maintainer chooses the release number. The app and bundled launcher version stay aligned
+so GitHub release notifications compare against the installed app correctly.
+
 1. Bump the version in `launcher/app/package.json`, `package-lock.json` (two places),
    `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
 2. Run copied-save gameplay (`runtime/tools/test_run.sh`) and the isolated new-save opening
@@ -96,6 +102,15 @@ Release notes say what changed for players. The README's screenshots come from t
   Linux and macOS CI passed for the repair; broader video acceptance remains open.
   Strict GPU locking still flashed,
   so the submission-lock default was not changed.
+- Pre-release QA on 2026-10-13: five further default-renderer isolated openings and two
+  self-contained downloaded-package openings all completed and were observed as successful.
+  One package opening used an empty project cache; OS/Metal caches were retained. No new
+  faults, GPU assertions or audio-thread invalid-mutex panics appeared. A 90-second packaged
+  copied-save hold passed at 47.3 FPS, p90 22.9 ms and sampled CPU 511%. One extra package
+  opening inherited the development driver and is excluded from self-contained acceptance.
+  Runtime tests and current app CI passed. These checks cover the isolated packaged game
+  entry point; full packaged-launcher first-setup/Gatekeeper UI on a clean machine remains
+  untested. Historical fault counts remain on the watch list; no version bump/tag occurred.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode

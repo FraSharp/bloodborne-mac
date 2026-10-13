@@ -54,3 +54,11 @@ bash runtime/build.sh --test
 
 Do not move or reset the player's data directory to fix this build error. Packaged applications
 use rebased library paths and do not depend on the development checkout's location.
+
+## Versioning
+
+bloodborne-native uses its own app versions, chosen for this project's release scope and
+compatibility. bbport's version describes the upstream compatibility level and merge history.
+Our major, minor and patch releases are independent of that number; a major release may mark
+our own compatibility changes or a substantial product milestone. The maintainer chooses the
+release number. Keep the bundled launcher version aligned with the app for update checks.
