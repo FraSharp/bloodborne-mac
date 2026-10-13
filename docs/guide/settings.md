@@ -20,7 +20,7 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 | **Saves** | The active profile’s save set, backups and restore. See [Profiles and saves](saves.md) (development launcher) |
 | **Mods** | Mods and their load order. See [Mods and patches](mods-and-patches.md) |
 | **Patches** | Third-party game patches. See [Mods and patches](mods-and-patches.md) |
-| **Advanced** | Launcher language and hiding during gameplay, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
+| **Advanced** | Launcher language and hiding during gameplay, new-version checks, experimental performance options, free camera/debug menu, diagnostics, extra environment variables and the data folder |
 | **Log** | The game's output while it runs |
 
 The Home frame-rate shortcut opens Graphics. The Game save-folder row shows the active
@@ -67,3 +67,9 @@ See [Performance](performance.md) for measurements.
 
 Controllers work through SDL3: PlayStation, Xbox and other common controllers are recognized.
 Without a controller, the keyboard can be used; its keys can be remapped on the **Controls** tab.
+
+## New-version notifications
+
+The development launcher checks stable app releases on GitHub and shows a dismissible banner
+when a newer version is available. Advanced includes automatic checks and **Check now**;
+downloads and installation remain manual. See [Updates](updates.md).
