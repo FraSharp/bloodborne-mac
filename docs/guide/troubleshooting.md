@@ -31,7 +31,8 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 - **Opening video in v0.5.1:** it can crash before character creation. An identified shared-state
   race is fixed in the development build, with ten successful opening-video checks. The fix
-  has not been released yet.
+  has not been released yet. Other development playback and movie-shutdown faults remain
+  under investigation; the new launcher release is waiting for video stability.
 
 - **Yharnam:** the sky behind some gates can be black, with streaks, and some objects pop in.
   Being looked into.
