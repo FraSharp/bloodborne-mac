@@ -60,7 +60,7 @@ Release notes say what changed for players. The README's screenshots come from t
 
 ## Where things stand (2026-10-13)
 
-- Releases: v0.6.0 is prepared for publication, with the independent launcher and runtime fixes.
+- Releases: v0.6.0 is published, with the independent launcher and runtime fixes.
   The imported bbport compatibility level remains 0.51.
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
   Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
@@ -83,7 +83,7 @@ Release notes say what changed for players. The README's screenshots come from t
   portable, five translated), versus three faults in five alternating controls. The guard is
   on by default; capped gameplay CPU cost was about 0.5%, with no throughput loss in one uncapped
   pair. Released v0.5.1 still has the bug (2/5 faults in the exact-release comparison); the fix
-  is not released yet. Runtime `docs/STABILITY.md` has the evidence and assertion watch list.
+  is included in 0.6.0. Runtime `docs/STABILITY.md` has the evidence and assertion watch list.
 - Development opening-video visual issue: four of seven observed openings had one white flash;
   stuttering was also reported. All seven completed without faults/assertions. The cause is not
   established. A playback-clock data race is repaired and passes standalone ThreadSanitizer
@@ -128,7 +128,7 @@ Release notes say what changed for players. The README's screenshots come from t
   The development launcher also checks stable app releases on GitHub, shows a dismissible
   update banner and changelog modal with a release-page button, and provides automatic/manual
   checks in Advanced. Downloads remain manual.
-  These launcher features are included in the prepared 0.6.0 release.
+  These launcher features are included in the 0.6.0 release.
 - Wikis: all four repositories have wikis; keep them in step with their docs. Launcher player
   guides also have mirrors in the app docs and wiki.
 - The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.

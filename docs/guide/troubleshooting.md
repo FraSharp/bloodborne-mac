@@ -29,10 +29,11 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 ## Known issues
 
-- **Opening video in v0.5.1:** it can crash before character creation. An identified shared-state
-  race is fixed in the development build, with ten successful opening-video checks. The fix
-  has not been released yet. Other development playback and movie-shutdown faults remain
-  under investigation; the new launcher release is waiting for video stability.
+- **Opening video:** 0.6.0 includes repairs for the identified shared-state, clock and video
+  queue races. Seven accepted pre-release opening trials completed and were observed as
+  successful. Rare sampler/GPU assertions and movie shutdown faults seen in earlier development
+  runs remain on the watch list; the short checks do not prove they are eliminated. See
+  [Stability](https://github.com/bloodborne-native/bloodborne-runtime/wiki/Stability).
 
 - **Yharnam:** the sky behind some gates can be black, with streaks, and some objects pop in.
   Being looked into.
