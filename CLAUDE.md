@@ -110,7 +110,8 @@ Release notes say what changed for players. The README's screenshots come from t
   and returns on exit; Advanced can keep it visible for logs. Design: launcher's
   `docs/SAVE_MANAGER.md` and `docs/LAUNCHER_LIFECYCLE.md`.
   The development launcher also checks stable app releases on GitHub, shows a dismissible
-  update banner, and provides automatic/manual checks in Advanced. Downloads remain manual.
+  update banner and changelog modal with a release-page button, and provides automatic/manual
+  checks in Advanced. Downloads remain manual.
   v0.5.1 does not include these development-launcher features.
 - Wikis: all four repositories have wikis; keep them in step with their docs. Launcher player
   guides also have mirrors in the app docs and wiki.
