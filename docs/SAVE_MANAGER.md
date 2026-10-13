@@ -13,7 +13,7 @@ This counts completed stages, not estimated development time.
 | S0 | Profile ownership, first-profile setup, complete save sets, active selection, backup and restore | Implemented; SQLite, native tests and browser checks |
 | S1 | Read-only character preview: verified names, level, attributes, playtime and progression | Planned |
 | S2 | Import/export and backup history management | Planned |
-| S3 | Editor for verified fields, copied-save validation, runtime trophy capture and profile trophy view | Planned |
+| S3 | Editor for verified fields, copied-save validation, runtime trophy capture and profile trophy view | Trophy capture/view implemented; editor planned |
 
 ## Ownership and first setup
 
@@ -46,7 +46,7 @@ transaction. A test checks that the native migration list matches Drizzle's jour
 | `save_sets` | Required profile foreign key, unique profile and user directory |
 | `launcher_state` | One active-profile record and the original/shared-cache directory |
 | `backups` | Required save-set foreign key, published path, timestamp and size |
-| `trophy_unlocks` | Unique profile/title/trophy key and timestamp; collection is not implemented |
+| `trophy_unlocks` | Unique profile/title/trophy key and earliest Unix-second timestamp; runtime events imported |
 | `pending_operations` | File-operation journal with pending, complete, failed or interrupted status |
 
 The structure follows Leari: Drizzle schema and typed service reads, TanStack Query hooks and UI;
@@ -157,5 +157,5 @@ confirmed deletion and active/running-profile protection. They do not exercise t
 
 Profile cards show a Trophies row with an In development badge, without unlock counts or actions.
 Saves shows a Save editor row with the same badge, without an editing action.
-Character parsing, editing and actual trophy collection remain future work. Game-derived files
+Character parsing and editing remain future work. Local trophy collection is active on development main. Game-derived files
 and analysis are never committed. Tests never write the player's save or settings.

@@ -124,9 +124,14 @@ Release notes say what changed for players. The README's screenshots come from t
   id/timestamp details on Home, Profiles and Saves. Marked edited saves cannot record new
   trophies; earned history survives restores. Online restrictions for edited saves are undecided.
   A separate React/Tauri overlay helper prototype passed windowed/fullscreen visual checks
-  on this Mac. Runtime spawning, reliable SDL geometry and matched overhead gates remain
-  planned; the helper is opt-in and records no test trophies.
-  Trophy names/icons, previews and editing remain future work; Saves shows an editor
+  on this Mac. Runtime spawning and SDL geometry are now implemented. Notifications are optional under
+  Advanced → Launcher and remain off by default: one valid matched game pair lost 1.9 FPS
+  (44.7 to 42.8) and added 1.3 ms to p90. The public
+  catalog has 40 stable trophy IDs, verified names in 15 locales and original summaries in
+  English, pt-BR and fr, with English fallback. Bloodborne and The Old Hunters are separate;
+  local platinum requires only the 33 other base-game trophies. Grade cards use metallic cup
+  styling. No game trophy files, keys or artwork are extracted or shipped.
+  Character previews and editing remain future work; Saves shows an editor
   development badge. The launcher hides to the menu bar/tray during its game process by default
   and returns on exit; Advanced can keep it visible for logs. Design: launcher's
   `docs/SAVE_MANAGER.md` and `docs/LAUNCHER_LIFECYCLE.md`.
