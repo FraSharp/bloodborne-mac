@@ -91,8 +91,10 @@ Release notes say what changed for players. The README's screenshots come from t
   playback had looked perfect, with only 36 ms maximum periodic lag. There are three such
   shutdown panics. The fifth sampler assertion was already present at draw enqueue.
   An AV queue data race is repaired and has a normal-flow test that passes ThreadSanitizer;
-  the original queue reproduced a race. One repaired opening completed, but its visual report
-  is unavailable and broader video acceptance remains open. Strict GPU locking still flashed,
+  the original queue reproduced a race. Both repaired openings completed (2/2); the repeat was
+  reported as perfect playback and had clean audio-thread shutdown. The first was not observed.
+  Linux and macOS CI passed for the repair; broader video acceptance remains open.
+  Strict GPU locking still flashed,
   so the submission-lock default was not changed.
 - GPU assertion watch list: three `ExecuteCopyShaderHLE` assertions (one while loading, two
   during the video), one `Unknown data_format=6 and num_format=1`, and one
