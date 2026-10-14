@@ -73,6 +73,8 @@ Release notes say what changed for players. The README's screenshots come from t
   GPU-completion locking and copy hoisting off; none is a workaround. Runtime STABILITY records
   the runs, shared-memory access audit and opt-in diagnostics. No root cause or fix is claimed;
   N4 remains paused. Keep CPU notifications over coarse tick ranges separate from exact overlap.
+  The temporary public FaceGen-disable patch also failed to prevent reported corruption in a
+  copied-save comparison (control sample 385, disabled repeat 301); it is not a workaround.
 - bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
   nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
