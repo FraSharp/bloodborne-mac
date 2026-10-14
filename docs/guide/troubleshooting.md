@@ -49,3 +49,14 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 To reset the settings, quit the launcher and delete `bbport.ini` and `launcher.json` in
 `~/Library/Application Support/bloodborne_mac`. Your saves in `user/` are kept.
+
+## Stretched geometry after visiting several areas
+
+Stretched scenery (vertex explosion) and missing objects have been reported in Central Yharnam
+after area transitions, including the nearby house and areas loading more enemies. Restarting
+the game restores the scene, but the cause is still under investigation. Disabling the draw
+pipeline or copy hoisting, and using GPU-completion locking, did not prevent the reproduced
+problem. No permanent fix is available yet.
+
+Development evidence and diagnostic limits are recorded in the runtime
+[stability notes](https://github.com/bloodborne-native/bloodborne-runtime/wiki/Stability).

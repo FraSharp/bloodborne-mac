@@ -67,6 +67,12 @@ Release notes say what changed for players. The README's screenshots come from t
   (bloodborne-runtime CLAUDE.md, "Command buffers").
 - Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
   user's report, not investigated): bisect bbport's optimizations with the user watching.
+- Under investigation (2026-10-14): stretched scenery/vertex explosion and missing objects after
+  visiting several Central Yharnam areas, often entering/leaving the house or loading enemies.
+  Restarting restores the scene. Copied-save runs reproduced with the draw pipeline off,
+  GPU-completion locking and copy hoisting off; none is a workaround. Runtime STABILITY records
+  the runs, shared-memory access audit and opt-in diagnostics. No root cause or fix is claimed;
+  N4 remains paused. Keep CPU notifications over coarse tick ranges separate from exact overlap.
 - bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
   nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
