@@ -125,8 +125,8 @@ Release notes say what changed for players. The README's screenshots come from t
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
   and run for each. None appeared in the video-fix acceptance or gameplay batches; their cause
   has not been established.
-- The independent development launcher (`launcher/app/`, bloodborne-launcher) has Profiles and
-  Saves tabs backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
+- The independent development launcher (`launcher/app/`, bloodborne-launcher) has Profiles with
+  nested Saves/Backups and Trophies sections backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
   existing saves in place. Native transactions own writes and file-operation recovery; shader
   caches remain shared. Development main now records local trophy unlocks per profile and displays counts and
   id/timestamp details on Home, Profiles and Saves. Marked edited saves cannot record new

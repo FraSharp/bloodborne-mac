@@ -72,3 +72,7 @@ Without a controller, the keyboard can be used; its keys can be remapped on the 
 The launcher in 0.6.0 checks stable app releases on GitHub and shows a dismissible banner
 when a newer version is available. Advanced includes automatic checks and **Check now**;
 downloads and installation remain manual. See [Updates](updates.md).
+
+On development main, Saves is a profile detail section rather than a sidebar tab. Open
+Profiles and click a name for Saves · Backups, or the trophy icon/count for the full trophy
+list. Opening details does not change the active profile.

@@ -27,8 +27,7 @@ its own complete save set, which can contain multiple characters. Creating a pro
 change which one is active. Choose **Use profile**, or use the **Active profile** selector above Play.
 
 Renaming a profile changes its displayed name without moving its files. Stop the game before
-changing profiles or managing saves. Each profile shows a recorded trophy count. **Trophies**
-opens a modal with unlock dates. Tracking is local and starts with this runtime; previous save
+changing profiles or managing saves. Each profile shows a recorded trophy count. The trophy icon/count opens the profile’s Trophies page with locked entries and unlock dates. Tracking is local and starts with this runtime; previous save
 progression is not imported. Development main shows public trophy names, original requirement
 summaries and grade cups. The runtime awards local platinum after the other 33 base-game
 trophies are recorded.
@@ -51,7 +50,7 @@ and restart with the game stopped to retry. The deleted profile will not reappea
 
 ## Saves and backups
 
-The **Saves** tab shows the active profile's save size, modification time and backups. Character
+The **Profiles → profile name → Saves · Backups** section shows the active profile's save size, modification time and backups. Character
 names, stats and progression are not displayed yet.
 
 The active save set is backed up before every launch. **Back up** creates another recovery copy.
@@ -102,7 +101,7 @@ policy for edited saves has not been decided; this restriction applies to trophi
 
 ## Trophy details and notifications (development main)
 
-**Trophies** separates Bloodborne from The Old Hunters and shows names, grades, short
+The profile’s **Trophies** section separates Bloodborne from The Old Hunters and shows names, grades, short
 requirement summaries and recorded dates. The 33 non-platinum base-game trophies determine
 local platinum; DLC trophies do not. Names have verified public translations in 15 locales,
 with English fallback for missing translations. Summaries currently support English,
@@ -118,3 +117,9 @@ helper leaves earned history recorded. Local tracking does not synchronize with 
 On development main, **New profile** is in the top-right page header. Home and Profiles use
 one clickable trophy summary. Saves separates current data from the dated backup list;
 backup-directory access is under **Advanced → Data → Backups**.
+
+On development main, Saves is nested under Profiles. Click a profile name for its saves and
+backups, or the cup/count beside its name for its Trophies page. Opening a profile does not
+change the identity used by Play. The page has Saves · Backups and Trophies sections and a
+back button. Trophies lists both locked and locally unlocked entries, with unlock dates when
+recorded. Base game and DLC stay separate. Home’s Saves shortcut opens the active profile.
