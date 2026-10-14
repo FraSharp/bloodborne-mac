@@ -24,8 +24,7 @@ the other. Launcher startup options use `launcher.json`; profile ownership uses 
 | **Log** | The game's output while it runs |
 
 The Home frame-rate shortcut opens Graphics. The Game save-folder row shows the active
-profile's location; use Profiles to change the active identity. Saves keeps backup/restore
-and the backup-folder location. Low-level and experimental renderer options remain in Advanced.
+profile's location; use Profiles to change the active identity. Saves keeps backup/restore. Backup-folder access is under Advanced → Data. Low-level and experimental renderer options remain in Advanced.
 These tab changes are included in 0.6.0.
 
 ## The in-game menu
