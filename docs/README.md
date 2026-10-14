@@ -2,6 +2,12 @@
 
 [← Back to the project](../README.md)
 
+> [!IMPORTANT]
+> **Experimental project: expect bugs and regressions.** Our CPU recompiler and native renderer
+> development diverges from bbport and can reduce stability. Loading hangs, crashes and stretched
+> geometry are known risks. Read the [project notice](../README.md) before choosing a build.
+> For the dedicated macOS port of bbport, see [bmy/bbport-mac](https://github.com/bmy/bbport-mac).
+
 ## Playing
 
 1. [Installation](guide/installation.md): download, the first start, where your data lives.

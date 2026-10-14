@@ -9,6 +9,21 @@
   <sub>Built on <a href="https://github.com/deadinside28/bloodborne_pc"><strong>bbport</strong></a> by deadinside28, the native Linux port it started from, and on <a href="https://github.com/shadps4-emu/shadPS4">shadPS4</a>.</sub>
 </p>
 
+> [!IMPORTANT]
+> **This is an experimental project. Expect bugs and regressions.**
+>
+> We are developing our own CPU recompiler and native renderer, with many approaches and changes
+> that diverge from the original bbport. These experiments can make this project less stable than
+> other Bloodborne projects. Crashes, loading hangs and graphical corruption—including vertex
+> explosions after playing for a while—are known risks during development.
+>
+> **Our goal is to make Bloodborne run natively**, with native CPU execution and a shared renderer
+> for Vulkan and Metal. This is an independent development effort beyond porting bbport to macOS.
+>
+> For the dedicated macOS port of bbport, see **[bmy/bbport-mac](https://github.com/bmy/bbport-mac)**.
+> It is a separate project and also describes itself as experimental. Please report problems with
+> bloodborne-native [here](https://github.com/bloodborne-native/bloodborne-mac/issues).
+
 <p align="center">
   <a href="https://github.com/bloodborne-native/bloodborne-mac/releases/latest"><strong>Download</strong></a>
   ·
@@ -74,8 +89,10 @@ Opening-video state, clock and queue races are repaired; deferred clears and the
 SRT walker are enabled by default. See [Release notes](docs/releases/v0.6.0.md) for checks,
 credits and remaining known issues.
 
-**Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in; a
-few more in [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
+**Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in.
+Stretched geometry (vertex explosion) after area transitions is also under investigation;
+restarting restores the scene. See [Troubleshooting](docs/guide/troubleshooting.md#known-issues)
+and the [geometry investigation](docs/guide/troubleshooting.md#stretched-geometry-after-visiting-several-areas).
 
 ## Documentation
 
