@@ -65,6 +65,13 @@ Release notes say what changed for players. The README's screenshots come from t
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
   Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
   (bloodborne-runtime CLAUDE.md, "Command buffers").
+- Next priority (2026-10-18): GPU device loss with character motion vectors (object motion) on.
+  MoltenVK reports `kIOGPUCommandBufferCallbackErrorInvalidResource` as
+  `VK_ERROR_OUT_OF_DEVICE_MEMORY`, then `GpuSignalLoop`/`vk_semaphore.cpp:42` assertions. Seen
+  in a boss fight with no setting change (motion on, 31 FPS, 1.6 GB Vulkan memory) and on
+  2026-10-15; FSR toggling with motion on is a known trigger. The maintainer wants it fixed:
+  motion vectors make the image much better for little frame-rate cost. First step: reproduce
+  with Metal API validation to name the invalid resource.
 - Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
   user's report, not investigated): bisect bbport's optimizations with the user watching.
 - Fixed (2026-10-18, released in 0.7.0): stretched scenery/vertex explosion and missing walls

@@ -88,7 +88,9 @@ after playing for a while are fixed: MoltenVK misread game data stored past 4 GB
 view of the game's memory. The launcher records trophies per profile, with an optional
 in-game notification. See [Release notes](docs/releases/v0.7.0.md) for details and checks.
 
-**Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in.
+**Known issues:** the game can crash with character motion vectors on (a GPU "Invalid
+Resource" error); turn them off if it does. In Yharnam the sky behind some gates can be black,
+with objects popping in.
 See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
