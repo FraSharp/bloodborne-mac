@@ -74,9 +74,9 @@ Release notes say what changed for players. The README's screenshots come from t
   2026-10-15; FSR toggling with motion on is a known trigger. The maintainer wants it fixed:
   motion vectors make the image much better for little frame-rate cost. First step: reproduce
   with Metal API validation to name the invalid resource.
-- Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
-  user's report, not investigated): bisect bbport's optimizations with the user watching.
-- Fixed (2026-10-18, released in 0.7.0): stretched scenery/vertex explosion and missing walls
+- Fixed (2026-10-18, released in 0.7.0): stretched scenery/vertex explosion, missing walls, and
+  the Yharnam black sky with streaks and objects popping in (the maintainer confirmed these went
+  with the same fix)
   after visiting several areas. MoltenVK drew data from past 4 GiB in the imported 6,080 MiB
   guest pool wrongly; bindings from 3 GiB use a second import of the pool's upper part
   (runtime `BufferCache::pool_upper`, `BB_POOL_SPLIT=0`: off). Found with a bbport-mac branch

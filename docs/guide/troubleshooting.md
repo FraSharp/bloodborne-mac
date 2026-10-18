@@ -35,8 +35,6 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
   runs remain on the watch list; the short checks do not prove they are eliminated. See
   [Stability](https://github.com/bloodborne-native/bloodborne-runtime/wiki/Stability).
 
-- **Yharnam:** the sky behind some gates can be black, with streaks, and some objects pop in.
-  Being looked into.
 - **GPU crash with character motion vectors on.** The game can stop with "Lost VkDevice ...
   Invalid Resource" (reported as `VK_ERROR_OUT_OF_DEVICE_MEMORY`, but memory is not the
   problem). It happened during a boss fight without changing any setting, and switching FSR
@@ -56,8 +54,9 @@ To reset the settings, quit the launcher and delete `bbport.ini` and `launcher.j
 
 ## Stretched geometry after visiting several areas
 
-Fixed in 0.7.0. Before it, stretched scenery (vertex explosion) and missing walls or objects
-appeared after visiting a few areas, until the game was restarted. MoltenVK drew game data
+Fixed in 0.7.0. Before it, stretched scenery (vertex explosion), missing walls or objects,
+objects popping in and a black sky with streaks behind some Yharnam gates appeared after
+visiting a few areas, until the game was restarted. MoltenVK drew game data
 stored past 4 GB in the GPU's view of the game's memory wrongly; that part of memory is now
 given to the GPU as a separate buffer. If you still see it on 0.7.0 or later, please report
 it with the area and what you did before. `BB_POOL_SPLIT=0` (Advanced → extra environment

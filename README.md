@@ -83,14 +83,13 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.7.0:** the stretched geometry (vertex explosions) and missing walls that appeared
-after playing for a while are fixed: MoltenVK misread game data stored past 4 GB in the GPU's
+**New in 0.7.0:** the stretched geometry (vertex explosions), missing walls, black sky and
+objects popping in that appeared after playing for a while are fixed: MoltenVK misread game data stored past 4 GB in the GPU's
 view of the game's memory. The launcher records trophies per profile, with an optional
 in-game notification. See [Release notes](docs/releases/v0.7.0.md) for details and checks.
 
 **Known issues:** the game can crash with character motion vectors on (a GPU "Invalid
-Resource" error); turn them off if it does. In Yharnam the sky behind some gates can be black,
-with objects popping in.
+Resource" error); turn them off if it does.
 See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
