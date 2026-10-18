@@ -60,21 +60,20 @@ Release notes say what changed for players. The README's screenshots come from t
 
 ## Where things stand (2026-10-13)
 
-- Releases: v0.6.0 is published, with the independent launcher and runtime fixes.
+- Releases: v0.7.0 (the stretched-geometry fix and local trophies) follows v0.6.0.
   The imported bbport compatibility level remains 0.51.
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
   Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
   (bloodborne-runtime CLAUDE.md, "Command buffers").
 - Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
   user's report, not investigated): bisect bbport's optimizations with the user watching.
-- Under investigation (2026-10-14): stretched scenery/vertex explosion and missing objects after
-  visiting several Central Yharnam areas, often entering/leaving the house or loading enemies.
-  Restarting restores the scene. Copied-save runs reproduced with the draw pipeline off,
-  GPU-completion locking and copy hoisting off; none is a workaround. Runtime STABILITY records
-  the runs, shared-memory access audit and opt-in diagnostics. No root cause or fix is claimed;
-  N4 remains paused. Keep CPU notifications over coarse tick ranges separate from exact overlap.
-  The temporary public FaceGen-disable patch also failed to prevent reported corruption in a
-  copied-save comparison (control sample 385, disabled repeat 301); it is not a workaround.
+- Fixed (2026-10-18, released in 0.7.0): stretched scenery/vertex explosion and missing walls
+  after visiting several areas. MoltenVK drew data from past 4 GiB in the imported 6,080 MiB
+  guest pool wrongly; bindings from 3 GiB use a second import of the pool's upper part
+  (runtime `BufferCache::pool_upper`, `BB_POOL_SPLIT=0`: off). Found with a bbport-mac branch
+  on the same memory model (KosmicKrisp clean, MoltenVK stretched) and draw fingerprints at
+  Iosefka's Clinic (data intact, broken draws reading past 4 GiB). Runtime STABILITY has the
+  evidence; the earlier FaceGen/synchronization/draw-trace notes there are history.
 - bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
   nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the

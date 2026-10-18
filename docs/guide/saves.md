@@ -2,8 +2,7 @@
 
 [← Documentation](../README.md)
 
-Profile and save management is included in 0.6.0. Local trophy tracking is on development
-main after that release; 0.6.0 still shows the trophy development badge.
+Profile and save management is included since 0.6.0, and local trophy tracking since 0.7.0.
 
 ## Your first profile
 
@@ -99,7 +98,7 @@ restoring a clean pre-edit backup restores its own eligibility. The editor remai
 will warn before applying edits. External edits are not automatically detected. Online access
 policy for edited saves has not been decided; this restriction applies to trophies only.
 
-## Trophy details and notifications (development main)
+## Trophy details and notifications
 
 The profile’s **Trophies** section separates Bloodborne from The Old Hunters and shows names, grades, short
 requirement summaries and recorded dates. The 33 non-platinum base-game trophies determine
@@ -114,11 +113,11 @@ All four grades use one cup emblem with different metallic finishes; platinum st
 for seven seconds, other grades for five. Notifications hide when the game loses focus or is minimized. An unavailable
 helper leaves earned history recorded. Local tracking does not synchronize with PSN.
 
-On development main, **New profile** is in the top-right page header. Home and Profiles use
+**New profile** is in the top-right page header. Home and Profiles use
 one clickable trophy summary. Saves separates current data from the dated backup list;
 backup-directory access is under **Advanced → Data → Backups**.
 
-On development main, Saves is nested under Profiles. Click a profile name for its saves and
+Saves is nested under Profiles. Click a profile name for its saves and
 backups, or the cup/count beside its name for its Trophies page. Opening a profile does not
 change the identity used by Play. The page has Saves · Backups and Trophies sections and a
 back button. Trophies lists both locked and locally unlocked entries, with unlock dates when

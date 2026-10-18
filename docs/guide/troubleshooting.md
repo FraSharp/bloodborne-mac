@@ -29,7 +29,7 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
 
 ## Known issues
 
-- **Opening video:** 0.6.0 includes repairs for the identified shared-state, clock and video
+- **Opening video:** 0.6.0 and later include repairs for the identified shared-state, clock and video
   queue races. Seven accepted pre-release opening trials completed and were observed as
   successful. Rare sampler/GPU assertions and movie shutdown faults seen in earlier development
   runs remain on the watch list; the short checks do not prove they are eliminated. See
@@ -52,12 +52,12 @@ To reset the settings, quit the launcher and delete `bbport.ini` and `launcher.j
 
 ## Stretched geometry after visiting several areas
 
-Stretched scenery (vertex explosion) and missing objects have been reported in Central Yharnam
-after area transitions, including the nearby house and areas loading more enemies. Restarting
-the game restores the scene, but the cause is still under investigation. Disabling the draw
-pipeline or copy hoisting, and using GPU-completion locking, did not prevent the reproduced
-problem. A temporary FaceGen-disable patch also did not prevent the reported corruption
-in an isolated comparison. No permanent fix is available yet.
+Fixed in 0.7.0. Before it, stretched scenery (vertex explosion) and missing walls or objects
+appeared after visiting a few areas, until the game was restarted. MoltenVK drew game data
+stored past 4 GB in the GPU's view of the game's memory wrongly; that part of memory is now
+given to the GPU as a separate buffer. If you still see it on 0.7.0 or later, please report
+it with the area and what you did before. `BB_POOL_SPLIT=0` (Advanced → extra environment
+variables) turns the fix off, for comparisons only.
 
-Development evidence and diagnostic limits are recorded in the runtime
+The investigation is recorded in the runtime
 [stability notes](https://github.com/bloodborne-native/bloodborne-runtime/wiki/Stability).

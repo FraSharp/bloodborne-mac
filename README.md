@@ -14,8 +14,8 @@
 >
 > We are developing our own CPU recompiler and native renderer, with many approaches and changes
 > that diverge from the original bbport. These experiments can make this project less stable than
-> other Bloodborne projects. Crashes, loading hangs and graphical corruption—including vertex
-> explosions after playing for a while—are known risks during development.
+> other Bloodborne projects. Crashes, loading hangs and graphical corruption are known risks
+> during development.
 >
 > **Our goal is to make Bloodborne run natively**, with native CPU execution and a shared renderer
 > for Vulkan and Metal. This is an independent development effort beyond porting bbport to macOS.
@@ -83,16 +83,13 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.6.0:** the independent launcher has first-profile setup, save backup/restore,
-confirmed profile deletion, a menu-bar mode and release notifications with a changelog modal.
-Opening-video state, clock and queue races are repaired; deferred clears and the native arm64
-SRT walker are enabled by default. See [Release notes](docs/releases/v0.6.0.md) for checks,
-credits and remaining known issues.
+**New in 0.7.0:** the stretched geometry (vertex explosions) and missing walls that appeared
+after playing for a while are fixed: MoltenVK misread game data stored past 4 GB in the GPU's
+view of the game's memory. The launcher records trophies per profile, with an optional
+in-game notification. See [Release notes](docs/releases/v0.7.0.md) for details and checks.
 
 **Known issues:** in Yharnam the sky behind some gates can be black, with objects popping in.
-Stretched geometry (vertex explosion) after area transitions is also under investigation;
-restarting restores the scene. See [Troubleshooting](docs/guide/troubleshooting.md#known-issues)
-and the [geometry investigation](docs/guide/troubleshooting.md#stretched-geometry-after-visiting-several-areas).
+See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
 
