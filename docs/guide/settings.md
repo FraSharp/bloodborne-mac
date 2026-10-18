@@ -72,8 +72,8 @@ The launcher checks stable app releases on GitHub and shows a dismissible banner
 when a newer version is available. Advanced includes automatic checks and **Check now**;
 downloads and installation remain manual. See [Updates](updates.md).
 
-**Advanced → Launcher → Trophy notifications** enables the macOS trophy overlay. It defaults
-off while overhead checks remain open.
+**Advanced → Launcher → Trophy notifications** shows the macOS trophy overlay. It is on by
+default; turning it off saves about 2 FPS (one measured pair).
 
 Since 0.7.0, Saves is a profile detail section rather than a sidebar tab. Open
 Profiles and click a name for Saves · Backups, or the trophy icon/count for the full trophy
