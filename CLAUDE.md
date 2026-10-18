@@ -12,7 +12,7 @@ Clone with `--recursive`.
   `~/Library/Application Support/bloodborne_mac/` (the app's names stay `bloodborne_mac` so
   players' saves and settings never move).
 - `packaging/macos.sh`: `Bloodborne.app` and its DMG in `dist/`, from `runtime/`'s build.
-- `.github/workflows/macos.yml`: builds and packages on every push; a `v*` tag publishes a release.
+- `.github/workflows/macos.yml`: a `v*` tag builds and publishes a release; manual runs build a test package.
 - `docs/guide/`: player guides; `docs/screenshots/` (README pictures).
 
 ## Build
@@ -35,7 +35,9 @@ so GitHub release notifications compare against the installed app correctly.
    `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
 2. Run copied-save gameplay (`runtime/tools/test_run.sh`) and the isolated new-save opening
    (`runtime/tools/test_opening_video.sh`) from this build, and the user approves.
-3. Commit, `git tag -a vX.Y.Z -m "..."`, push `main` and the tag; the workflow builds the DMG and
+3. Commit and push `main`, run the workflow on it (`gh workflow run macos.yml --ref main`;
+   pushes do not build) and check that it passes.
+4. `git tag -a vX.Y.Z -m "..."` and push the tag; the workflow builds the DMG and
    publishes the release. Check the run (`gh run list`) and the release's asset.
 
 Release notes say what changed for players. The README's screenshots come from the game

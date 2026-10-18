@@ -1,14 +1,14 @@
 # Builds the game (the runtime/ submodule, bloodborne-runtime, with bloodborne-recomp inside it) for
 # Apple Silicon and packages it with the launcher as Bloodborne.app in a DMG (packaging/macos.sh).
-# Every push to main and every pull request: the package as a workflow artifact.
 # A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package.
+# A manual run (Actions → macOS → Run workflow, or gh workflow run macos.yml): the package as a
+# workflow artifact, e.g. a test build or a check of main before tagging. Pushes do not build:
+# the runtime and launcher have their own CI, and most pushes here are docs or pointer bumps.
 name: macOS
 
 on:
   push:
-    branches: [main]
     tags: ['v*']
-  pull_request:
   workflow_dispatch:
 
 permissions:
