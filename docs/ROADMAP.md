@@ -6,7 +6,11 @@ What we plan to implement next, in order. Ticked items say where they landed. So
 0.6 ([deadinside28/bloodborne_pc](https://github.com/deadinside28/bloodborne_pc) `8185b88`,
 reviewed 2026-10-19) and the Windows fork
 ([Supermedo/bloodborne_pc](https://github.com/Supermedo/bloodborne_pc) `de2e38a` 1.9.2, reviewed
-2026-10-19 from `e5d04e2`). Code taken from them is credited in the same commit (CREDITS, the
+2026-10-19 from `e5d04e2`), and the macOS fork
+([Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
+`308992e` / `metal-native` `ff830e6`, reviewed 2026-10-19). **Performance changes from any of them
+are adopted only after an A/B on our own build** (same backup, route and settings, alternating
+runs); their numbers come from other machines and architectures. Code taken from them is credited in the same commit (CREDITS, the
 wiki, the commit message, a code comment) and recorded in the runtime's
 `docs/upstream/RENDERER_PORTS.md`.
 
@@ -30,9 +34,20 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 
 ## 2. GPU crash with character motion vectors
 
-- [ ] Reproduce at the boss fight with Metal API validation and enhanced command-buffer errors
-  to name the invalid resource.
-- [ ] Fix; turn motion vectors back on in the recommendation. The image gets much better for a
+- [x] Reproduced with Metal API validation from the pre-boss backup: Metal names objects
+  "destroyed while still required to be alive by the command buffer" (a 64 MiB detiler staging
+  buffer, texture-cache images and views).
+- [ ] **Residency set fix** (built, not committed): objects removed from the queue's residency
+  set are retained until the GPU completes the submission open at their removal; every command
+  buffer in flight still counts them as resident. Verified: the staging buffer and images are no
+  longer destroyed early and the run did not crash at the point that crashed four times.
+- [ ] **Texture-cache deletions one submission later** (image views): the draw pipeline's stage
+  B can record draws prepared before a deletion into the next submission (40 early view destroys
+  in a load with the pipeline on, 0 off or with the later deletion).
+- [ ] A run without validation, with a count of objects waiting for release: one validation run
+  dropped to 3 FPS after 4.5 minutes (validation's own cost, the retained objects, or Metal's
+  memory limit: see section 6, texture budget).
+- [ ] Turn motion vectors back on in the recommendation. The image gets much better for a
   small frame-rate cost.
 
 ## 3. Online (bbport 0.6's module)
@@ -70,14 +85,31 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [ ] **Aspect ratios** 21:9 and 32:9 through hooks (bbport 0.6; the fork's PR #70).
 - [ ] **Field of view; mute in the background** (fork `b75e811`).
 
-## 6. Visual bugs (older, reported 2026-10-19)
+## 6. From the Wooloomooloo2 macOS fork (each measured on our build first)
+
+- [ ] **MoltenVK without Metal argument buffers** (`MVK_CONFIG_USE_METAL_ARGUMENT_BUFFERS=0`):
+  +13–16% FPS there. A/B uncapped and capped.
+- [ ] **MoltenVK prefilled command buffers** (`MVK_CONFIG_PREFILL_METAL_COMMAND_BUFFERS=2`):
+  about 6× fewer late frames there. A/B frame pacing (p90, late frames); check MetalFX and FSR.
+- [ ] **DingDong order:** queue the game's compute work before waiting for the previous
+  submission (black loading screen there). Correctness: loads with the copied save.
+- [ ] **Texture budget without the game's memory pool** (their #19): our collector counts the
+  6 GB pool as texture use and never evicts. Check Metal's working-set limit on 16–18 GB Macs.
+- [ ] **Draw-list task lock** (stuck loading screen): check whether our command-buffer guard
+  covers the render thread's draw-list task as a whole.
+- [ ] **Character-name entry in fullscreen** (IME text box, Noel Miller): check ours first.
+- [ ] Reference for the native renderer (R5): their Metal renderer's untracked buffers, pipeline
+  archive, MetalFX/FSR on Metal. Ideas and measurements, not a merge (ours stays multiplatform).
+- [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
+
+## 7. Visual bugs (older, reported 2026-10-19)
 
 - [ ] **Blood decals** on floors and walls are drawn as pale speckles with bright rims instead of
   dark red pools.
 - [ ] **An enemy's body drawn as colour noise** (a dog, after it attacked the player): probably
   the same blood/wet effect on characters.
 
-## 7. Launcher and tooling
+## 8. Launcher and tooling
 
 - [ ] **Keep test progress between test runs** (`test_run.sh`): an option to reuse the scratch
   save copy instead of copying the player's save again.
