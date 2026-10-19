@@ -88,8 +88,8 @@ objects popping in that appeared after playing for a while are fixed: MoltenVK m
 view of the game's memory. The launcher records trophies per profile, with an optional
 in-game notification. See [Release notes](docs/releases/v0.7.0.md) for details and checks.
 
-**Known issues:** the game can crash with character motion vectors on (a GPU "Invalid
-Resource" error); turn them off if it does.
+**Known issues:** in 0.7.0 the game can crash with character motion vectors on (a GPU "Invalid
+Resource" error); turn them off if it does. Fixed on development main for the next release.
 See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation

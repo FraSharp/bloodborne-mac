@@ -39,8 +39,9 @@ Please do not report problems with this port to shadPS4 or to the upstream proje
   Invalid Resource" (reported as `VK_ERROR_OUT_OF_DEVICE_MEMORY`, but memory is not the
   problem). It happened during a boss fight without changing any setting, and switching FSR
   on and off while motion vectors are on also triggers it. Motion vectors make the image much
-  sharper for a small frame-rate cost, so fixing this is a priority; until then, turn them off
-  (Graphics → motion vectors) if the game crashes.
+  sharper for a small frame-rate cost. Fixed on development main (2026-10-19: GPU objects were
+  freed while the GPU could still use them) and coming in the next release; until then, turn
+  them off (Graphics → motion vectors) if the game crashes.
 - Two of the game's pipelines fail to compile in MoltenVK; their draws are skipped.
 - *The Old Hunters*: the Game of the Year editions include it. Since 0.5, add-on packages can be
   loaded from `user/addcont/` (as in bbport); this is not tested on macOS yet.

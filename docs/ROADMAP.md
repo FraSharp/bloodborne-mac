@@ -37,18 +37,16 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [x] Reproduced with Metal API validation from the pre-boss backup: Metal names objects
   "destroyed while still required to be alive by the command buffer" (a 64 MiB detiler staging
   buffer, texture-cache images and views).
-- [ ] **Residency set fix** (built, not committed): objects removed from the queue's residency
-  set are retained until the GPU completes the submission open at their removal; every command
-  buffer in flight still counts them as resident. Verified: the staging buffer and images are no
-  longer destroyed early and the run did not crash at the point that crashed four times.
-- [ ] **Texture-cache deletions one submission later** (image views): the draw pipeline's stage
-  B can record draws prepared before a deletion into the next submission (40 early view destroys
-  in a load with the pipeline on, 0 off or with the later deletion).
-- [ ] A run without validation, with a count of objects waiting for release: one validation run
-  dropped to 3 FPS after 4.5 minutes (validation's own cost, the retained objects, or Metal's
-  memory limit: see section 6, texture budget).
-- [ ] Turn motion vectors back on in the recommendation. The image gets much better for a
-  small frame-rate cost.
+- [x] **Fixed** in runtime `57fba4f` (2026-10-19): removed residency-set objects retained until
+  the submission open at their removal completes; texture-cache deletions one submission later
+  (draw pipeline); large staging buffers kept (MoltenVK's argument buffers referenced a trimmed
+  one; turning argument buffers off cost ~85% FPS). The pre-boss backup's boss was won; a
+  20-minute launcher session had no crash at 50–65 FPS.
+- [ ] Frame-rate A/B of the three changes (expected nil).
+- [ ] Next release: notes, and motion vectors recommended again (the image gets much better for
+  a small frame-rate cost).
+- [ ] In-game menu values out of sync with the actual settings (reported 2026-10-19; which
+  values to be confirmed).
 
 ## 3. Online (bbport 0.6's module)
 
@@ -105,7 +103,8 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 ## 7. Visual bugs (older, reported 2026-10-19)
 
 - [ ] **Blood decals** on floors and walls are drawn as pale speckles with bright rims instead of
-  dark red pools.
+  dark red pools. Also the stains the game restores from the save on reload: the problem is in
+  drawing the stains (texture or blend), not in the hit effect.
 - [ ] **An enemy's body drawn as colour noise** (a dog, after it attacked the player): probably
   the same blood/wet effect on characters.
 

@@ -68,13 +68,14 @@ Release notes say what changed for players. The README's screenshots come from t
 - Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
   Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
   (bloodborne-runtime CLAUDE.md, "Command buffers").
-- Next priority (2026-10-18): GPU device loss with character motion vectors (object motion) on.
-  MoltenVK reports `kIOGPUCommandBufferCallbackErrorInvalidResource` as
-  `VK_ERROR_OUT_OF_DEVICE_MEMORY`, then `GpuSignalLoop`/`vk_semaphore.cpp:42` assertions. Seen
-  in a boss fight with no setting change (motion on, 31 FPS, 1.6 GB Vulkan memory) and on
-  2026-10-15; FSR toggling with motion on is a known trigger. The maintainer wants it fixed:
-  motion vectors make the image much better for little frame-rate cost. First step: reproduce
-  with Metal API validation to name the invalid resource.
+- Fixed on main, not released (2026-10-19, runtime `57fba4f`): the GPU device loss with character
+  motion vectors ("Invalid Resource", reported as `VK_ERROR_OUT_OF_DEVICE_MEMORY`). Three Metal
+  object-lifetime bugs: residency-set removals freed under in-flight command buffers, texture
+  deletions before the draw pipeline's prepared draws were recorded, large staging buffers freed
+  while MoltenVK's argument buffers referenced them. Found with Metal API validation from a
+  pre-boss backup (`SAVE_FROM`); runtime STABILITY and CLAUDE.md have the method. Argument
+  buffers off costs ~85% FPS on our build: do not adopt it. The maintainer wants more before a
+  release; the 0.7.0 known issue stays until then.
 - Fixed (2026-10-18, released in 0.7.0): stretched scenery/vertex explosion, missing walls, and
   the Yharnam black sky with streaks and objects popping in (the maintainer confirmed these went
   with the same fix)
