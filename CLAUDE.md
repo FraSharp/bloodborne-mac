@@ -14,6 +14,7 @@ Clone with `--recursive`.
 - `packaging/macos.sh`: `Bloodborne.app` and its DMG in `dist/`, from `runtime/`'s build.
 - `.github/workflows/macos.yml`: a `v*` tag builds and publishes a release; manual runs build a test package.
 - `docs/guide/`: player guides; `docs/screenshots/` (README pictures).
+- `docs/ROADMAP.md`: the plan as a checklist; tick items (with where they landed) as work lands.
 
 ## Build
 
