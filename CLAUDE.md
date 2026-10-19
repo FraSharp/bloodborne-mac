@@ -7,7 +7,7 @@ Clone with `--recursive`.
 
 ## Layout
 
-- `launcher/app/`: the bloodborne-launcher submodule (Tauri: React + Rust,
+- `launcher/`: the bloodborne-launcher submodule (Tauri: React + Rust,
   `src-tauri/src/main.rs`); its own README has the stack and conventions. 20 languages; settings in `bbport.ini` and `launcher.json` in
   `~/Library/Application Support/bloodborne_mac/` (the app's names stay `bloodborne_mac` so
   players' saves and settings never move).
@@ -20,7 +20,7 @@ Clone with `--recursive`.
 ```sh
 bash runtime/build.sh            # the game (runtime/deps/ the first time: ~1 h)
 bash packaging/macos.sh          # the app and the DMG
-cd launcher/app && npm run tauri dev   # the launcher against runtime/ (npm run dev: browser preview)
+cd launcher && npm run tauri dev   # the launcher against runtime/ (npm run dev: browser preview)
 ```
 
 ## Releases
@@ -31,7 +31,7 @@ versions may be chosen for our own compatibility changes or substantial product 
 the maintainer chooses the release number. The app and bundled launcher version stay aligned
 so GitHub release notifications compare against the installed app correctly.
 
-1. Bump the version in `launcher/app/package.json`, `package-lock.json` (two places),
+1. Bump the version in `launcher/package.json`, `package-lock.json` (two places),
    `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
 2. Run copied-save gameplay (`runtime/tools/test_run.sh`) and the isolated new-save opening
    (`runtime/tools/test_opening_video.sh`) from this build, and the user approves.
@@ -133,7 +133,7 @@ Release notes say what changed for players. The README's screenshots come from t
   `Unknown data_format=15 and num_format=4`. Runtime `docs/STABILITY.md` lists the build/mode
   and run for each. None appeared in the video-fix acceptance or gameplay batches; their cause
   has not been established.
-- The independent development launcher (`launcher/app/`, bloodborne-launcher) has Profiles with
+- The independent development launcher (`launcher/`, bloodborne-launcher) has Profiles with
   nested Saves/Backups and Trophies sections backed by SQLite, Drizzle and the Tauri SQL plugin. First-profile setup adopts
   existing saves in place. Native transactions own writes and file-operation recovery; shader
   caches remain shared. Development main now records local trophy unlocks per profile and displays counts and
@@ -169,7 +169,7 @@ Release notes say what changed for players. The README's screenshots come from t
   that owns the file, push it, then bump the submodule pointer in the parent (runtime → recomp,
   mac → runtime) and push that too. Submodules are checked out at a commit (detached HEAD):
   before editing inside `runtime/` or `runtime/recomp/`, run `git checkout main` (and
-  `git pull`) there. The app also includes `launcher/app/` =
+  `git pull`) there. The app also includes `launcher/` =
   [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher); commit/push
   launcher changes there, then bump its pointer in this app. Separate clones work the same way.
 - **Before any push, check `git remote get-url origin`** (a clone once still pointed at a local

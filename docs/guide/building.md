@@ -29,8 +29,8 @@ To run the game without the app: `BB_GAME_DIR=/path/to/your/game bash runtime/ru
 [building guide](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/guide/building.md)
 lists the environment variables and developer tools).
 
-The launcher lives in [`launcher/app`](../../launcher/app). Its
-[README](../../launcher/app/README.md) covers development (`npm run dev` previews it in a browser
+The launcher lives in [`launcher/`](../../launcher). Its
+[README](../../launcher/README.md) covers development (`npm run dev` previews it in a browser
 with sample data; `npm run tauri dev` runs it against `runtime/`) and its code conventions.
 
 Releases are built by GitHub Actions (`.github/workflows/macos.yml`): pushing a `v*` tag builds the

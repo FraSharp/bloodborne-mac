@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # macOS: packages the current build (bash runtime/build.sh first) as Bloodborne.app in
 # dist/bloodborne_mac-<version>-<arch>.dmg. No game files are included. The app needs nothing
-# installed: the Tauri launcher (launcher/app, built here with npm and cargo) carries the game,
+# installed: the Tauri launcher (launcher/, built here with npm and cargo) carries the game,
 # bash, Python and the libraries.
 #   Contents/MacOS/             bloodborne-launcher, bb-probe, bb-gpu-capabilities, bash
 #   Contents/Frameworks/        libbbgpu, MoltenVK, Vulkan loader, SDL3, FFmpeg
@@ -52,13 +52,13 @@ frameworks=$app/Contents/Frameworks
 game=$app/Contents/Resources/game
 
 # The launcher (Tauri: React interface, Rust backend), the bundle the rest goes into.
-(cd launcher/app && { [[ -d node_modules ]] || npm ci; } && npx tauri build --bundles app)
-(cd launcher/app/src-tauri && cargo build --release --bin bloodborne-overlay --features tauri/custom-protocol)
-cp -R launcher/app/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
+(cd launcher && { [[ -d node_modules ]] || npm ci; } && npx tauri build --bundles app)
+(cd launcher/src-tauri && cargo build --release --bin bloodborne-overlay --features tauri/custom-protocol)
+cp -R launcher/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
 plutil -replace CFBundleShortVersionString -string "$short_version" "$app/Contents/Info.plist"
 plutil -replace CFBundleVersion -string "$version" "$app/Contents/Info.plist"
 mkdir -p "$frameworks" "$game/share/vulkan/icd.d"
-install -m755 launcher/app/src-tauri/target/release/bloodborne-overlay "$macos/"
+install -m755 launcher/src-tauri/target/release/bloodborne-overlay "$macos/"
 install -m755 "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$deps/app-runtime/bin/bash" "$macos/"
 install -m755 "$gpudir/libbbgpu.dylib" "$frameworks/"
 copy_deps() { # copy_deps FILE: the non-system libraries FILE links against, recursively

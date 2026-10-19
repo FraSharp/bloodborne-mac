@@ -7,7 +7,7 @@ The project has four repositories:
 - **The app** (this repository): macOS packaging, releases and player guides. It puts the
   launcher and runtime into `Bloodborne.app` with its own bash, Python and libraries.
 - **The launcher** ([bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher),
-  in `launcher/app/`): Tauri and React; settings, saves, mods and patches, and starting the game.
+  in `launcher/`): Tauri and React; settings, saves, mods and patches, and starting the game.
   It is an independent submodule. macOS integration works today; Windows and Linux are planned.
 - **The runtime** ([bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime), in
   `runtime/`): loads the game's executable, provides the PS4 system libraries it calls, and draws

@@ -35,7 +35,7 @@ patches.json
 .DS_Store
 
 # The launcher's app icons (tracked despite *.png above)
-!launcher/app/src-tauri/icons/*.png
+!launcher/src-tauri/icons/*.png
 # README screenshots
 !docs/screenshots/*.png
 
