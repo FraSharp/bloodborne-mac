@@ -12,18 +12,21 @@ wiki, the commit message, a code comment) and recorded in the runtime's
 
 ## 1. Small fixes (runtime)
 
-- [ ] **Thread records below 40 bits** (bbport 0.6). The game packs thread handles into 40-bit
-  fields; ours come from `calloc` (about `0x6000_0000_0000` on macOS), so the game's lock never
-  matches its owner: a possible hang at lamp travel.
-- [ ] **Blur-kernel assertion `0xa0020007`** logged and ignored at its two known sites (bbport 0.6).
-- [ ] **Larger GX per-frame command heap** patch, against the crash at `0x2199310` (bbport 0.6).
-- [ ] **A stale texture format** no longer stops the game (fork `3e3b760`, parsifal295): our
+Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
+
+- [x] ~~Thread records below 40 bits~~ (bbport 0.6): already handled here, the runtime's
+  allocations come from its own heap below 1 TiB (`runtime_heap.h`).
+- [x] **Blur-kernel assertion `0xa0020007`** logged and ignored at its two known sites (bbport 0.6).
+- [x] **Larger GX per-frame command heap** patch, against the crash at `0x2199310` (bbport 0.6);
+  on by default, `BB_GX_HEAP=0` turns it off.
+- [x] **A stale texture format** no longer stops the game (fork `3e3b760`, parsifal295): also our
   watch-list assertions `data_format=6/num_format=1` and `15/4`.
-- [ ] **A garbage PM4 header** drops the rest of that command buffer instead of aborting (fork
+- [x] **A garbage PM4 header** drops the rest of that command buffer instead of aborting (fork
   `c07f0ff`).
-- [ ] **A null vertex-buffer table** skips the draw (fork `2c4ddeb`; bbport 0.6 "crash 139").
-- [ ] **A flip IRQ ahead of its label** waits briefly instead of stopping (fork `76f5b5f`, from Awaken).
-- [ ] Copied-save run with lamp travel; release notes.
+- [x] **A null vertex-buffer table** skips the draw (fork `2c4ddeb`; bbport 0.6 "crash 139").
+- [x] **A flip IRQ ahead of its label** waits briefly instead of stopping (fork `76f5b5f`, from Awaken).
+- [x] Two copied-save playtests with lamp travel and fights: no fault, none of the fallbacks fired.
+- [ ] Release notes (next release).
 
 ## 2. GPU crash with character motion vectors
 
@@ -67,8 +70,17 @@ wiki, the commit message, a code comment) and recorded in the runtime's
 - [ ] **Aspect ratios** 21:9 and 32:9 through hooks (bbport 0.6; the fork's PR #70).
 - [ ] **Field of view; mute in the background** (fork `b75e811`).
 
-## 6. Launcher and tooling
+## 6. Visual bugs (older, reported 2026-10-19)
 
+- [ ] **Blood decals** on floors and walls are drawn as pale speckles with bright rims instead of
+  dark red pools.
+- [ ] **An enemy's body drawn as colour noise** (a dog, after it attacked the player): probably
+  the same blood/wet effect on characters.
+
+## 7. Launcher and tooling
+
+- [ ] **Keep test progress between test runs** (`test_run.sh`): an option to reuse the scratch
+  save copy instead of copying the player's save again.
 - [ ] **Background shader compilation:** a missing pipeline compiles on a worker and its draw is
   skipped until ready (no hitches the first time an area is seen), behind a setting.
 
