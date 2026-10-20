@@ -8,8 +8,8 @@ Clone with `--recursive`.
 ## Layout
 
 - `launcher/`: the bloodborne-launcher submodule (Tauri: React + Rust,
-  `src-tauri/src/main.rs`); its own README has the stack and conventions. 20 languages; settings in `bbport.ini` and `launcher.json` in
-  `~/Library/Application Support/bloodborne_mac/` (the app's names stay `bloodborne_mac` so
+  `src-tauri/src/main.rs`); its own README has the stack and conventions. 20 languages; settings in the launcher's SQLite database (written out to `bbport.ini` and
+  `launcher.json` in `~/Library/Application Support/bloodborne_mac/` for the scripts) (the app's names stay `bloodborne_mac` so
   players' saves and settings never move).
 - `packaging/macos.sh`: `Bloodborne.app` and its DMG in `dist/`, from `runtime/`'s build.
 - `.github/workflows/macos.yml`: a `v*` tag builds and publishes a release; manual runs build a test package.

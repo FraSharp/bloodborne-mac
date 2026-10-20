@@ -45,8 +45,10 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [ ] Frame-rate A/B of the three changes (expected nil).
 - [ ] Next release: notes, and motion vectors recommended again (the image gets much better for
   a small frame-rate cost).
-- [ ] In-game menu values out of sync with the actual settings (reported 2026-10-19; which
-  values to be confirmed).
+- [x] In-game menu values out of sync with the actual settings: the launcher keeps the settings
+  in its database and the game and launcher exchange changes while it runs (runtime `8cbcf64`,
+  launcher `1dc03d8`, 2026-10-20). The menu shows every launcher graphics setting under the same
+  tabs (runtime `511b7ac`).
 
 ## 3. Online (bbport 0.6's module)
 
@@ -96,8 +98,12 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [ ] **Draw-list task lock** (stuck loading screen): check whether our command-buffer guard
   covers the render thread's draw-list task as a whole.
 - [ ] **Character-name entry in fullscreen** (IME text box, Noel Miller): check ours first.
-- [ ] Reference for the native renderer (R5): their Metal renderer's untracked buffers, pipeline
-  archive, MetalFX/FSR on Metal. Ideas and measurements, not a merge (ours stays multiplatform).
+- [ ] **Native renderer (R5):** their Metal renderer (0.5.x: no MoltenVK; partly from
+  Huax-1839/bloodborne-macos, GPL-2.0) is adapted into our Metal backend where it fits the
+  multiplatform design (an adapter per graphics API): the SPIR-V to MSL compiler and its rect-list,
+  tessellation and geometry rewrites, the pipeline cache with a binary archive, the format and
+  state tables, FidelityFX on Metal. First: build every pipeline our renderer creates as a Metal
+  pipeline too and count failures. Credited in the commits that bring the code.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
 ## 7. Visual bugs (older, reported 2026-10-19)
@@ -109,6 +115,15 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
   the same blood/wet effect on characters.
 
 ## 8. Launcher and tooling
+
+- [x] **Outputs above 1080p start again** (runtime `74c556e`): the pool is imported in
+  overlapping windows and direct memory follows the scene size; the Graphics page and the menu
+  estimate memory against the Mac's.
+- [ ] **Characters drawn black above about 3.5 million scene pixels** (1440p native, 4K Quality),
+  with or without FSR and with more memory: a fixed limit in the game or in MoltenVK. Compare
+  with a native Metal path (R5).
+- [x] **Trophy notices only over the game** (launcher `6f626d7`); [ ] the delay before the first
+  notice (the runtime waits for SDL's focus; drop it on macOS now that the helper checks).
 
 - [ ] **Keep test progress between test runs** (`test_run.sh`): an option to reuse the scratch
   save copy instead of copying the player's save again.
