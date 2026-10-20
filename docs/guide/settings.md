@@ -92,7 +92,15 @@ Italiano, Nederlands, Polski, Русский, Türkçe, Suomi, Svenska, Dansk, N
   follows it.
 - **Game language** (the game's text and voices): Game → Language.
 
-## Controllers
+## Controllers, keyboard and mouse
 
-PlayStation, Xbox and other common controllers work through SDL3. Without one, use the keyboard;
-both can be remapped on the **Controls** tab.
+PlayStation, Xbox and other common controllers work through SDL3. The keyboard and mouse follow
+Dark Souls III's PC layout: **WASD** move, **Space** dodge, **Left Shift** run (Shift + Space
+jumps), **F**/**Enter** interact, **left click** attack, **Shift + left click** strong attack,
+**right click** shoot, **Q** blood vial, **E** transform the weapon, **Tab**/**R** quick item,
+**1**/**2** left/right weapon, **3**/**4** d-pad up/down, **C** lock-on, **Escape** menu (and back
+inside menus), **G** gestures. Click into the window to give it the mouse; **F1** releases it.
+
+The mouse turns the camera directly (no stick dead zone or speed limit), and points and clicks
+in the game's menus: hover selects, left click confirms, right click goes back, the wheel
+scrolls. Every key can be remapped on the **Controls** tab.

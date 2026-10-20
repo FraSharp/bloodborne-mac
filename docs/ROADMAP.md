@@ -97,9 +97,10 @@ Features:
 - [x] **Aspect ratios** 4:3, 16:10, 21:9, 32:9 and Auto (camera, HUD at the edges, full-screen
   fills, markers), separate from the resolution, in the launcher and the menu; 16:9 by default.
   Checked at 16:10, 21:9 (with the game's menu) and 16:9 (no cost). The blur-kernel clamp too.
-- [ ] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
-  III layout with chords, the movement-key ramp, button prompts for the device in use, the
-  port's cursor; the mouse-capture jump and the Escape double toggle fixed.
+- [x] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
+  III layout with chords, the movement-key ramp, the port's cursor; the mouse-capture jump and the
+  Escape double toggle fixed. The launcher's Controls page shows the new defaults (Run, Dodge).
+  [ ] Button prompts for the device in use; [ ] assigning mouse buttons and chords in the launcher.
 - [ ] **Online:** Seamless Hunt with BBSC seamless co-op, and The Hunter's Dream, on shadPS4 0.20's
   network code (`libbbnet20`). Dependencies in `build-deps.sh` (Protobuf with Abseil,
   nlohmann_json, OpenSSL, miniupnpc, epoll-shim); its game hooks on `InstallGuestCodeHook`;
