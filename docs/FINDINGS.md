@@ -19,8 +19,8 @@ Nothing below is released: development main carries it; 0.7.0 is the current rel
 | In-game menu | The launcher's look, tabs and every graphics setting; on-screen keyboard; memory estimate | runtime `511b7ac` |
 | Outputs above 1080p | Start again (pool imported in windows; memory from the scene) | runtime `74c556e` |
 | FPS counter | Small/big, six positions; big names the GPU and CPU path | runtime `511b7ac`, `77bcc30` |
-| Trophy notices | Shown only while the game's window is in front; no wait for SDL focus (not yet observed) | launcher `6f626d7`, runtime `77bcc30` |
-| Metal renderer (R5 N5) | Every pipeline builds in Metal; the frame draws through Metal behind Advanced → Renderer (experimental) | runtime `dfb01fd`, `1992ecf`, `fd60bb9`; launcher `1f1c146` |
+| Trophy notices | Shown only while the game's window is in front; sent at once (observed); activation handed back to the game | launcher `6f626d7`, `4b9a90e`; runtime `77bcc30` |
+| Metal renderer (R5 N5) | Every pipeline builds in Metal; the frame draws through Metal behind Advanced → Renderer (experimental); a full play session on it was stable | runtime `dfb01fd`, `1992ecf`, `fd60bb9`; launcher `1f1c146` |
 | Recompiled CPU code with Metal | Runs, correct picture | recomp `5bb8499` |
 
 ## The Metal renderer (R5)
@@ -115,6 +115,11 @@ debug build loads its page from the launcher's dev server (port 5173); without i
 becomes ready ("helper did not become ready"). The card keeps its original transparency (a CSS backdrop filter cannot blur another
 window; macOS's window material showed opaque over the game: both removed).
 
+A real trophy in a fullscreen launcher session on Metal took the keyboard and controller from the
+game while its window stayed in front: the helper had become the active app. The helper now gives
+activation back (`NSApp.deactivate`) whenever it is active while a notice is up, and logs it. Still
+to confirm in a launcher session (test games are background-only, see Test helpers).
+
 ## Settings sync
 
 Lines on the game's standard streams: `BBSET key=value` (game settings) and
@@ -136,6 +141,9 @@ library). It stays in the recompiler's ignored `out/`: no generated game code in
 
 - `runtime/tools/test_run.sh NAME [VAR=...]`: copied save; the test copy of the settings is
   `runtime/out/test-user/bbport.ini` (keep `fps_size=big`, `show_fps=1` there for tests).
+- Test games run as background-only apps (`mac_bench.sh` sets `SDL_MAC_BACKGROUND_APP=1`): they
+  never become the active app, so Cmd+Q and focus behave unlike a launcher game. For a test the
+  maintainer plays in, pass `BB_BENCH_FOREGROUND=1`.
 - `runtime/tools/grab.sh [--screen] NAME`: the game's frame (or the window with the menu and
   counter). The frame dump path swaps red and blue; compare like with like.
 - Scripted menu keys: `BB_MENU_KEYS_FILE=$PWD/out/menu.keys`, tokens like `r1 r1 down enter`;
