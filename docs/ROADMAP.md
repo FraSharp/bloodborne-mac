@@ -102,8 +102,13 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
   Huax-1839/bloodborne-macos, GPL-2.0) is adapted into our Metal backend where it fits the
   multiplatform design (an adapter per graphics API): the SPIR-V to MSL compiler and its rect-list,
   tessellation and geometry rewrites, the pipeline cache with a binary archive, the format and
-  state tables, FidelityFX on Metal. First: build every pipeline our renderer creates as a Metal
-  pipeline too and count failures. Credited in the commits that bring the code.
+  state tables, FidelityFX on Metal. Credited in the commits that bring the code.
+  - [x] Every pipeline builds in Metal too (`BB_METAL_SHADOW=1`, runtime `dfb01fd`): 550
+    pipelines, 0 failed.
+  - [x] The frame drawn through Metal behind `BB_METAL_FRAME=1` (runtime `1992ecf`): 65.5/61.7 FPS
+    against 58.0/58.1 on MoltenVK in two alternating pairs; MoltenVK stays the default.
+  - [ ] A renderer choice in the launcher and the in-game menu (MoltenVK / Metal).
+  - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
 ## 7. Visual bugs (older, reported 2026-10-19)
