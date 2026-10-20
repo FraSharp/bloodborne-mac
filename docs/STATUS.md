@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What development main has, what is open, and how to pick each thread up. Updated 2026-10-20.
+What development main has, what is open, and how to pick each thread up. Updated 2026-10-21.
 The plan as a checklist is the [roadmap](ROADMAP.md).
 
 ## Releases
@@ -27,10 +27,10 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 ## Open threads
 
 **Before 0.8.0.** Investigate native 1080p crashes: a Metal play session ended on a GX worker;
-a copied-save load faulted at the same guest access with Metal and MoltenVK, and a separate Metal
-load aborted in fragment binding. Check the frame-rate hooks in play (running above 90 FPS,
-cloth, Laurence's cinematic; needs a save near it); then the rest of the 0.6 port as the
-maintainer decides; update the release notes, rerun the release tests, tag.
+a copied-save load faulted at the same guest access with Metal and MoltenVK. Metal's separate
+fragment-binding crash was fixed in runtime `e0348c2`. Check the frame-rate hooks in play
+(running above 90 FPS, cloth, Laurence's cinematic; needs a save near it); then the rest of the
+0.6 port as the maintainer decides; update the release notes, rerun the release tests, tag.
 
 **Characters drawn black above about 3.5 million scene pixels.** Bisected between 3.45 and 3.67
 million pixels; the same with or without FSR, at 1440p or 4K, with more memory, and on the Metal
