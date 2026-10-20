@@ -50,42 +50,74 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
   launcher `1dc03d8`, 2026-10-20). The menu shows every launcher graphics setting under the same
   tabs (runtime `511b7ac`).
 
-## 3. Online (bbport 0.6's module)
+## 3. bbport 0.6 (before the next release)
 
-- [ ] Dependencies in `build-deps.sh` (arm64, self-contained in the app): Protobuf with Abseil,
-  nlohmann_json, OpenSSL, miniupnpc, epoll-shim.
-- [ ] Port 0.6's `libbbnet20` (shadPS4 0.20 network, NP and shadNet code) as a `.dylib`.
-- [ ] Seamless Hunt pool and BBSC seamless co-op; its game hooks as bbcpu trap handlers.
-- [ ] The Hunter's Dream pool with Discord sign-in.
-- [ ] Launcher Online page: on/off, pool, Seamless Hunt account, Discord sign-in.
-- [ ] Decision (maintainer): may a save marked as edited go online? Trophies stay local either way.
-- [ ] Tests with real accounts (messages, bloodstains, bells solo; co-op with a second player).
+Every item of bbport 0.6's change list ([CHANGES_0.6.md](https://github.com/deadinside28/bloodborne_pc/blob/master/docs/CHANGES_0.6.md),
+`8185b88`, with 0.6-pre1 `72e5c8c`), sorted for our build. 0.6 replaced bbport's renderer with
+its own code, and its hook and overlay code calls that renderer, so a merge does not fit (86
+conflicts in a trial merge): each feature is ported by hand onto our renderer and bbcpu.
 
-## 4. Renderer and game fixes (medium)
+**The hook base.** bbport 0.6 hooks the game's code with x86 stubs and trampolines that save
+every register. On macOS bbcpu runs such stubs like the game's code (their pages are guest code
+ranges; a call to a host function is a bridged host call). Runtime `Core::InstallGuestCodeHook`
+(bbport's interface) is a jump to a stub `int3; the replaced instructions; jmp back`, whose int3
+reaches a host handler with every register (bbcpu `bbcpu_trap_state`: flags, MXCSR, YMM).
+Functions rewritten while the game runs stay with the translator (`bbcpu_recomp_exclude`).
 
-- [ ] **Laurence's cinematic above 30 FPS** (bbport 0.6): 512 MiB of extra direct memory for the
-  render resource cache, and the job-slot and cache hooks as trap handlers. Needs a save near
-  the cutscene.
-- [ ] **Draws without a pixel shader** no longer take the previous draw's fragment settings from
-  the pipeline cache (bbport 0.6).
-- [ ] **Push constants after the pass begins** (bbport 0.6 flicker fix; no effect on MoltenVK,
-  correct for the Vulkan backend on Linux).
+Renderer and small fixes:
+
+- [x] Push constants after the pass begins (the half-screen/corner frames); a draw without a pixel
+  shader no longer takes the previous draw's fragment settings (runtime `8b2aaac`).
+- [x] The present waits for its frame at every stage (single black or grey frames; runtime
+  `2bdc2f7`).
+- [x] Already here: blur-kernel assertion `0xa0020007`, the larger GX command heap, crash 139
+  (null resource tables), 40-bit thread handles, command buffers copied at submit
+  (`BB_COPY_GPU_BUFFERS`), the save-load `Bad PM4 packet` (command-buffer guard).
+- [ ] Empty character-creator preview (#178); decoder and format asserts during draw preparation
+  (#144, #165, #166): check which parts are in their new renderer only.
+- [ ] Draw preparation on more threads with 12+ hardware threads (a quarter, up to 8): A/B.
+
+Features:
+
+- [x] **Frame rate through hooks** (`bbport_frame_rate.cpp`): the pacer, the main loop's step and
+  48 per-frame values follow the frame's time; the community patches remain with
+  `BB_FRAME_HOOKS=0`. The frame rate limit applies live; **F3** toggles a 30 FPS limit
+  (runtime `2bdc2f7`). Hooks 66.6/67.8/68.0 FPS at 473/462/480% CPU against the patches'
+  65.0/67.3 FPS at 471/455% (60 s holds, Hunter's Dream): no measurable cost.
+- [ ] Physics check in play: running speed above 90 FPS, cloth, corpses, Laurence above 30 FPS.
+- [x] **Laurence's cinematic above 30 FPS:** failed render jobs give their pool slot back; the
+  render resource cache gets 512 MiB of port memory past the game's (`BB_DMEM_EXTRA_MB`,
+  runtime `2bdc2f7`).
+  [ ] Checked at the cinematic (needs a save there).
+- [x] **Effects switched live:** chromatic aberration, depth of field, motion blur, SSAO, the
+  game's anti-aliasing, dynamic-light shadows; SSAO only where the game has its target (the
+  crash after selecting an item); SSR stays a patch at start (it sizes a target).
+  [ ] Bloom as a new setting (launcher, 20 languages).
+- [ ] **Aspect ratios** 4:3, 16:10, 21:9, 32:9 live through hooks (camera, HUD anchored to the
+  edges, full-screen fills, markers), separate from the resolution; white HUD streaks at 21:9.
+- [ ] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
+  III layout with chords, the movement-key ramp, button prompts for the device in use, the
+  port's cursor; the mouse-capture jump and the Escape double toggle fixed.
+- [ ] **Online:** Seamless Hunt with BBSC seamless co-op, and The Hunter's Dream, on shadPS4 0.20's
+  network code (`libbbnet20`). Dependencies in `build-deps.sh` (Protobuf with Abseil,
+  nlohmann_json, OpenSSL, miniupnpc, epoll-shim); its game hooks on `InstallGuestCodeHook`;
+  the launcher's Online page. Decision (maintainer): may a save marked as edited go online?
+  Trophies stay local either way. Tests with real accounts.
+- [ ] Real occlusion queries counted at the game's resolution (part of their new memory model:
+  check against ours).
+
+Not for our build: the new memory model and its NVIDIA/Intel/VRAM fixes (we use the unified
+pool), NVIDIA startup and RIP 0, Debian/Steam Deck/AppImage, FSR 4.1.1 assets and its white
+picture after loading, RX 580 labels, light-shaft tiling over the bus (discrete GPUs), the GPU
+choice for laptops with two GPUs, the old shadNet module (shadPS4's server refuses other builds).
+
+## 4. Other forks' fixes (medium)
+
 - [ ] **Mods:** more folder layouts load, and folders that do not are named (fork `dd2314e`).
 - [ ] **An external FPS patch** replaces the built-in preset (fork `8042500`).
-
-## 5. Gameplay and input features (each its own decision)
-
-- [ ] **Frame rate through hooks** (bbport 0.6): physics timers ran 6–7× fast at high frame
-  rates and running fell to walking above ~90 FPS. 48 hook sites, traps under bbcpu: measure
-  their CPU cost first.
-- [ ] **Keyboard and mouse:** Dark Souls III layout, smooth stick ramp, mouse camera, menu
-  pointer, key chords (bbport 0.6; the fork's emurphy04 PR #79).
-- [ ] **Button prompts** for keyboard and Xbox pads (both).
-- [ ] **Live effect switching:** SSAO, motion blur, depth of field, chromatic aberration (bbport 0.6).
-- [ ] **Aspect ratios** 21:9 and 32:9 through hooks (bbport 0.6; the fork's PR #70).
 - [ ] **Field of view; mute in the background** (fork `b75e811`).
 
-## 6. From the Wooloomooloo2 macOS fork (each measured on our build first)
+## 5. From the Wooloomooloo2 macOS fork (each measured on our build first)
 
 - [ ] **MoltenVK without Metal argument buffers** (`MVK_CONFIG_USE_METAL_ARGUMENT_BUFFERS=0`):
   +13–16% FPS there. A/B uncapped and capped.
@@ -111,7 +143,7 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
   - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
-## 7. Visual bugs (older, reported 2026-10-19)
+## 6. Visual bugs (older, reported 2026-10-19)
 
 - [ ] **Blood decals** on floors and walls are drawn as pale speckles with bright rims instead of
   dark red pools. Also the stains the game restores from the save on reload: the problem is in
@@ -119,7 +151,7 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [ ] **An enemy's body drawn as colour noise** (a dog, after it attacked the player): probably
   the same blood/wet effect on characters.
 
-## 8. Launcher and tooling
+## 7. Launcher and tooling
 
 - [x] **Outputs above 1080p start again** (runtime `74c556e`): the pool is imported in
   overlapping windows and direct memory follows the scene size; the Graphics page and the menu
