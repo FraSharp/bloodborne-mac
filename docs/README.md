@@ -19,6 +19,7 @@
 6. [Troubleshooting](guide/troubleshooting.md): common problems and known issues.
 
 - [Roadmap](ROADMAP.md): what we plan to implement next, as a checklist.
+- [Findings](FINDINGS.md): what recent work established, what is open, and where to continue.
 
 - [Launcher during gameplay](guide/launcher-lifecycle.md): menu-bar/tray behaviour and restoring the window.
 - [Profiles and saves](guide/saves.md): first-profile setup, identities, backups and restore in the development launcher.

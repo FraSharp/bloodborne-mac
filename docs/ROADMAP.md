@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What we plan to implement next, in order. Ticked items say where they landed. Sources: bbport
+What we plan to implement next, in order. Evidence and where to continue: [Findings](FINDINGS.md). Ticked items say where they landed. Sources: bbport
 0.6 ([deadinside28/bloodborne_pc](https://github.com/deadinside28/bloodborne_pc) `8185b88`,
 reviewed 2026-10-19) and the Windows fork
 ([Supermedo/bloodborne_pc](https://github.com/Supermedo/bloodborne_pc) `de2e38a` 1.9.2, reviewed

@@ -91,7 +91,8 @@ Release notes say what changed for players. The README's screenshots come from t
   above ~3.5 M scene pixels, unexplained); R5's Metal backend, adapted from
   Wooloomooloo2/bloodborne_mac_port, draws the frame through Metal behind the launcher's
   experimental Renderer option (65.5/61.7 vs 58.0/58.1 FPS on MoltenVK, two pairs); MoltenVK
-  stays the default. Test runs use the big FPS counter.
+  stays the default. Test runs use the big FPS counter. Recompiled code with Metal runs
+  (51.7-57.3 FPS, R3 open). Findings and where to continue: docs/FINDINGS.md.
 - bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
   nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
