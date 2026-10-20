@@ -73,9 +73,10 @@ Renderer and small fixes:
 - [x] Already here: blur-kernel assertion `0xa0020007`, the larger GX command heap, crash 139
   (null resource tables), 40-bit thread handles, command buffers copied at submit
   (`BB_COPY_GPU_BUFFERS`), the save-load `Bad PM4 packet` (command-buffer guard).
-- [ ] Empty character-creator preview (#178); decoder and format asserts during draw preparation
-  (#144, #165, #166): check which parts are in their new renderer only.
-- [ ] Draw preparation on more threads with 12+ hardware threads (a quarter, up to 8): A/B.
+- [x] Empty character-creator preview (#178): GPU-written images keep their mip hashes from the
+  first upload; a new save's character creator draws the character. Decoder and format asserts
+  (#144, #165, #166): already handled (stale formats logged and skipped).
+- [x] ~~Draw preparation on a quarter of the hardware threads~~: ours already uses half.
 
 Features:
 
