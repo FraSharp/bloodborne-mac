@@ -61,7 +61,9 @@
 - **A launcher** ([bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher)) with graphics, controls, game options, mods, patches and the game's log.
 - **AMD FSR 3.1 upscaling,** the biggest performance gain on Apple GPUs.
 - **An in-game settings menu** (F1, or L3 + R3 on a controller).
-- **Controllers and keyboard,** with button mapping for both.
+- **Controllers, keyboard and mouse,** with mapping for all three; the mouse turns the camera and
+  points in the game's menus.
+- **Any aspect ratio:** 16:10, 21:9, 32:9 and 4:3 without stretching or black bars.
 - **Mods and patches,** with load order. The game folder is never changed.
 - **20 languages** for the launcher and the menu, the same as the PS4 game.
 
@@ -87,7 +89,8 @@ other Macs are welcome.
 in-game menu share every setting, and the menu has the launcher's look, tabs and an on-screen
 keyboard; outputs above 1080p start again; an experimental **Metal renderer** (Advanced →
 Renderer) draws the game with Apple's Metal directly, usually faster; from bbport 0.6, a frame
-rate that keeps physics right at any speed and effects that switch without a restart. See
+rate that keeps physics right at any speed, effects that switch without a restart, aspect ratios
+(16:10, 21:9, ...) and keyboard and mouse in Dark Souls III's layout. See
 [Release notes](docs/releases/v0.8.0.md).
 
 **Known issues:** characters are drawn black when the game renders more than about 3.5 million
