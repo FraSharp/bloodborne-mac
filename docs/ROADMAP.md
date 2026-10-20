@@ -94,8 +94,9 @@ Features:
   game's anti-aliasing, dynamic-light shadows; SSAO only where the game has its target (the
   crash after selecting an item); SSR stays a patch at start (it sizes a target).
   Bloom is a new live setting in the launcher and the menu (20 languages).
-- [ ] **Aspect ratios** 4:3, 16:10, 21:9, 32:9 live through hooks (camera, HUD anchored to the
-  edges, full-screen fills, markers), separate from the resolution; white HUD streaks at 21:9.
+- [x] **Aspect ratios** 4:3, 16:10, 21:9, 32:9 and Auto (camera, HUD at the edges, full-screen
+  fills, markers), separate from the resolution, in the launcher and the menu; 16:9 by default.
+  Checked at 16:10, 21:9 (with the game's menu) and 16:9 (no cost). The blur-kernel clamp too.
 - [ ] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
   III layout with chords, the movement-key ramp, button prompts for the device in use, the
   port's cursor; the mouse-capture jump and the Escape double toggle fixed.

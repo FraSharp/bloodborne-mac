@@ -13,7 +13,7 @@ runs.
 | Tab | What it has |
 |---|---|
 | **Home** | Your profile and trophies, the game folder and edition, a summary of the main settings |
-| **Graphics** | Output resolution with a memory estimate, monitor, fullscreen, V-Sync, frame-rate mode and limit, the FPS counter, upscaling and sharpening, character motion vectors, model detail, visual effects |
+| **Graphics** | Aspect ratio and output resolution with a memory estimate, monitor, fullscreen, V-Sync, frame-rate mode and limit, the FPS counter, upscaling and sharpening, character motion vectors, model detail, visual effects |
 | **Controls** | Which controller to use, and button mapping for controller and keyboard |
 | **Game** | Game language, skipping the intro videos, your save folder |
 | **Profiles** | Profiles, each with its saves, backups and trophies ([Profiles and saves](saves.md)) |
@@ -57,6 +57,14 @@ On a Mac the game is limited by the GPU, so the upscaler matters most:
   looks wrong.
 
 See [Performance](performance.md).
+
+## Aspect ratio
+
+Graphics → **Aspect ratio**: 16:9 (the game's own) by default, or 4:3, 16:10 (MacBook screens),
+21:9, 32:9, or **Auto** (the monitor the game is on). On a wider screen the game shows more to
+the sides, on a taller one more above and below; the HUD moves to the screen's edges and the
+markers over enemies stay on them. The output resolution then lists that ratio's sizes. A change
+applies at the next start.
 
 ## The FPS counter
 
