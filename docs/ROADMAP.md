@@ -107,7 +107,7 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
     pipelines, 0 failed.
   - [x] The frame drawn through Metal behind `BB_METAL_FRAME=1` (runtime `1992ecf`): 65.5/61.7 FPS
     against 58.0/58.1 on MoltenVK in two alternating pairs; MoltenVK stays the default.
-  - [ ] A renderer choice in the launcher and the in-game menu (MoltenVK / Metal).
+  - [x] A renderer choice in the launcher and the in-game menu (MoltenVK / Metal, experimental).
   - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
