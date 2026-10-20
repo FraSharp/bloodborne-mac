@@ -85,6 +85,13 @@ Release notes say what changed for players. The README's screenshots come from t
   on the same memory model (KosmicKrisp clean, MoltenVK stretched) and draw fingerprints at
   Iosefka's Clinic (data intact, broken draws reading past 4 GiB). Runtime STABILITY has the
   evidence; the earlier FaceGen/synchronization/draw-trace notes there are history.
+- Development main, 2026-10-20 (not released): settings live in the launcher's database and sync
+  with the in-game menu (the menu has the launcher's tabs and every graphics setting); outputs
+  above 1080p start again (pool imported in windows, memory from the scene; characters draw black
+  above ~3.5 M scene pixels, unexplained); R5's Metal backend, adapted from
+  Wooloomooloo2/bloodborne_mac_port, draws the frame through Metal behind the launcher's
+  experimental Renderer option (65.5/61.7 vs 58.0/58.1 FPS on MoltenVK, two pairs); MoltenVK
+  stays the default. Test runs use the big FPS counter.
 - bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
   nlohmann_json, OpenSSL): offline play.
 - The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the

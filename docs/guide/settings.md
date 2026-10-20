@@ -34,6 +34,31 @@ Press **F1** on the keyboard, or **L3 + R3** on a controller, to open the settin
 game. Most graphics settings apply right away. Settings that need a restart say so, and the menu
 has a button to restart the game.
 
+## Coming in the next release
+
+On development main, not yet in a release:
+
+- **One set of settings.** The launcher keeps the settings in its database, shared by all profiles.
+  While the game runs, the launcher and the in-game menu send each other their changes, so each
+  shows the other's. `bbport.ini` and `launcher.json` are still written for the scripts.
+- **The in-game menu** has the launcher's look and tabs (Graphics, Game, Advanced) and every
+  graphics setting the launcher has, including the launcher's own: fullscreen, monitor, frame
+  presentation, frame-rate mode and limit, the Metal HUD and the performance options. Fullscreen
+  switches at once; the others say they need a restart, and **Restart** applies them.
+- **On-screen keyboard** for the character name and other text with a controller.
+- **FPS counter:** small (frame rate and frame time) or big (also the upscaler, the resolutions, a
+  frame-time graph and the renderer), in any corner or edge center (Graphics → Frame rate).
+- **Memory estimate** on the Graphics page and in the menu: what the game will use with these
+  settings, against the Mac's memory, in amber above three quarters of it.
+- **Outputs above 1080p start again** (they lost the GPU at boot on an 18 GB Mac). Known issue:
+  characters are drawn black when the game renders more than about 3.5 million pixels (1440p
+  native, 4K with the Quality preset or none); a preset that renders less avoids it.
+- **Renderer (experimental):** Advanced → Performance → **Renderer**: MoltenVK (the default) or
+  **Metal**, the new native Metal renderer. Two alternating pairs on an M3 Pro measured 65.5 and
+  61.7 FPS on Metal against 58.0 and 58.1 on MoltenVK.
+- **Metal performance HUD** (Graphics → Frame rate, macOS): Apple's statistics overlay.
+- **Trophy notifications** show only while the game's window is in front.
+
 ## Languages
 
 The launcher and the in-game menu are available in the 20 languages of the PS4 game:

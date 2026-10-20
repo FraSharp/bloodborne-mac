@@ -11,7 +11,8 @@ The project has four repositories:
   It is an independent submodule. macOS integration works today; Windows and Linux are planned.
 - **The runtime** ([bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime), in
   `runtime/`): loads the game's executable, provides the PS4 system libraries it calls, and draws
-  its graphics through Vulkan (MoltenVK on macOS) with a renderer derived from shadPS4. Built on
+  its graphics through Vulkan (MoltenVK on macOS; development main also has an experimental
+  Metal renderer) with a renderer derived from shadPS4. Built on
   [bbport](https://github.com/deadinside28/bloodborne_pc).
 - **The CPU layer** ([bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp), in
   `runtime/recomp/`): runs the game's x86-64 code on Apple Silicon, translated to arm64 as it runs,
