@@ -21,14 +21,16 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 |---|---|
 | bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects with a new Bloom switch. Next: aspect ratios, keyboard and mouse, online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
-| Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); a full play session was stable; with the recompiled library it runs too |
+| Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. Stability at native 1080p is under investigation |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads
 
-**Before 0.8.0.** Physics check of the frame-rate hooks in play (running above 90 FPS, cloth,
-Laurence's cinematic; needs a save near it); then the rest of the 0.6 port as the maintainer
-decides; update the release notes, rerun the release tests, tag.
+**Before 0.8.0.** Investigate native 1080p crashes: a Metal play session ended on a GX worker;
+a copied-save load faulted at the same guest access with Metal and MoltenVK, and a separate Metal
+load aborted in fragment binding. Check the frame-rate hooks in play (running above 90 FPS,
+cloth, Laurence's cinematic; needs a save near it); then the rest of the 0.6 port as the
+maintainer decides; update the release notes, rerun the release tests, tag.
 
 **Characters drawn black above about 3.5 million scene pixels.** Bisected between 3.45 and 3.67
 million pixels; the same with or without FSR, at 1440p or 4K, with more memory, and on the Metal
