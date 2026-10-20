@@ -3,38 +3,33 @@
 [← Back to the project](../README.md)
 
 > [!IMPORTANT]
-> **Experimental project: expect bugs and regressions.** Our CPU recompiler and native renderer
-> development diverges from bbport and can reduce stability. Loading hangs, crashes and graphical
-> corruption are known risks. Read the [project notice](../README.md) before choosing a build.
-> For the dedicated macOS port of bbport, see [bmy/bbport-mac](https://github.com/bmy/bbport-mac).
+> **Experimental project: expect bugs.** Our CPU recompiler and native renderer diverge from
+> bbport and can be less stable. For the dedicated macOS port of bbport, see
+> [bmy/bbport-mac](https://github.com/bmy/bbport-mac).
 
 ## Playing
 
-1. [Installation](guide/installation.md): download, the first start, where your data lives.
+1. [Installation](guide/installation.md): download, first start, where your data lives.
 2. [Game files](guide/game-files.md): preparing your dump, supported editions, The Old Hunters.
-3. [Settings](guide/settings.md): the launcher, the in-game menu, languages, controllers.
-4. [Mods and patches](guide/mods-and-patches.md): installing mods, load order, third-party
-   patches.
-5. [Performance](guide/performance.md): what to expect, and the settings that matter.
-6. [Troubleshooting](guide/troubleshooting.md): common problems and known issues.
+3. [Settings](guide/settings.md): the launcher, the in-game menu, recommended settings,
+   languages, controllers.
+4. [Profiles and saves](guide/saves.md): profiles, backups, trophies.
+5. [Mods and patches](guide/mods-and-patches.md)
+6. [Performance](guide/performance.md)
+7. [Troubleshooting](guide/troubleshooting.md): common problems, known issues, what was fixed.
+8. [Updates](guide/updates.md)
 
-- [Roadmap](ROADMAP.md): what we plan to implement next, as a checklist.
-- [Findings](FINDINGS.md): what recent work established, what is open, and where to continue.
-
-- [Launcher during gameplay](guide/launcher-lifecycle.md): menu-bar/tray behaviour and restoring the window.
-- [Profiles and saves](guide/saves.md): first-profile setup, identities, backups and restore in the development launcher.
+[Release notes](releases/)
 
 ## Developing
 
-- [Building from source](guide/building.md): the app and its DMG.
-- [How it works](guide/how-it-works.md): the four repositories this app is made of.
-- [Launcher wiki](https://github.com/bloodborne-native/bloodborne-launcher/wiki): player guides and the save-manager roadmap.
-- [Launcher](../launcher/README.md): the launcher's stack and code conventions.
-- The game itself: [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime/tree/main/docs)
-  (runtime, renderer, macOS performance); the translator and the recompiler:
-  [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp).
-
-- [Save manager roadmap](SAVE_MANAGER.md): storage contract and planned previews/editor.
+- [Architecture](ARCHITECTURE.md): the four repositories, the app, a launch, where it is going.
+- [Building and releasing](BUILDING.md)
+- [Status and where to continue](STATUS.md)
+- [Roadmap](ROADMAP.md): the plan as a checklist.
+- Each part's own docs: [runtime](https://github.com/bloodborne-native/bloodborne-runtime/tree/main/docs),
+  [recompiler](https://github.com/bloodborne-native/bloodborne-recomp/tree/main/docs),
+  [launcher](https://github.com/bloodborne-native/bloodborne-launcher/tree/main/docs).
 
 ## Project
 

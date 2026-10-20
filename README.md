@@ -83,14 +83,15 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.7.0:** the stretched geometry (vertex explosions), missing walls, black sky and
-objects popping in that appeared after playing for a while are fixed: MoltenVK misread game data stored past 4 GB in the GPU's
-view of the game's memory. The launcher records trophies per profile, with an optional
-in-game notification. See [Release notes](docs/releases/v0.7.0.md) for details and checks.
+**New in 0.8.0:** character motion vectors no longer crash the game; the launcher and the
+in-game menu share every setting, and the menu has the launcher's look, tabs and an on-screen
+keyboard; outputs above 1080p start again; an experimental **Metal renderer** (Advanced →
+Renderer) draws the game with Apple's Metal directly, usually faster. See
+[Release notes](docs/releases/v0.8.0.md).
 
-**Known issues:** in 0.7.0 the game can crash with character motion vectors on (a GPU "Invalid
-Resource" error); turn them off if it does. Fixed on development main for the next release.
-See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
+**Known issues:** characters are drawn black when the game renders more than about 3.5 million
+pixels (1440p without an upscaler, 4K with Quality); use a preset that renders less. See
+[Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
 
@@ -101,6 +102,7 @@ See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 | [Settings](docs/guide/settings.md) | The launcher, the in-game menu, languages, controllers |
 | [Mods and patches](docs/guide/mods-and-patches.md) | Installing mods and third-party patches |
 | [Performance](docs/guide/performance.md) | What to expect, and the settings that matter |
+| [Profiles and saves](docs/guide/saves.md) | Profiles, backups, trophies |
 | [Troubleshooting](docs/guide/troubleshooting.md) | Common problems and known issues |
 
 ## Under the hood
@@ -121,14 +123,14 @@ Only the tool is published, never the game's code
 ([status](https://github.com/bloodborne-native/bloodborne-recomp/wiki/Recompilation-status)). The
 recompiler and its CPU layer don't depend on macOS: other platforms can build on them.
 
-[Building from source](docs/guide/building.md) · [How it works](docs/guide/how-it-works.md)
+[Architecture](docs/ARCHITECTURE.md) · [Building and releasing](docs/BUILDING.md) · [Status](docs/STATUS.md)
 
 ## Credits
 
 Built on [**bbport**](https://github.com/deadinside28/bloodborne_pc) by deadinside28, the native
 Linux port this project started from as a fork, and on [**shadPS4**](https://github.com/shadps4-emu/shadPS4):
 the loader, the PS4 runtime, the renderer and its extensions, the upscalers and the game patches
-come from them, and bbport's releases keep being merged (now 0.51). This work adds the macOS
+come from them; bbport's releases are merged up to 0.51 and ported in parts from 0.6. This work adds the macOS
 platform layer, the arm64 translator, the app and the recompiler. None of it would exist without
 the projects it is built on. Full list: [Credits and licenses](docs/CREDITS.md).
 

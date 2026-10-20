@@ -46,11 +46,11 @@ Everything the app writes is kept in `~/Library/Application Support/bloodborne_m
 
 | Path | Contents |
 |---|---|
-| `user/` | Saves and the shader cache |
-| `bbport.ini` | Graphics and control settings (shared with the in-game menu) |
-| `launcher.json` | Launcher settings (game folder, language, start-up options) |
-| `mods/`, `mods.json` | Mods and their load order |
-| `patches/`, `patches.json` | Third-party patches and which are enabled |
+| `launcher.db` | Your profiles, settings, backup records and trophies |
+| `user/`, `save-profiles/` | Saves, and the shader cache |
+| `save-backups/` | Backups of your saves |
+| `bbport.ini`, `launcher.json` | Copies of the settings for the game's scripts |
+| `mods/`, `patches/` | Mods and third-party patches |
 | `logs/last.log` | The log of the last run |
 
 The game folder is never modified.
@@ -58,7 +58,7 @@ The game folder is never modified.
 ## Updating
 
 Download the new DMG and replace the app in Applications. Your saves and settings stay in the data
-folder above.
+folder above. The launcher tells you when a new version is out ([Updates](updates.md)).
 
 ## Uninstalling
 

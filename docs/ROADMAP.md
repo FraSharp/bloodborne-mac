@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What we plan to implement next, in order. Evidence and where to continue: [Findings](FINDINGS.md). Ticked items say where they landed. Sources: bbport
+What we plan to implement next, in order. Where things stand: [Status](STATUS.md). Ticked items say where they landed. Sources: bbport
 0.6 ([deadinside28/bloodborne_pc](https://github.com/deadinside28/bloodborne_pc) `8185b88`,
 reviewed 2026-10-19) and the Windows fork
 ([Supermedo/bloodborne_pc](https://github.com/Supermedo/bloodborne_pc) `de2e38a` 1.9.2, reviewed
@@ -12,7 +12,7 @@ reviewed 2026-10-19) and the Windows fork
 are adopted only after an A/B on our own build** (same backup, route and settings, alternating
 runs); their numbers come from other machines and architectures. Code taken from them is credited in the same commit (CREDITS, the
 wiki, the commit message, a code comment) and recorded in the runtime's
-`docs/upstream/RENDERER_PORTS.md`.
+`docs/UPSTREAM.md`.
 
 ## 1. Small fixes (runtime)
 
@@ -159,11 +159,10 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [ ] **Characters drawn black above about 3.5 million scene pixels** (1440p native, 4K Quality),
   with or without FSR and with more memory: a fixed limit in the game or in MoltenVK. Compare
   with a native Metal path (R5).
-- [x] **Trophy notices only over the game** (launcher `6f626d7`); [ ] the delay before the first
-  notice (the runtime waits for SDL's focus; drop it on macOS now that the helper checks).
+- [x] **Trophy notices only over the game** (launcher `6f626d7`), sent without waiting for SDL's
+  focus (runtime `77bcc30`), activation handed back to the game (launcher `4b9a90e`).
 
-- [ ] **Keep test progress between test runs** (`test_run.sh`): an option to reuse the scratch
-  save copy instead of copying the player's save again.
+- [x] **Keep test progress between test runs:** `KEEP_SAVE=1` (`test_run.sh`).
 - [ ] **Background shader compilation:** a missing pipeline compiles on a worker and its draw is
   skipped until ready (no hitches the first time an area is seen), behind a setting.
 
