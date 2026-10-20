@@ -33,7 +33,7 @@ type text (the character's name) on an on-screen keyboard.
 ## What applies at once
 
 - **Effects** (chromatic aberration, depth of field, motion blur, ambient occlusion, the game's
-  own anti-aliasing, shadows from dynamic lights). Screen-space reflections need a restart.
+  own anti-aliasing, shadows from dynamic lights, bloom). Screen-space reflections need a restart.
 - **Frame-rate limit.** Above 30 FPS the game steps by each frame's real time, so physics,
   cloth and running speed stay right at any frame rate. **F3** switches a 30 FPS limit on and off
   while playing (useful for Laurence's cinematic, which can misbehave at high frame rates).

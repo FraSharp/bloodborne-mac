@@ -86,7 +86,8 @@ other Macs are welcome.
 **New in 0.8.0:** character motion vectors no longer crash the game; the launcher and the
 in-game menu share every setting, and the menu has the launcher's look, tabs and an on-screen
 keyboard; outputs above 1080p start again; an experimental **Metal renderer** (Advanced →
-Renderer) draws the game with Apple's Metal directly, usually faster. See
+Renderer) draws the game with Apple's Metal directly, usually faster; from bbport 0.6, a frame
+rate that keeps physics right at any speed and effects that switch without a restart. See
 [Release notes](docs/releases/v0.8.0.md).
 
 **Known issues:** characters are drawn black when the game renders more than about 3.5 million

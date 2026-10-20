@@ -19,7 +19,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 
 | Area | State |
 |---|---|
-| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects. Next: aspect ratios, keyboard and mouse, online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
+| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects with a new Bloom switch. Next: aspect ratios, keyboard and mouse, online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
 | Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); a full play session was stable; with the recompiled library it runs too |
 | Docs | One English set per repository; wikis mirror them |

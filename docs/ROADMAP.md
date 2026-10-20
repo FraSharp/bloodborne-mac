@@ -92,7 +92,7 @@ Features:
 - [x] **Effects switched live:** chromatic aberration, depth of field, motion blur, SSAO, the
   game's anti-aliasing, dynamic-light shadows; SSAO only where the game has its target (the
   crash after selecting an item); SSR stays a patch at start (it sizes a target).
-  [ ] Bloom as a new setting (launcher, 20 languages).
+  Bloom is a new live setting in the launcher and the menu (20 languages).
 - [ ] **Aspect ratios** 4:3, 16:10, 21:9, 32:9 live through hooks (camera, HUD anchored to the
   edges, full-screen fills, markers), separate from the resolution; white HUD streaks at 21:9.
 - [ ] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
