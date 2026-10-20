@@ -88,10 +88,10 @@ with an upscaler preset stays under 8 GB.
 The same with FSR on or off, at 1440p or 4K output, with more memory (6656 MiB), with the
 1440p light-grid patch, and with the scene nudged away from the output size. A fixed buffer of
 14 MiB at 4 bytes per pixel (or about 14,000 lighting tiles of 16x16) fits the boundary once
-targets are padded. No such cap was found in the port's code. Unknown: whether it is the game's
-(sized for 1080p) or MoltenVK's. **Next test:** 1440p native with `BB_METAL_FRAME=1`. Lit there
-points at MoltenVK's encoding; black points at the game or MoltenVK's resources. A PC report at
-1440p native would also decide it.
+targets are padded. No such cap was found in the port's code. **Not MoltenVK's encoding:** 1440p
+native with `BB_METAL_FRAME=1` (our own Metal encoding, 2026-10-20) draws the characters black too.
+Left: the game (a buffer sized for 1080p) or MoltenVK's resources, which the Metal path still uses.
+Creating resources in Metal (R5's next step) decides it; a PC report at 1440p native would too.
 
 ## Memory estimate
 
@@ -109,9 +109,10 @@ reporting input focus for a fullscreen game while another app was in front, and 
 reported the game (a process without an app bundle) as the frontmost application. The helper now
 checks the window order: the front layer-0 window on screen must belong to its parent (the game),
 every 250 ms while a notice is up; it logs the decision when it changes. The runtime no longer
-waits for SDL focus on macOS. **Next:** one run with `BB_TROPHY_OVERLAY_PREVIEW=1`, the game
-fullscreen on the second display, watched by the maintainer, to confirm the first notice comes at
-once. The card keeps its original transparency (a CSS backdrop filter cannot blur another
+waits for SDL focus on macOS: in a fullscreen run on the second display the first preview went out
+right after the pad opened (before the title), shown with the game's window in front. The helper's
+debug build loads its page from the launcher's dev server (port 5173); without it the helper never
+becomes ready ("helper did not become ready"). The card keeps its original transparency (a CSS backdrop filter cannot blur another
 window; macOS's window material showed opaque over the game: both removed).
 
 ## Settings sync
