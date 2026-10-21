@@ -85,7 +85,12 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.8.0:** character motion vectors no longer crash the game; the launcher and the
+**New in 0.8.1:** the repeatable GX worker crash with live dynamic shadows is fixed on Metal and
+MoltenVK; a rejected tessellation pipeline no longer makes the shader cache rebuild every launch;
+and **MetalFX (Apple)** is an optional macOS upscaler. The big FPS overlay shows MetalFX and its
+render resolution. [0.8.1 release notes](docs/releases/v0.8.1.md).
+
+**From 0.8.0:** character motion vectors no longer crash the game; the launcher and the
 in-game menu share every setting, and the menu has the launcher's look, tabs and an on-screen
 keyboard; outputs above 1080p start again; an experimental **Metal renderer** (Advanced →
 Renderer) draws the game with Apple's Metal directly, usually faster; from bbport 0.6, a frame

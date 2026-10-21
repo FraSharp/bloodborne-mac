@@ -46,6 +46,8 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 | Problem | Fixed in |
 |---|---|
+| A GX worker crash during loading or turning in the level, on Metal or MoltenVK | 0.8.1 |
+| The shader cache rebuilt at every launch after a tessellation shader failed | 0.8.1 |
 | The game stopped with "Lost VkDevice ... Invalid Resource" (`VK_ERROR_OUT_OF_DEVICE_MEMORY`), mostly with character motion vectors on | 0.8.0 |
 | 1440p and 4K stopped at the loading screen | 0.8.0 |
 | Stretched scenery, missing walls, objects popping in and a black sky with streaks after visiting a few areas | 0.7.0 |

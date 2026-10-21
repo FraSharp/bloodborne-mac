@@ -43,8 +43,8 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
   one; turning argument buffers off cost ~85% FPS). The pre-boss backup's boss was won; a
   20-minute launcher session had no crash at 50–65 FPS.
 - [ ] Frame-rate A/B of the three changes (expected nil).
-- [ ] Next release: notes, and motion vectors recommended again (the image gets much better for
-  a small frame-rate cost).
+- [x] 0.8.0 release notes recommend motion vectors again for the sharper moving image at a small
+  frame-rate cost.
 - [x] In-game menu values out of sync with the actual settings: the launcher keeps the settings
   in its database and the game and launcher exchange changes while it runs (runtime `8cbcf64`,
   launcher `1dc03d8`, 2026-10-20). The menu shows every launcher graphics setting under the same
@@ -143,6 +143,9 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [x] The frame drawn through Metal behind `BB_METAL_FRAME=1` (runtime `1992ecf`): 65.5/61.7 FPS
     against 58.0/58.1 on MoltenVK in two alternating pairs; MoltenVK stays the default.
   - [x] A renderer choice in the launcher and the in-game menu (MoltenVK / Metal, experimental).
+  - [x] MetalFX as a macOS upscaler choice with either renderer (runtime PR #2, launcher PR #1;
+    1080p Balanced on an M3 Pro: 23.9 ms median against FSR 3.1's 21.3 ms in one copied-save
+    scene). Its name and render resolution appear in the big FPS overlay.
   - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
@@ -166,6 +169,12 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   focus (runtime `77bcc30`), activation handed back to the game (launcher `4b9a90e`).
 
 - [x] **Keep test progress between test runs:** `KEEP_SAVE=1` (`test_run.sh`).
+- [x] **Native 1080p GX worker crash:** live dynamic shadows keep the game's disabled state in a
+  secondary render context without a shadow target (runtime `e8e14a3`). Copied-save tests passed
+  on both renderers, including a five-minute Metal run with left turns.
+- [x] **Recurring shader-cache rebuild:** save only successful pipeline keys (runtime `e8e14a3`),
+  emit each tessellation output location once (runtime PR #3), and rebuild older shader binaries
+  once (`0e940e9`). A warm launch reused the cache without the damaged-entry warning.
 - [ ] **Background shader compilation:** a missing pipeline compiles on a worker and its draw is
   skipped until ready (no hitches the first time an area is seen), behind a setting.
 

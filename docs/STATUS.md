@@ -9,28 +9,29 @@ The plan as a checklist is the [roadmap](ROADMAP.md).
 
 | Version | Highlights |
 |---|---|
-| 0.8.0 (prepared, not tagged) | Motion-vector crash fixed; settings shared with the in-game menu; outputs above 1080p; the experimental Metal renderer; FPS counter sizes; memory estimate; trophy notices only over the game |
+| 0.8.1 | GX worker crash fixed; MetalFX option; tessellation shader and recurring shader-cache rebuild fixed |
+| 0.8.0 | Motion-vector crash fixed; settings shared with the in-game menu; outputs above 1080p; the experimental Metal renderer; FPS counter sizes; memory estimate; trophy notices only over the game |
 | 0.7.0 | Stretched geometry fixed; local trophies |
 | 0.6.0 | Profiles and saves; the opening-video crash fixed |
 
 Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 
-## On main, not released
+## On main
 
 | Area | State |
 |---|---|
-| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects with a new Bloom switch. Next: aspect ratios, keyboard and mouse, online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
+| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse. Next: online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
-| Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. Stability at native 1080p is under investigation |
+| Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads
 
-**Before 0.8.0.** Investigate native 1080p crashes: a Metal play session ended on a GX worker;
-a copied-save load faulted at the same guest access with Metal and MoltenVK. Metal's separate
-fragment-binding crash was fixed in runtime `e0348c2`. Check the frame-rate hooks in play
-(running above 90 FPS, cloth, Laurence's cinematic; needs a save near it); then the rest of the
-0.6 port as the maintainer decides; update the release notes, rerun the release tests, tag.
+**After 0.8.1.** The repeatable GX worker crash on Metal and MoltenVK was the live dynamic-shadow
+setting re-enabling shadows in a secondary context without a shadow target. A separate null guest
+virtual call seen once on Metal has not recurred. Brief FPS drops reported in play remain to be
+measured with frame logs. Check the frame-rate hooks in play (running above 90 FPS, cloth,
+Laurence's cinematic; needs a save near it).
 
 **Characters drawn black above about 3.5 million scene pixels.** Bisected between 3.45 and 3.67
 million pixels; the same with or without FSR, at 1440p or 4K, with more memory, and on the Metal
@@ -38,8 +39,8 @@ renderer. Left: a buffer the game sizes for 1080p, or MoltenVK's resources. Crea
 Metal decides it; a PC report at 1440p native would too.
 
 **Metal renderer, next.** Resources created in Metal (images, views, samplers, buffers, the
-guest pool), each behind a switch and measured; then MoltenVK can be left out. MetalFX as an
-upscaler. Shaders ahead of time. The fork we adapt from is
+guest pool), each behind a switch and measured; then MoltenVK can be left out. Shaders ahead of
+time. The fork we adapt from is
 [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
