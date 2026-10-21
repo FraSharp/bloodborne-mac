@@ -29,9 +29,11 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 
 **After 0.8.1.** The repeatable GX worker crash on Metal and MoltenVK was the live dynamic-shadow
 setting re-enabling shadows in a secondary context without a shadow target. A separate null guest
-virtual call seen once on Metal has not recurred. Brief FPS drops reported in play remain to be
-measured with frame logs. Check the frame-rate hooks in play (running above 90 FPS, cloth,
-Laurence's cinematic; needs a save near it).
+virtual call seen once on Metal has not recurred. A
+[GXRenderThread null read in Cathedral Ward](https://github.com/bloodborne-native/bloodborne-mac/issues/3)
+has a different signature and is not confirmed fixed; a nearby save is needed to reproduce it.
+Brief FPS drops reported in play remain to be measured with frame logs. Check the frame-rate
+hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a save near it).
 
 **Characters drawn black above about 3.5 million scene pixels.** Bisected between 3.45 and 3.67
 million pixels; the same with or without FSR, at 1440p or 4K, with more memory, and on the Metal
