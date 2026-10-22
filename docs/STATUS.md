@@ -45,7 +45,8 @@ save near it).
 [render adapter](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/RENDER_ADAPTER.md)
 is approved: the renderer moves onto the project's own GPU interface (steps A0–A6, Vulkan
 backend), then a Metal backend creates every resource in Metal and MoltenVK leaves the macOS
-build (M1–M4). A0 is done (the adapter's device over today's Vulkan objects); next: A1. Shaders ahead of time follow (N2). The fork we adapt from is
+build (M1–M4). A0 (the adapter's device) and A1 (its own formats and pipeline state) are done; next: A2,
+resources through the adapter. Shaders ahead of time follow (N2). The fork we adapt from is
 [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
