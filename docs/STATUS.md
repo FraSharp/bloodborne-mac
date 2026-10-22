@@ -41,9 +41,11 @@ Pro in both 0.8.0 and current main. The reporter's check on 0.8.2 is needed.
 Check the frame-rate hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a
 save near it).
 
-**Metal renderer, next.** Resources created in Metal (images, views, samplers, buffers, the
-guest pool), each behind a switch and measured; then MoltenVK can be left out. Shaders ahead of
-time. The fork we adapt from is
+**Metal renderer, next.** The
+[render adapter](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/RENDER_ADAPTER.md)
+is approved: the renderer moves onto the project's own GPU interface (steps A0–A6, Vulkan
+backend), then a Metal backend creates every resource in Metal and MoltenVK leaves the macOS
+build (M1–M4). Next: A0. Shaders ahead of time follow (N2). The fork we adapt from is
 [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
