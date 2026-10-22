@@ -149,6 +149,9 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
     1080p Balanced on an M3 Pro: 23.9 ms median against FSR 3.1's 21.3 ms in one copied-save
     scene). Its name and render resolution appear in the big FPS overlay.
   - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
+  - [ ] Pipelines created in Metal own their shaders, and unused shaders are freed. Today the
+    shadow layer keeps every compiled shader for the session (runtime `e0348c2`), because Metal
+    pipelines point at shaders that Vulkan handles may outlive or reuse.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
 ## 6. Visual bugs
@@ -164,10 +167,13 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [x] **Character lighting above about 3.5 million scene pixels:** the texture collector kept
   GPU-written images whose contents could not safely be downloaded. Native 1440p clothing
   highlights returned on Metal and MoltenVK with normal collection active (runtime `b2ff9cd`).
+  Over the critical memory mark they are freed again, so memory stays bounded (runtime `ab31a4c`).
 - [x] **Trophy notices only over the game** (launcher `6f626d7`), sent without waiting for SDL's
   focus (runtime `77bcc30`), activation handed back to the game (launcher `4b9a90e`).
 
 - [x] **Keep test progress between test runs:** `KEEP_SAVE=1` (`test_run.sh`).
+- [x] **Tests for the in-game trophy notices** (queue, and only new eligible unlocks; runtime
+  `2425cff`) and **CPU tests in bloodborne-recomp's CI** on Apple Silicon.
 - [x] **Native 1080p GX worker crash:** live dynamic shadows keep the game's disabled state in a
   secondary render context without a shadow target (runtime `e8e14a3`). Copied-save tests passed
   on both renderers, including a five-minute Metal run with left turns.

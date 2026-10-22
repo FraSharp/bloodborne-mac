@@ -24,7 +24,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 | bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse. Next: online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
 | Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
-| High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs |
+| High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs. On main they are freed again over the critical memory mark (memory before lighting); native 1440p on the 18 GB M3 Pro stays about 2.4 GB below it |
 | Trophy notifications | The game draws notices in its ImGui overlay after a persisted unlock; the launcher imports and lists unlocked trophies |
 | Docs | One English set per repository; wikis mirror them |
 
