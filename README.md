@@ -143,7 +143,9 @@ recompiler and its CPU layer don't depend on macOS: other platforms can build on
 Built on [**bbport**](https://github.com/deadinside28/bloodborne_pc) by deadinside28, the native
 Linux port this project started from as a fork, and on [**shadPS4**](https://github.com/shadps4-emu/shadPS4):
 the loader, the PS4 runtime, the renderer and its extensions, the upscalers and the game patches
-come from them; bbport's releases are merged up to 0.51 and ported in parts from 0.6. This work adds the macOS
+come from them; bbport's releases are merged up to 0.51 and ported in parts from 0.6. Native Apple
+Metal FSR 4.1.1 upscaling is based on [**fsr4-native-macos**](https://github.com/UzenUPoZiTiV4ik/fsr4-native-macos)
+by UzenUPoZiTiV4ik. This work adds the macOS
 platform layer, the arm64 translator, the app and the recompiler. None of it would exist without
 the projects it is built on. Full list: [Credits and licenses](docs/CREDITS.md).
 

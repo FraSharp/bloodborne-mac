@@ -105,6 +105,13 @@ strip -x "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/"*.dylib 2>
 
 cp "$runtime/run.sh" LICENSE README.md "$game/"
 cp -R "$runtime/scripts" "$runtime/patches" "$game/"
+# FSR 4.1.1 on Metal: the kernels and model layouts runtime/'s build made (no sources, no tools;
+# AMD's initializers stay with the player).
+if [[ -d $runtime/out/fsr4_metal ]]; then
+    rsync -a --exclude .built "$runtime/out/fsr4_metal/" "$game/fsr4_metal/"
+    mkdir -p "$game/tools"
+    cp "$runtime/tools/fsr4_metal_initializers.sh" "$game/tools/"
+fi
 cp -R "$deps/app-runtime/python" "$app/Contents/Resources/python"
 find "$app" -name __pycache__ -type d -prune -exec rm -rf {} +
 # Ad-hoc signatures, inside out (libraries, helpers, Python's binaries, then the bundle).
