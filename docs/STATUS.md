@@ -47,7 +47,8 @@ save near it).
 is approved: the renderer moves onto the project's own GPU interface (steps A0–A6, Vulkan
 backend), then a Metal backend creates every resource in Metal and MoltenVK leaves the macOS
 build (M1–M4). A0 (the adapter's device), A1 (its own formats and pipeline state) and A2 (every resource
-created and destroyed through it) are done; next: A3, commands and synchronization. Shaders ahead of time follow (N2). The fork we adapt from is
+created and destroyed through it) are done; A3 is under way (the caches follow the GPU through the adapter
+and describe copies in its structures; next: image state and barriers into the backend). Shaders ahead of time follow (N2). The fork we adapt from is
 [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
