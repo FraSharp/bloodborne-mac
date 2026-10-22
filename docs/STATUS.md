@@ -50,8 +50,9 @@ time. The fork we adapt from is
 the translator. Candidates are listed in bloodborne-recomp's CLAUDE.md. The launcher does not
 offer it yet (a "CPU: Translator / Recompiled" option is a candidate).
 
-**Opening video.** A short white flash in about half the openings; cause unknown. Watch list of
-rare assertions: the runtime's [stability notes](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/STABILITY.md).
+**Watch list.** A short white flash in the opening video and an enemy's body drawn as colour
+noise have not recurred in recent play. Neither has a confirmed fix. Older rare assertions are in
+the runtime's [stability notes](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/STABILITY.md).
 
 **Online.** bbport 0.6's module (Seamless Hunt with BBSC co-op, The Hunter's Dream) needs its
 dependencies in `deps/`, its hooks on our base, and the maintainer's decision on edited saves.

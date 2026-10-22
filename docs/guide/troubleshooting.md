@@ -29,9 +29,7 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 ## Known issues
 
-- **The opening video** can show a short white flash; it plays to the end.
-- **Blood stains** can look pale with bright edges, and one enemy's body was seen drawn as
-  colour noise.
+- **Blood on already killed enemies** can look pale with bright edges after reloading a save.
 
 ## Good to know
 

@@ -149,13 +149,10 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [ ] Resources created in Metal; then MoltenVK can be left out on macOS.
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
-## 6. Visual bugs (older, reported 2026-10-19)
+## 6. Visual bugs
 
-- [ ] **Blood decals** on floors and walls are drawn as pale speckles with bright rims instead of
-  dark red pools. Also the stains the game restores from the save on reload: the problem is in
-  drawing the stains (texture or blend), not in the hit effect.
-- [ ] **An enemy's body drawn as colour noise** (a dog, after it attacked the player): probably
-  the same blood/wet effect on characters.
+- [ ] **Blood on already killed enemies after a save reload** can be pale with bright edges
+  instead of dark red. The cause has not been isolated.
 
 ## 7. Launcher and tooling
 
