@@ -29,11 +29,15 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 ## Known issues
 
-- **The Metal renderer is experimental.** If the picture or stability is wrong with it, switch
-  back to MoltenVK (Advanced → Renderer) and report what you saw.
+- **Brief FPS dips** are under investigation.
 - **The opening video** can show a short white flash; it plays to the end.
 - **Blood stains** can look pale with bright edges, and one enemy's body was seen drawn as
   colour noise.
+
+## Good to know
+
+- **The Metal renderer is experimental.** If the picture or stability is wrong with it, switch
+  back to MoltenVK (Advanced → Renderer) and report what you saw.
 - **Offline only:** online play is not available on macOS yet.
 - *The Old Hunters*: the Game of the Year editions include it; add-on packages in
   `user/addcont/` are not tested on macOS.

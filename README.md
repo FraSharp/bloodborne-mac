@@ -102,8 +102,9 @@ rate that keeps physics right at any speed, effects that switch without a restar
 (16:10, 21:9, ...) and keyboard and mouse in Dark Souls III's layout. See
 [Release notes](docs/releases/v0.8.0.md).
 
-**Known issues:** brief FPS dips and visual faults in the experimental Metal renderer are still
-under investigation. See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
+**Known issues:** brief FPS dips, a short white flash in the opening video, and pale blood stains.
+See [Troubleshooting](docs/guide/troubleshooting.md#known-issues) for details and other things to
+know before playing.
 
 ## Documentation
 
