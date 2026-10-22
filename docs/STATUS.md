@@ -71,5 +71,5 @@ dependencies in `deps/`, its hooks on our base, and the maintainer's decision on
 - Test games are background-only apps (`SDL_MAC_BACKGROUND_APP=1`): they never become the active
   app, so focus and Cmd+Q behave unlike a launcher game. `BB_BENCH_FOREGROUND=1` for a test the
   maintainer plays in.
-- The runtime's Linux and macOS CI run on every push and cancel older runs; wait for a run whose
-  result matters before pushing again.
+- The runtime's macOS CI runs on every push and cancels older runs; wait for a run whose result
+  matters before pushing again. Linux CI is started by hand for now, while the work is on macOS.
