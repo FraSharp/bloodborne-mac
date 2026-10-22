@@ -82,3 +82,7 @@ The launcher's character save format locations were checked against
 [Noxde/Bloodborne-save-editor at d8d0365](https://github.com/Noxde/Bloodborne-save-editor/tree/d8d03658f288fe747f819d0dc9a09c5f9d2e1668)
 (GPL-3.0). No source from that editor was copied; the launcher's parser and save workflow are
 independent. See the [launcher credits](https://github.com/bloodborne-native/bloodborne-launcher/blob/main/docs/CREDITS.md).
+The base HP and stamina progression values were checked against the public
+[Bloodborne Wiki Vitality](https://www.bloodborne-wiki.com/2015/05/vitality.html) and
+[Endurance](https://www.bloodborne-wiki.com/2015/05/endurance.html) tables
+([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)).

@@ -31,10 +31,12 @@ Saves · Backups shows the save's size and date, and its backups.
 - **Show in Finder** opens the save or backup folder. Backups are kept until you delete them.
 
 The Saves page also previews each readable character's name, level, attributes, Blood Echoes,
-Insight, playtime and journey. **Edit character** changes Strength, Skill, Bloodtinge and Arcane
-(1–99), Blood Echoes (up to 999,999,999) and Insight (up to 99). Level follows the attributes.
-Vitality and Endurance are read-only while their saved health and stamina values are being
-verified. The game must be stopped. Confirming an edit first backs up
+Insight, playtime and journey. **Edit character** changes Vitality (7–99), Endurance (8–99)
+and the other four attributes (1–99),
+Blood Echoes (up to 999,999,999) and Insight (up to 99). **Max all** sets them to their maxima,
+reaching level 544. Level follows the attributes; changing Vitality or Endurance also sets
+the saved health or stamina to its full base value. Runes and equipment may alter the value
+shown in game. The game must be stopped. Confirming an edit first backs up
 the complete current save set, then marks the edited save as ineligible for new trophies. To
 continue from a clean save, restore a backup from before the first edit.
 

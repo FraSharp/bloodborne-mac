@@ -26,7 +26,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 | Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
 | High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs. On main they are freed again over the critical memory mark (memory before lighting); native 1440p on the 18 GB M3 Pro stays about 2.4 GB below it |
 | Trophy notifications | The game draws notices in its ImGui overlay after a persisted unlock; the launcher imports and lists unlocked trophies |
-| Save editor | The launcher previews characters and edits offensive attributes, Blood Echoes and Insight in a backed-up, staged save set; level follows the attributes and edited saves cannot earn new trophies. Vitality and Endurance remain read-only pending derived-value handling |
+| Save editor | The launcher previews characters and edits all six attributes, Blood Echoes and Insight in a backed-up, staged save set; level and saved HP or stamina follow attribute changes. Max all reaches level 544. Edited saves cannot earn new trophies |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads

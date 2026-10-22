@@ -20,8 +20,9 @@ wiki, the commit message, a code comment) and recorded in the runtime's
   Echoes, Insight, playtime and journey (launcher `6f6f64a`).
 - [x] Edit offensive attributes, Blood Echoes and Insight with a full pre-edit backup, staged save swap, stale-preview
   check and edited-save trophy marker (launcher `6f6f64a`).
-- [ ] Add Vitality and Endurance with coherent saved HP and stamina values, then verify other
-  character fields and inventory one at a time.
+- [x] Add Vitality and Endurance with coherent saved HP and stamina values, and a level 544
+  Max all action (launcher `1697795`; see `launcher/docs/SAVE_MANAGER.md`).
+- [ ] Verify other character fields and inventory one at a time.
 - [ ] Import/export complete save sets and manage backup history.
 
 ## 1. Small fixes (runtime)
