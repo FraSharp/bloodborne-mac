@@ -29,10 +29,6 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 ## Known issues
 
-- **Characters drawn black at very high render sizes.** When the game renders more than about 3.5
-  million pixels (1440p without an upscaler or with Native AA, 4K with Quality), characters are
-  black while the scenery is lit, on both renderers. Use a preset that renders less (1440p
-  Balanced, 4K Balanced). The cause is still being investigated.
 - **The Metal renderer is experimental.** If the picture or stability is wrong with it, switch
   back to MoltenVK (Advanced → Renderer) and report what you saw.
 - **The opening video** can show a short white flash; it plays to the end.

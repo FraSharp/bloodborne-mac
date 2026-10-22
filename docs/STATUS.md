@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What development main has, what is open, and how to pick each thread up. Updated 2026-10-21.
+What development main has, what is open, and how to pick each thread up. Updated 2026-10-22.
 The plan as a checklist is the [roadmap](ROADMAP.md).
 
 ## Releases
@@ -23,6 +23,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 | bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse. Next: online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
 | Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
+| High-resolution character lighting | The texture collector keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads
@@ -34,11 +35,6 @@ virtual call seen once on Metal has not recurred. A
 has a different signature and is not confirmed fixed; a nearby save is needed to reproduce it.
 Brief FPS drops reported in play remain to be measured with frame logs. Check the frame-rate
 hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a save near it).
-
-**Characters drawn black above about 3.5 million scene pixels.** Bisected between 3.45 and 3.67
-million pixels; the same with or without FSR, at 1440p or 4K, with more memory, and on the Metal
-renderer. Left: a buffer the game sizes for 1080p, or MoltenVK's resources. Creating resources in
-Metal decides it; a PC report at 1440p native would too.
 
 **Metal renderer, next.** Resources created in Metal (images, views, samplers, buffers, the
 guest pool), each behind a switch and measured; then MoltenVK can be left out. Shaders ahead of

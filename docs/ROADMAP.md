@@ -162,9 +162,9 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [x] **Outputs above 1080p start again** (runtime `74c556e`): the pool is imported in
   overlapping windows and direct memory follows the scene size; the Graphics page and the menu
   estimate memory against the Mac's.
-- [ ] **Characters drawn black above about 3.5 million scene pixels** (1440p native, 4K Quality),
-  with or without FSR and with more memory: a fixed limit in the game or in MoltenVK. Compare
-  with a native Metal path (R5).
+- [x] **Character lighting above about 3.5 million scene pixels:** the texture collector kept
+  GPU-written images whose contents could not safely be downloaded. Native 1440p clothing
+  highlights returned on Metal and MoltenVK with normal collection active (runtime `b2ff9cd`).
 - [x] **Trophy notices only over the game** (launcher `6f626d7`), sent without waiting for SDL's
   focus (runtime `77bcc30`), activation handed back to the game (launcher `4b9a90e`).
 
