@@ -77,3 +77,8 @@ The launcher’s menu-bar/window restoration and Dock/taskbar handling follow
 [leari-mail/leari 5876482](https://github.com/leari-mail/leari/tree/5876482/src-tauri/src)
 (MIT, Pablo Souza). The launcher retains the original MIT notice; its hunter’s-sigil tray
 artwork is original and does not copy Leari or game assets.
+
+The launcher's character save format locations were checked against
+[Noxde/Bloodborne-save-editor at d8d0365](https://github.com/Noxde/Bloodborne-save-editor/tree/d8d03658f288fe747f819d0dc9a09c5f9d2e1668)
+(GPL-3.0). No source from that editor was copied; the launcher's parser and save workflow are
+independent. See the [launcher credits](https://github.com/bloodborne-native/bloodborne-launcher/blob/main/docs/CREDITS.md).

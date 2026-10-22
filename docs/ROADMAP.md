@@ -14,6 +14,16 @@ runs); their numbers come from other machines and architectures. Code taken from
 wiki, the commit message, a code comment) and recorded in the runtime's
 `docs/UPSTREAM.md`.
 
+## Save editor (launcher)
+
+- [x] Preview readable characters in each profile's save set: name, level, attributes, Blood
+  Echoes, Insight, playtime and journey (launcher `6f6f64a`).
+- [x] Edit offensive attributes, Blood Echoes and Insight with a full pre-edit backup, staged save swap, stale-preview
+  check and edited-save trophy marker (launcher `6f6f64a`).
+- [ ] Add Vitality and Endurance with coherent saved HP and stamina values, then verify other
+  character fields and inventory one at a time.
+- [ ] Import/export complete save sets and manage backup history.
+
 ## 1. Small fixes (runtime)
 
 Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
