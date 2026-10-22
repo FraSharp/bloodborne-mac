@@ -1,108 +1,81 @@
 # bloodborne-mac
 
-The macOS app of Bloodborne (PS4, CUSA03173 1.09) on Apple Silicon: the launcher, the packaging,
-the releases and the player guides. The game itself is the `runtime/` submodule
-(bloodborne-runtime), with the CPU layer and recompiler in `runtime/recomp/` (bloodborne-recomp).
-Clone with `--recursive`.
+The macOS app of Bloodborne (PS4, CUSA03173 1.09) on Apple Silicon: the packaging, the releases,
+the player guides and the plan. The game itself is the `runtime/` submodule (bloodborne-runtime),
+with the CPU layer and recompiler in `runtime/recomp/` (bloodborne-recomp); the launcher is
+`launcher/` (bloodborne-launcher). Clone with `--recursive`.
+
+## Read first
+
+- `docs/STATUS.md`: what main has, what is open, where to continue.
+- `docs/ROADMAP.md`: the plan as a checklist; tick items (with where they landed) as work lands.
+- `docs/ARCHITECTURE.md`, `docs/BUILDING.md` (build, working across submodules, releasing).
+- Each submodule's CLAUDE.md and docs for its own work.
 
 ## Layout
 
-- `launcher/app/`: the launcher (Tauri: React + Rust, `src-tauri/src/main.rs`); its own README has
-  the stack and conventions. 20 languages; settings in `bbport.ini` and `launcher.json` in
-  `~/Library/Application Support/bloodborne_mac/` (the app's names stay `bloodborne_mac` so
-  players' saves and settings never move).
+- `launcher/`, `runtime/`: submodules (see above).
 - `packaging/macos.sh`: `Bloodborne.app` and its DMG in `dist/`, from `runtime/`'s build.
-- `.github/workflows/macos.yml`: builds and packages on every push; a `v*` tag publishes a release.
-- `docs/guide/`: player guides; `docs/screenshots/` (README pictures).
+- `.github/workflows/macos.yml`: a `v*` tag builds and publishes a release; manual runs build a
+  test package.
+- `docs/guide/`: player guides (the only copy; the launcher's docs are for developers).
+  `docs/releases/`: release notes. `docs/screenshots/`: README pictures.
 
 ## Build
 
 ```sh
 bash runtime/build.sh            # the game (runtime/deps/ the first time: ~1 h)
 bash packaging/macos.sh          # the app and the DMG
-cd launcher/app && npm run tauri dev   # the launcher against runtime/ (npm run dev: browser preview)
+cd launcher && npm run tauri dev # the launcher against runtime/ (npm run dev: browser preview)
 ```
 
 ## Releases
 
-1. Bump the version in `launcher/app/package.json`, `package-lock.json` (two places),
-   `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
-2. Run the game from this build at least once (`runtime/tools/test_run.sh`), and the user approves.
-3. Commit, `git tag -a vX.Y.Z -m "..."`, push `main` and the tag; the workflow builds the DMG and
-   publishes the release. Check the run (`gh run list`) and the release's asset.
-
-Release notes say what changed for players. The README's screenshots come from the game
-(`runtime/tools/grab.sh`), in English, never from the user's screen.
+The maintainer chooses the number and approves the tests; ask before tagging. Steps in
+`docs/BUILDING.md#releasing`. Release notes say what changed for players. README screenshots
+come from the game (`runtime/tools/grab.sh`), in English, never from the user's screen.
 
 ## This machine (the user's Mac)
 
 - The game dump: `~/Downloads/PS4/Bloodborne/CUSA03173` (1.09 merged). The player's data:
-  `~/Library/Application Support/bloodborne_mac/` (never written by tests: `tools/test_run.sh`).
-- The clone is `~/projects/pablovsouza/bloodborne-mac` (VS Code workspace:
-  `~/projects/pablovsouza/bloodborne.code-workspace`). `runtime/deps/` is built there (about an
-  hour); its libraries record absolute paths, so a moved or copied `deps/` must be rebuilt
-  (`BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh` after removing `deps/macos-arm64`).
+  `~/Library/Application Support/bloodborne_mac/` (never written by tests).
+- The clone is `~/projects/bloodborne/bloodborne-mac` (VS Code workspace:
+  `~/projects/bloodborne/bloodborne.code-workspace`). `runtime/deps/` records absolute paths.
 - Metal System Traces need `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
-- **REA** (https://github.com/morluto/rea) is registered as an MCP server for Claude Code, with
-  the Ghidra provider (Ghidra 12.1.4, Java 21; `JAVA_HOME` and `GHIDRA_INSTALL_DIR` in
-  `~/.zshrc`): decompiling, cross-references and call graphs of the game's code
-  (`runtime/recomp/out/eboot.elf`, or `out/eboot.elf` after `runtime/run.sh`). The first
-  analysis of the 93 MB executable takes a long time. Its output is decompiled game code: use it
-  to understand, never commit it or paste it into docs, issues or wikis.
-- An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–62 FPS.
+- **REA** (https://github.com/morluto/rea) is an MCP server here with the Ghidra provider
+  (Ghidra 12.1.4, Java 21; `JAVA_HOME` and `GHIDRA_INSTALL_DIR` in `~/.zshrc`): decompiling,
+  cross-references and call graphs of `runtime/recomp/out/eboot.elf`. Its output is game code:
+  use it to understand, never commit it or paste it into docs, issues or wikis.
+- An Apple M3 Pro (18 GB): a healthy run in the Hunter's Dream is ~58–68 FPS.
+- The old `PabloVSouza/bloodborne_mac` repository only points to the four repositories.
 
-## Where things stand (2026-10-11)
+## Working rules (all four repositories)
 
-- Releases: up to v0.5.1 (bbport 0.51) on this repository.
-- Fixed in 0.5.1: the GPU assertion while loading (`Unimplemented PM4 type 0`; most loads in
-  Brazilian Portuguese): the main thread and GXRenderThread wrote one command buffer at once
-  (bloodborne-runtime CLAUDE.md, "Command buffers").
-- Known issue: in Yharnam, a black sky with streaks behind some gates and objects popping in (the
-  user's report, not investigated): bisect bbport's optimizations with the user watching.
-- bbport 0.51's online module (gpu/bbnet) is not built on macOS (deps/ lacks Protobuf,
-  nlohmann_json, OpenSSL): offline play.
-- The recompiler (bloodborne-recomp): every function generated and the game runs on them, at the
-  translator's frame rate but with 20–30% more CPU time (R3, speed, is next). Status and numbers:
-  bloodborne-recomp's wiki, Recompilation-status.
-- The native renderer (R5, in bloodborne-runtime `docs/NATIVE_RENDERER.md`): the engine's graphics
-  on each platform's own GPU API, multiplatform (Vulkan and Metal backends, never Metal-only).
-  Scoping done; next is N1, frame planning in today's renderer.
-- A new GPU assertion seen once (2026-10-11, after ~8,000 frames of a test run with a Metal
-  trace and a sample attached): "Unknown data_format=6 and num_format=1"; watch for it.
-- Wikis: all three repositories have one, built from their docs; keep them in step with the docs.
-- The old `PabloVSouza/bloodborne_mac` repository (a fork of bbport) only points to these three.
-
-## Working rules (all three repositories)
-
-- **The project is three repositories**, nested as submodules:
+- **The project is four repositories**, nested as submodules:
   [bloodborne-mac](https://github.com/bloodborne-native/bloodborne-mac) (the app) ⊃ `runtime/` =
   [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) ⊃ `recomp/` =
-  [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp). Commit in the repository
-  that owns the file, push it, then bump the submodule pointer in the parent (runtime → recomp,
-  mac → runtime) and push that too. Submodules are checked out at a commit (detached HEAD):
-  before editing inside `runtime/` or `runtime/recomp/`, run `git checkout main` (and
-  `git pull`) there. Separate clones of each repository side by side work the same way.
-- **Before any push, check `git remote get-url origin`** (a clone once still pointed at a local
-  repository and a force-push landed there). Push to `main`; ask before force-pushing anything
-  that existed before this session.
-- **Commits:** a short subject, a body that says what changed and why (numbers when measured), and
-  the trailer the session asks for (`Co-Authored-By: ...`).
-- **Credits:** this work is built on [bbport](https://github.com/deadinside28/bloodborne_pc) by
-  deadinside28 and on [shadPS4](https://github.com/shadps4-emu/shadPS4); keep them credited where
-  they are (README, docs/CREDITS.md, the wikis). Code taken from another project or fork is
-  credited in the same commit: CREDITS.md, the wiki's credits page, the commit message and a short
-  code comment.
+  [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp); the app also has
+  `launcher/` = [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher).
+  Commit in the repository that owns the file, push it, then bump the submodule pointer in the
+  parent and push that too. Submodules are checked out at a commit: run `git checkout main` (and
+  `git pull`) there before editing.
+- **Before any push, check `git remote get-url origin`.** Push to `main`; ask before
+  force-pushing anything that existed before this session.
+- **Commits:** a short subject, a body that says what changed and why (numbers when measured),
+  and the trailer the session asks for.
+- **Credits:** built on [bbport](https://github.com/deadinside28/bloodborne_pc) by deadinside28
+  and on [shadPS4](https://github.com/shadps4-emu/shadPS4); keep them credited. Code taken from
+  another project or fork is credited in the same commit: CREDITS.md, the wiki's credits page,
+  the commit message and a short code comment.
 - **No game code, ever:** no decompiled or generated game code, no game files, no records of game
-  memory in any repository. Docs and wikis talk about the recompiler only (not about decompiled
-  code or private folders).
-- **Testing the game:** run it in the background with `runtime/tools/test_run.sh NAME [VAR=...]`
-  (bloodborne-runtime's `tools/test_run.sh`): it copies the player's save first and never touches
-  the real one. Check `pgrep -x bb-probe` first; one game at a time. Test windows open on the
-  user's screen: say so before long batches of runs (bisections), and stop when asked.
-- **Never capture the user's screen.** Pictures come from the game itself: `tools/grab.sh NAME`
-  (its frame) or `tools/grab.sh --screen NAME` (with the in-game menu). Screenshots in English
-  (`BB_LANGUAGE=1 BB_UI_LANGUAGE=en`).
-- **Shell:** no `rm -rf` on variable paths (literal paths only); no `xargs ... sh -c '...'` (write
-  a script file instead).
-- **Docs:** plain, precise English; numbers measured, not guessed. When a milestone or a measured
-  number changes, update the docs and the wiki status pages (progress bars: 20 blocks, one per 5%).
+  memory in any repository or wiki.
+- **Test language:** English for game, launcher and overlay tests (`BB_LANGUAGE=1
+  BB_UI_LANGUAGE=en`), unless the maintainer asks for a language-specific investigation.
+- **Testing the game:** `runtime/tools/test_run.sh NAME [VAR=...]` (a copy of the save; the real
+  one is never written), one game at a time (`pgrep -x bb-probe` first). Test windows open on the
+  user's screen: say so before long batches, and stop when asked.
+- **Never capture the user's screen.** Pictures come from the game: `tools/grab.sh`.
+- **Shell:** no `rm -rf` on variable paths; no `xargs ... sh -c '...'`.
+- **Docs:** plain, precise English; numbers measured, not guessed. Docs say what is true now;
+  investigation logs do not go in docs (conclusions do). The wiki mirrors the docs; update both.
+  Progress bars: 20 blocks, one per 5%.

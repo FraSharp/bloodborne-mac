@@ -1,0 +1,60 @@
+# Building and releasing
+
+[← Documentation](README.md)
+
+## Requirements
+
+- A Mac with Apple Silicon (macOS 15 or newer recommended).
+- Xcode Command Line Tools and [Homebrew](https://brew.sh):
+
+  ```bash
+  brew install bash pkgconf glslang nasm cmake ninja
+  ```
+
+- Node 22+ and Rust (for the launcher).
+- A game folder prepared as in [Game files](guide/game-files.md).
+
+## Build
+
+```bash
+git clone --recursive https://github.com/bloodborne-native/bloodborne-mac.git
+cd bloodborne-mac
+bash runtime/build.sh                 # the game; the first run builds runtime/deps/ (about an hour)
+bash packaging/macos.sh               # Bloodborne.app and its DMG in dist/
+cd launcher && npm run tauri dev      # the launcher against runtime/ (npm run dev: browser preview)
+```
+
+- Run the game without the app: `BB_GAME_DIR=/path/to/game bash runtime/run.sh`. The runtime's
+  [building guide](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/BUILDING.md)
+  has the environment, the test runners and how to measure.
+- The launcher's [README](../launcher/README.md) has its stack, conventions and checks.
+- `runtime/deps/` records absolute paths: after moving the checkout, remove
+  `runtime/deps/macos-arm64` and `runtime/out/gpu-arm64`, then
+  `BB_ARCH=arm64 bash runtime/scripts/macos/build-deps.sh` and `bash runtime/build.sh --test`. Never
+  move or reset the player's data folder to fix a build. Packaged apps do not depend on the
+  checkout's location.
+
+## Working across the repositories
+
+`launcher/`, `runtime/` and `runtime/recomp/` are submodules, checked out at a commit. Before
+editing one, `git checkout main && git pull` inside it. Commit and push there first, then commit
+the new pointer in its parent (recomp → runtime → app; launcher → app) and push that.
+
+## Releasing
+
+App versions are this project's own; bbport's version only records imported compatibility. The
+maintainer chooses the number. The app and the bundled launcher always have the same version, so
+update checks compare correctly.
+
+1. Bump the version in the launcher: `package.json`, `package-lock.json` (two places),
+   `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock`, `src-tauri/tauri.conf.json`.
+2. Write `docs/releases/vX.Y.Z.md`: what changed for players, known issues, how to install.
+3. Test this build: copied-save gameplay (`runtime/tools/test_run.sh`) and a new save through the
+   opening video (`runtime/tools/test_opening_video.sh`); the maintainer approves.
+4. Commit and push `main`, run the workflow on it (`gh workflow run macos.yml --ref main`; pushes do
+   not build) and check that it passes.
+5. `git tag -a vX.Y.Z -m "..."` and push the tag: `.github/workflows/macos.yml` builds the DMG and
+   publishes the release with the notes. Check the run (`gh run list`) and the release's asset.
+
+README screenshots come from the game (`runtime/tools/grab.sh`, in English), never from the
+screen; launcher screenshots from its browser preview with mock data.

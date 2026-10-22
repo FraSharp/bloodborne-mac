@@ -1,14 +1,14 @@
 # Builds the game (the runtime/ submodule, bloodborne-runtime, with bloodborne-recomp inside it) for
 # Apple Silicon and packages it with the launcher as Bloodborne.app in a DMG (packaging/macos.sh).
-# Every push to main and every pull request: the package as a workflow artifact.
 # A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package.
+# A manual run (Actions → macOS → Run workflow, or gh workflow run macos.yml): the package as a
+# workflow artifact, e.g. a test build or a check of main before tagging. Pushes do not build:
+# the runtime and launcher have their own CI, and most pushes here are docs or pointer bumps.
 name: macOS
 
 on:
   push:
-    branches: [main]
     tags: ['v*']
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -41,22 +41,24 @@ jobs:
       - name: Tools
         run: brew install bash pkgconf glslang nasm cmake ninja
 
-      # The launcher (launcher/app): Tauri needs Node and Rust.
+      # The launcher (launcher): Tauri needs Node and Rust.
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: launcher/app/package-lock.json
+          cache-dependency-path: launcher/package-lock.json
 
       - uses: Swatinem/rust-cache@v2
         with:
-          workspaces: launcher/app/src-tauri
+          workspaces: launcher/src-tauri
 
       - name: Launcher checks
-        working-directory: launcher/app
+        working-directory: launcher
         run: |
           npm ci
           npm run check
+          cargo test --manifest-path src-tauri/Cargo.toml
+          cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
 
       # The libraries build-deps.sh builds (MoltenVK, SDL3, FFmpeg, ...): ~1 h without the cache.
       - name: Dependency cache
@@ -85,6 +87,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          notes="docs/releases/${GITHUB_REF_NAME}.md"
+          if [[ ! -f $notes ]]; then
+            notes=notes.md
           cat > notes.md <<'EOF'
           Bloodborne for Apple Silicon: open the DMG and drag **Bloodborne** to Applications.
           Nothing else to install. **No game files are included**: you need your own dump of
@@ -95,5 +100,6 @@ jobs:
           choose **Open** (or System Settings → Privacy & Security → Open Anyway). See
           `First start.txt` in the DMG.
           EOF
+          fi
           gh release create "$GITHUB_REF_NAME" "$PACKAGE" --title "bloodborne-mac $GITHUB_REF_NAME" \
-            --notes-file notes.md --generate-notes
+            --notes-file "$notes"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # macOS: packages the current build (bash runtime/build.sh first) as Bloodborne.app in
 # dist/bloodborne_mac-<version>-<arch>.dmg. No game files are included. The app needs nothing
-# installed: the Tauri launcher (launcher/app, built here with npm and cargo) carries the game,
+# installed: the Tauri launcher (launcher/, built here with npm and cargo) carries the game,
 # bash, Python and the libraries.
 #   Contents/MacOS/             bloodborne-launcher, bb-probe, bb-gpu-capabilities, bash
 #   Contents/Frameworks/        libbbgpu, MoltenVK, Vulkan loader, SDL3, FFmpeg
@@ -32,15 +32,29 @@ short_version=$(sed -E 's/^v//; s/[^0-9.].*$//' <<< "$version"); [[ -n $short_ve
 name=bloodborne_mac-$version-$arch
 work=dist/$name
 app=$work/Bloodborne.app
-rm -rf "$work" "dist/$name.dmg"
+# Limit cleanup to direct children of dist; unlink symlinks rather than following them.
+python3 - "$work" "dist/$name.dmg" <<'CLEANUP'
+from pathlib import Path
+import shutil, sys
+root = Path("dist").resolve()
+for value in sys.argv[1:]:
+    path = Path(value)
+    if path.parent.resolve() != root or not path.name.startswith("bloodborne_mac-"):
+        raise SystemExit("Invalid packaging output path")
+    if path.is_symlink() or path.is_file():
+        path.unlink()
+    elif path.exists():
+        shutil.rmtree(path)
+CLEANUP
 mkdir -p "$work"
 macos=$app/Contents/MacOS
 frameworks=$app/Contents/Frameworks
 game=$app/Contents/Resources/game
 
 # The launcher (Tauri: React interface, Rust backend), the bundle the rest goes into.
-(cd launcher/app && { [[ -d node_modules ]] || npm ci; } && npx tauri build --bundles app)
-cp -R launcher/app/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
+cmp runtime/gpu/shim/trophy_catalog.json launcher/src/lib/trophy-text/trophy_catalog.json
+(cd launcher && { [[ -d node_modules ]] || npm ci; } && npx tauri build --bundles app)
+cp -R launcher/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
 plutil -replace CFBundleShortVersionString -string "$short_version" "$app/Contents/Info.plist"
 plutil -replace CFBundleVersion -string "$version" "$app/Contents/Info.plist"
 mkdir -p "$frameworks" "$game/share/vulkan/icd.d"
@@ -115,7 +129,9 @@ Bloodborne for Apple Silicon ($version)
 2. The first time, right-click Bloodborne and choose Open, then Open again (the app is not
    signed with an Apple Developer ID). If macOS still refuses: System Settings → Privacy &
    Security → Open Anyway. Or, in Terminal: xattr -dr com.apple.quarantine /Applications/Bloodborne.app
-3. Choose your Bloodborne dump (version 1.09; any edition with the same executable) and press Play.
+3. Create your first profile when prompted. Updates adopt existing saves into that profile;
+   additional profiles start with new saves.
+4. Choose your Bloodborne dump (version 1.09; any edition with the same executable) and press Play.
    Graphics, controls (controller choice and button mapping), mods and patches are in the
    launcher's tabs.
    The first start compiles the game's shaders and takes a few minutes.
