@@ -85,7 +85,11 @@ and about **44 FPS** in the clinic at the start of the game
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
-**New in 0.8.1:** the repeatable GX worker crash with live dynamic shadows is fixed on Metal and
+**New in 0.8.2:** clothing lighting at high render resolutions no longer disappears after texture
+collection. The fix was checked at native 1440p on Metal and MoltenVK.
+[0.8.2 release notes](docs/releases/v0.8.2.md).
+
+**From 0.8.1:** the repeatable GX worker crash with live dynamic shadows is fixed on Metal and
 MoltenVK; a rejected tessellation pipeline no longer makes the shader cache rebuild every launch;
 and **MetalFX (Apple)** is an optional macOS upscaler. The big FPS overlay shows MetalFX and its
 render resolution. [0.8.1 release notes](docs/releases/v0.8.1.md).
@@ -98,9 +102,8 @@ rate that keeps physics right at any speed, effects that switch without a restar
 (16:10, 21:9, ...) and keyboard and mouse in Dark Souls III's layout. See
 [Release notes](docs/releases/v0.8.0.md).
 
-**Known issues:** characters are drawn black when the game renders more than about 3.5 million
-pixels (1440p without an upscaler, 4K with Quality); use a preset that renders less. See
-[Troubleshooting](docs/guide/troubleshooting.md#known-issues).
+**Known issues:** brief FPS dips and visual faults in the experimental Metal renderer are still
+under investigation. See [Troubleshooting](docs/guide/troubleshooting.md#known-issues).
 
 ## Documentation
 

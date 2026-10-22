@@ -42,6 +42,7 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 | Problem | Fixed in |
 |---|---|
+| Character clothing lost its lighting at native 1440p after texture collection | 0.8.2 |
 | A GX worker crash during loading or turning in the level, on Metal or MoltenVK | 0.8.1 |
 | The shader cache rebuilt at every launch after a tessellation shader failed | 0.8.1 |
 | The game stopped with "Lost VkDevice ... Invalid Resource" (`VK_ERROR_OUT_OF_DEVICE_MEMORY`), mostly with character motion vectors on | 0.8.0 |
