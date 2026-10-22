@@ -77,19 +77,6 @@
 
 The [installation guide](docs/guide/installation.md) has the details.
 
-### AMD FSR 4 / 4.1.1 (Metal) Requirements
-
-The app includes native Apple Silicon Metal support for AMD FSR 4 and FSR 4.1.1 (neural upscaling). To use FSR 4 / 4.1.1 on macOS:
-
-- **Apple Silicon Mac** (M1 or newer; M5 features native matrix acceleration, M1–M4 use the SIMD FP16 fallback).
-- **Metal Toolchain component**: Xcode 26+ with the Metal Toolchain installed. In Terminal, run:
-  ```sh
-  xcodebuild -downloadComponent MetalToolchain
-  ```
-- **Python 3** available on your system.
-
-Select **AMD FSR 4.1.1 (Metal)** or **AMD FSR 4.0** in the launcher's **Graphics** tab or in the in-game settings menu.
-
 ## Status
 
 **Experimental, playable.** The game boots, loads saves and plays with sound, controllers and

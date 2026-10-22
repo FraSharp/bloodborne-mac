@@ -109,6 +109,8 @@ cp -R "$runtime/scripts" "$runtime/patches" "$game/"
 # AMD's initializers stay with the player).
 if [[ -d $runtime/out/fsr4_metal ]]; then
     rsync -a --exclude .built "$runtime/out/fsr4_metal/" "$game/fsr4_metal/"
+    mkdir -p "$game/tools"
+    cp "$runtime/tools/fsr4_metal_initializers.sh" "$game/tools/"
 fi
 cp -R "$deps/app-runtime/python" "$app/Contents/Resources/python"
 find "$app" -name __pycache__ -type d -prune -exec rm -rf {} +
