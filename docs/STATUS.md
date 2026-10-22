@@ -37,8 +37,8 @@ has a different signature and is not confirmed fixed; a nearby save is needed to
 The [FSR 3.1 dark picture on an M5](https://github.com/bloodborne-native/bloodborne-mac/issues/2)
 is also unconfirmed: the reported resolution and upscaler settings rendered normally on this M3
 Pro in both 0.8.0 and current main. The reporter's check on 0.8.2 is needed.
-Brief FPS drops reported in play remain to be measured with frame logs. Check the frame-rate
-hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a save near it).
+Check the frame-rate hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a
+save near it).
 
 **Metal renderer, next.** Resources created in Metal (images, views, samplers, buffers, the
 guest pool), each behind a switch and measured; then MoltenVK can be left out. Shaders ahead of

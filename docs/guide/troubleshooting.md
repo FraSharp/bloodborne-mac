@@ -29,7 +29,6 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 ## Known issues
 
-- **Brief FPS dips** are under investigation.
 - **The opening video** can show a short white flash; it plays to the end.
 - **Blood stains** can look pale with bright edges, and one enemy's body was seen drawn as
   colour noise.
