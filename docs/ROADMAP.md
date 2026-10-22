@@ -31,6 +31,8 @@ Landed in runtime `63f043a` (2026-10-19); each fix logs when it acts.
 - [x] **A flip IRQ ahead of its label** waits briefly instead of stopping (fork `76f5b5f`, from Awaken).
 - [x] Two copied-save playtests with lamp travel and fights: no fault, none of the fallbacks fired.
 - [ ] Release notes (next release).
+- [x] Trophy notifications draw in the game's ImGui overlay after a persisted unlock; the
+  launcher only records and lists trophies (runtime and launcher main, 2026-10-22).
 
 ## 2. GPU crash with character motion vectors
 

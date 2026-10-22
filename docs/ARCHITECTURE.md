@@ -9,7 +9,7 @@ How the app is put together. Each part has its own docs; this page says which pa
 | Repository | Here as | What it does |
 |---|---|---|
 | **bloodborne-mac** (this one) | | Packages the macOS app and its DMG, publishes releases, holds the player guides and the roadmap |
-| [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher) | `launcher/` | The launcher (Tauri: React and Rust): profiles, saves, settings, mods, patches, starting the game; and the trophy notification helper |
+| [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher) | `launcher/` | The launcher (Tauri: React and Rust): profiles, saves, settings, mods, patches, starting the game and tracking trophies |
 | [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | `runtime/` | Runs the game: loads its executable, provides the PS4 system libraries, draws its graphics (Vulkan on MoltenVK, or Metal directly) |
 | [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) | `runtime/recomp/` | bbcpu, which runs the game's x86-64 code on arm64, and the recompiler that turns it into native code ahead of time |
 
@@ -22,7 +22,7 @@ port this project started from, and on [shadPS4](https://github.com/shadps4-emu/
 
 | In the bundle | |
 |---|---|
-| `Contents/MacOS/` | the launcher, the notification helper, `bb-probe` (the game), `bb-gpu-capabilities`, bash |
+| `Contents/MacOS/` | the launcher, `bb-probe` (the game), `bb-gpu-capabilities`, bash |
 | `Contents/Frameworks/` | the runtime's GPU library, MoltenVK, the Vulkan loader, SDL3, FFmpeg |
 | `Contents/Resources/game/` | `run.sh`, the runtime's scripts and patches, the Vulkan driver manifest |
 | `Contents/Resources/python/` | a standalone Python 3 |
@@ -40,7 +40,8 @@ macOS asks the player to allow it once). Nothing else needs installing.
    the game folder is never changed), sizes memory for the output, and starts `bb-probe`.
 4. The game runs through bbcpu (or the recompiled library), on the runtime's PS4 libraries and
    renderer. While it runs, the launcher and the in-game menu exchange setting changes over the
-   game's standard streams, and the launcher imports trophy unlocks.
+   game's standard streams. The game shows trophy notices in its overlay; the launcher imports
+   recorded unlocks.
 5. The launcher hides to the menu bar during the game and comes back when it exits.
 
 Details: the runtime's [architecture](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/ARCHITECTURE.md);

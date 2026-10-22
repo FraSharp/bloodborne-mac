@@ -78,8 +78,8 @@ By default the launcher hides to the menu bar while the game runs and comes back
 Its menu-bar icon has **Show launcher** and **Stop game**. To keep the launcher and its Log tab
 visible, turn off Advanced → Launcher → **Hide launcher during gameplay**.
 
-**Trophy notifications** (Advanced → Launcher, on by default) appear over the game when you earn
-a trophy, only while the game is in front. Turning them off saved about 2 FPS in one test.
+**Trophy notifications** (Advanced → Launcher, on by default) appear in the game's own overlay
+when you earn a trophy. The launcher still records trophies when notifications are off.
 
 ## Languages
 

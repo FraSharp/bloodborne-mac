@@ -25,6 +25,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
 | Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
 | High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs |
+| Trophy notifications | The game draws notices in its ImGui overlay after a persisted unlock; the launcher imports and lists unlocked trophies |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads
@@ -70,7 +71,5 @@ dependencies in `deps/`, its hooks on our base, and the maintainer's decision on
 - Test games are background-only apps (`SDL_MAC_BACKGROUND_APP=1`): they never become the active
   app, so focus and Cmd+Q behave unlike a launcher game. `BB_BENCH_FOREGROUND=1` for a test the
   maintainer plays in.
-- The notification helper's debug build loads its page from the launcher's dev server (port
-  5173).
 - The runtime's Linux and macOS CI run on every push and cancel older runs; wait for a run whose
   result matters before pushing again.
