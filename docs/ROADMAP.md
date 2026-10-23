@@ -162,7 +162,8 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [x] The [render adapter](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/RENDER_ADAPTER.md)
     specified and approved: the project's own GPU interface, with Vulkan and Metal backends,
     replacing the Metal interception layer.
-  - [ ] Adapter A0–A6: the renderer moved onto it with the Vulkan backend, each step measured.
+  - [x] Adapter A0–A6: the renderer moved onto it with the Vulkan backend, each step measured
+    (runtime `d6e8199`).
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
     out on macOS.
   - [ ] Pipelines created in Metal own their shaders, and unused shaders are freed. Today the
