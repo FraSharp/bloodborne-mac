@@ -9,6 +9,7 @@ The plan as a checklist is the [roadmap](ROADMAP.md).
 
 | Version | Highlights |
 |---|---|
+| 0.8.3 | Mods and Patches pages fixed; character editing in every language; optional FSR 4.1.1 on Metal; trophy notices drawn by the game; instanced tessellated draws on Metal |
 | 0.8.2 | High-resolution character lighting fixed after texture collection |
 | 0.8.1 | GX worker crash fixed; MetalFX option; tessellation shader and recurring shader-cache rebuild fixed |
 | 0.8.0 | Motion-vector crash fixed; settings shared with the in-game menu; outputs above 1080p; the experimental Metal renderer; FPS counter sizes; memory estimate; trophy notices only over the game |
