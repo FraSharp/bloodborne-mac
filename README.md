@@ -32,6 +32,8 @@
   <a href="docs/README.md">Documentation</a>
   ·
   <a href="https://github.com/bloodborne-native/bloodborne-mac/issues">Report a problem</a>
+  ·
+  <a href="https://discord.gg/EyyQ23sTBg">Discord</a>
 </p>
 
 <p align="center">
