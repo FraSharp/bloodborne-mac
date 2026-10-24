@@ -165,7 +165,8 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [x] Adapter A0–A6: the renderer moved onto it with the Vulkan backend, each step measured
     (runtime `d6e8199`).
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
-    out on macOS.
+    out on macOS. M1 done (runtime `4ca9561`); M2 step 1, all shared recording through the
+    adapter, done (runtime `1dda5fb`).
   - [ ] Pipelines created in Metal own their shaders, and unused shaders are freed. Today the
     shadow layer keeps every compiled shader for the session (runtime `e0348c2`), because Metal
     pipelines point at shaders that Vulkan handles may outlive or reuse.
