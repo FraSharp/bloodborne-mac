@@ -167,9 +167,10 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
     out on macOS. M1 done (runtime `4ca9561`); M2 step 1, all shared recording through the
     adapter, done (runtime `1dda5fb`).
-  - [ ] Pipelines created in Metal own their shaders, and unused shaders are freed. Today the
-    shadow layer keeps every compiled shader for the session (runtime `e0348c2`), because Metal
-    pipelines point at shaders that Vulkan handles may outlive or reuse.
+  - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
+    Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
+    modules or pipelines. The compiled forms stay for the session (the session's Metal
+    pipelines point into them, and the pipeline cache keeps every program anyway).
 - [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
 
 ## 6. Visual bugs
