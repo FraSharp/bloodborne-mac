@@ -24,9 +24,11 @@ project it is based on.
 Changes taken from other ports of bbport, with thanks (details and commits in the runtime's
 [credits](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/CREDITS.md)):
 
-- [**Wooloomooloo2/bloodborne_mac_port**](https://github.com/Wooloomooloo2/bloodborne_mac_port)
-  and [**Huax-1839/bloodborne-macos**](https://github.com/Huax-1839/bloodborne-macos): the Metal
-  renderer's shader compiler, pipeline cache, command layer and frame encoder.
+- [**Huax-1839/bloodborne-macos**](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54):
+  the direct Metal renderer's shader compiler and rewrites, pipeline-state cache and
+  Vulkan-to-Metal format/state tables, adapted here through Wooloomooloo2's port.
+- [**Wooloomooloo2/bloodborne_mac_port**](https://github.com/Wooloomooloo2/bloodborne_mac_port):
+  further Metal integration and development, including the command layer and frame encoder.
 - [**Supermedo/bloodborne_pc**](https://github.com/Supermedo/bloodborne_pc): trophy event
   persistence and robustness fixes.
 - [**MaSieS4Fun/ARM_bloodborne_pc**](https://github.com/MaSieS4Fun/ARM_bloodborne_pc) and

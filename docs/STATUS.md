@@ -60,8 +60,9 @@ the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and
 submissions are committed in Metal (~335 a second; the presenter's fenced one still goes
 through MoltenVK). Next: the rest of the skeleton (the presenter's fence, command buffers'
 begin and end, debug labels), then the acceptance run (step 5).
-Shaders ahead of time follow (N2). The fork we adapt from is
-[Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
+Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
+tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
+through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
 **Recompiled code speed (R3).** The library runs the whole game but takes 20–30% more CPU than

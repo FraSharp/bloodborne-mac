@@ -133,7 +133,7 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [ ] **An external FPS patch** replaces the built-in preset (fork `8042500`).
 - [ ] **Field of view; mute in the background** (fork `b75e811`).
 
-## 5. From the Wooloomooloo2 macOS fork (each measured on our build first)
+## 5. From the Huax-1839 and Wooloomooloo2 macOS ports (each measured on our build first)
 
 - [ ] **MoltenVK without Metal argument buffers** (`MVK_CONFIG_USE_METAL_ARGUMENT_BUFFERS=0`):
   +13–16% FPS there. A/B uncapped and capped.
@@ -146,8 +146,8 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [ ] **Draw-list task lock** (stuck loading screen): check whether our command-buffer guard
   covers the render thread's draw-list task as a whole.
 - [ ] **Character-name entry in fullscreen** (IME text box, Noel Miller): check ours first.
-- [ ] **Native renderer (R5):** their Metal renderer (0.5.x: no MoltenVK; partly from
-  Huax-1839/bloodborne-macos, GPL-2.0) is adapted into our Metal backend where it fits the
+- [ ] **Native renderer (R5):** Huax-1839's direct Metal renderer, further developed in
+  Wooloomooloo2's 0.5.x Metal port (GPL-2.0-or-later), is adapted into our backend where it fits the
   multiplatform design (an adapter per graphics API): the SPIR-V to MSL compiler and its rect-list,
   tessellation and geometry rewrites, the pipeline cache with a binary archive, the format and
   state tables, FidelityFX on Metal. Credited in the commits that bring the code.
@@ -171,7 +171,7 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
     pipelines point into them, and the pipeline cache keeps every program anyway).
-- [ ] Later: DiAvisoo/bbport-mac-optimized and Huax-1839/bloodborne-macos, which they cite.
+- [ ] Later: review other ideas from DiAvisoo/bbport-mac-optimized separately.
 
 ## 6. Visual bugs
 
