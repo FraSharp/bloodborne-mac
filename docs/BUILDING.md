@@ -54,7 +54,10 @@ update checks compare correctly.
 4. Commit and push `main`, run the workflow on it (`gh workflow run macos.yml --ref main`; pushes do
    not build) and check that it passes.
 5. `git tag -a vX.Y.Z -m "..."` and push the tag: `.github/workflows/macos.yml` builds the DMG and
-   publishes the release with the notes. Check the run (`gh run list`) and the release's asset.
+   publishes the release with the notes, then posts it to the Discord server's `#releases`
+   (`packaging/discord_release.py`: the notes' heading, their "What's new" list and known issues;
+   the `DISCORD_RELEASES_WEBHOOK` secret). Check the run (`gh run list`), the release's asset and
+   the post. `DRY_RUN=1 python3 packaging/discord_release.py vX.Y.Z` shows the post beforehand.
 
 README screenshots come from the game (`runtime/tools/grab.sh`, in English), never from the
 screen; launcher screenshots from its browser preview with mock data.
