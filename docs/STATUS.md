@@ -56,10 +56,9 @@ same frame time. M2's first step is done: everything both backends run records t
 adapter, at M1's speed (4.04–4.17 µs per draw against 4.05–5.01). With the Metal frame
 (`BB_METAL_FRAME=1`) the commands are now encoded into Metal directly (step 2), pipelines and
 shaders are built only in Metal (step 3), the window is presented and drawn through Metal with
-the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and the frame's
-submissions are committed in Metal (~335 a second; the presenter's fenced one still goes
-through MoltenVK). Next: the rest of the skeleton (the presenter's fence, command buffers'
-begin and end, debug labels), then the acceptance run (step 5).
+the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and every
+submission is committed in Metal (~433 a second, none through MoltenVK). Next: the acceptance
+run (step 5).
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
 tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
