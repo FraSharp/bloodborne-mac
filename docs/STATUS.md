@@ -66,8 +66,10 @@ tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/blood
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
-**Recompiled code speed (R3).** The library runs the whole game but takes 20–30% more CPU than
-the translator. Candidates are listed in bloodborne-recomp's CLAUDE.md. The launcher does not
+**Recompiled code speed (R3).** The library runs the whole game at about the translator's CPU
+time: 420% of one core against 428% in the Hunter's Dream (bloodborne-recomp #7 and #8,
+2026-10-24); 340% against 327% at the test save's place, where main's library took 397%. Making
+it cheaper than the translator is next; candidates are listed in bloodborne-recomp's CLAUDE.md. The launcher does not
 offer it yet (a "CPU: Translator / Recompiled" option is a candidate).
 
 **Watch list.** A short white flash in the opening video and an enemy's body drawn as colour
