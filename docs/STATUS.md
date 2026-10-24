@@ -57,8 +57,10 @@ adapter, at M1's speed (4.04–4.17 µs per draw against 4.05–5.01). With the 
 (`BB_METAL_FRAME=1`) the commands are now encoded into Metal directly (step 2), pipelines and
 shaders are built only in Metal (step 3), the window is presented and drawn through Metal with
 the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and every
-submission is committed in Metal (~433 a second, none through MoltenVK). Next: the acceptance
-run (step 5).
+submission is committed in Metal (~433 a second, none through MoltenVK). Step 5's automated
+runs passed: 36.2 FPS on the Metal frame against 27.6 on MoltenVK (FSR 3.1 Balanced, the test
+save's place) and a 10-minute session without faults. Next: the maintainer's play session on a
+copied save closes M2; then M3 (MetalFX without copies, FSR 3.1 ported to Metal).
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
 tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
