@@ -53,8 +53,11 @@ build (M1–M4). A0–A6 are done: the renderer runs on the adapter with the Vul
 frames, the swapchain interface and the upscalers' images). M1 is done too: with
 `BB_GFX_BACKEND=metal` every buffer and image is made in Metal and handed to MoltenVK, at the
 same frame time. M2's first step is done: everything both backends run records through the
-adapter, at M1's speed (4.04–4.17 µs per draw against 4.05–5.01). Next: a Metal command
-stream. Shaders ahead of time follow (N2). The fork we adapt from is
+adapter, at M1's speed (4.04–4.17 µs per draw against 4.05–5.01). With the Metal frame
+(`BB_METAL_FRAME=1`) the commands are now encoded into Metal directly (step 2), pipelines and
+shaders are built only in Metal (step 3), and the window is presented through Metal (step 4,
+first part). Next: the presenter's and upscalers' own passes on Metal, then Metal submissions.
+Shaders ahead of time follow (N2). The fork we adapt from is
 [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
