@@ -59,9 +59,10 @@ Advanced options apply at the next start.
 - **Output above 1080p:** use an upscaler preset; the memory estimate (Graphics, and the menu)
   shows what the game will use against your Mac's memory, in amber above three quarters of it.
   Without an upscaler above 1440p, characters are drawn black (a known issue).
-- **Renderer** (Advanced → Performance): MoltenVK is the default. **Metal (experimental)** draws
-  with Apple's Metal directly and is about 25–30% faster at native 1080p on an M3 Pro (about 39
-  against 31 FPS in the same place); switch back if anything looks wrong.
+- **Renderer** (Advanced → Performance): **Metal**, the default, draws with Apple's Metal directly
+  and is about 25–30% faster than MoltenVK at native 1080p on an M3 Pro (about 39 against 31 FPS
+  in the same place). MoltenVK stays available while Metal is new; switch to it if anything looks
+  wrong, and report it.
 
 See [Performance](performance.md).
 
