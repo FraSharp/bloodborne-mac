@@ -62,7 +62,11 @@ submission is committed in Metal (~433 a second, none through MoltenVK). **M2 is
 the test save's place), and a 3.4-hour new game at native 1080p without faults. **M3**
 is done: the upscaler is off by default (no upscaler beat native 1080p), and the Metal renderer
 offers MetalFX only; FSR 3.1, FSR 4.1.1 and DLSS stay with the Vulkan backend for other
-platforms. Next: M4, Metal by default and MoltenVK out of the macOS build.
+platforms. **M4** is in progress: Metal is the default renderer on Apple Silicon (MoltenVK
+selectable), buffers and images are made in Metal, and no Vulkan call reaches MoltenVK per frame
+any more (an inventory, `BB_METAL_INVENTORY=1`, counts what still does: image views and the
+device, made once). A leak of Metal-made images' textures is fixed. Next: images and views made
+only in Metal, then the macOS build without MoltenVK.
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
 tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
