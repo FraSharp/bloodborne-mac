@@ -165,8 +165,9 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [x] Adapter A0–A6: the renderer moved onto it with the Vulkan backend, each step measured
     (runtime `d6e8199`).
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
-    out on macOS. M1 done (runtime `4ca9561`); M2 step 1, all shared recording through the
-    adapter, done (runtime `1dda5fb`).
+    out on macOS. M1 done (runtime `4ca9561`). M2 done (runtime `555ec75`, accepted
+    2026-10-25): with the Metal frame every command, pipeline, present and submission is
+    Metal's. Next M3: MetalFX without copies, FSR 3.1 ported to Metal.
   - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
@@ -177,6 +178,9 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 
 - [ ] **Blood on already killed enemies after a save reload** can be pale with bright edges
   instead of dark red. The cause has not been isolated.
+- [ ] **The camera after in-game cutscenes** sometimes starts in front of the character instead of
+  behind (e.g. waking at the table in the clinic after the character creation). It happens on
+  builds before the render adapter's M2 too; the cause has not been isolated.
 
 ## 7. Launcher and tooling
 
