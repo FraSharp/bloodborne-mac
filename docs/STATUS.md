@@ -60,7 +60,8 @@ the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and
 submission is committed in Metal (~433 a second, none through MoltenVK). **M2 is done**
 (accepted 2026-10-25): 36.2 FPS on the Metal frame against 27.6 on MoltenVK (FSR 3.1 Balanced,
 the test save's place), and a 3.4-hour new game at native 1080p without faults. Next: M3
-(MetalFX without copies, FSR 3.1 ported to Metal).
+(MetalFX without copies; MetalFX is the Metal backend's only upscaler, and FSR 3.1, FSR 4.1.1
+and DLSS stay with the Vulkan backend for other platforms).
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
 tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)

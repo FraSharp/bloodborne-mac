@@ -167,7 +167,8 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
     out on macOS. M1 done (runtime `4ca9561`). M2 done (runtime `555ec75`, accepted
     2026-10-25): with the Metal frame every command, pipeline, present and submission is
-    Metal's. Next M3: MetalFX without copies, FSR 3.1 ported to Metal.
+    Metal's. Next M3: MetalFX without copies, the Metal backend's only upscaler (FSR stays with
+    the Vulkan backend, for other platforms).
   - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
