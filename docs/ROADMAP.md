@@ -167,13 +167,17 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
   - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
     out on macOS. M1 done (runtime `4ca9561`). M2 done (runtime `555ec75`, accepted
     2026-10-25): with the Metal frame every command, pipeline, present and submission is
-    Metal's. Next M3: MetalFX without copies, the Metal backend's only upscaler (FSR stays with
-    the Vulkan backend, for other platforms).
+    Metal's. M3 done: the upscaler off by default, MetalFX the Metal backend's only upscaler
+    (FSR stays with the Vulkan backend, for other platforms). Next M4.
   - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
     pipelines point into them, and the pipeline cache keeps every program anyway).
 - [ ] Later: review other ideas from DiAvisoo/bbport-mac-optimized separately.
+- [ ] Later: improve MetalFX performance. It is slower than native 1080p today (33.5 against 39.0
+  FPS, Balanced, Metal renderer): it runs through the bridge written for MoltenVK, with copies, a
+  second Metal queue and CPU waits. A MetalFX native to the Metal backend, encoded in the frame's
+  own command buffer on its textures, removes them (runtime docs/RENDER_ADAPTER.md).
 
 ## 6. Visual bugs
 

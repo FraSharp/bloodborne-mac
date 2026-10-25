@@ -44,9 +44,10 @@ Advanced options apply at the next start.
 
 ## Recommended settings
 
-- **Upscaler:** off (native resolution). In current builds FSR 3.1 is slower than native 1080p
-  on a Mac, on both renderers ([performance](performance.md)).
-- **AMD FSR 4.1.1 (Metal):** AMD's neural upscaler (its Lite model), run on the Mac's GPU. It
+- **Upscaler:** off (native resolution), the default. In current builds the upscalers are slower
+  than native 1080p on a Mac ([performance](performance.md)). With the Metal renderer the only
+  upscaler is MetalFX; FSR 3.1 and FSR 4.1.1 are for the MoltenVK renderer.
+- **AMD FSR 4.1.1 (Metal), MoltenVK renderer only:** AMD's neural upscaler (its Lite model), run on the Mac's GPU. It
   costs more than FSR 3.1: on an M3 Pro at 1080p output (Balanced), 4.8 ms of GPU time a frame,
   about 40 instead of 46 FPS. It suits Macs with frame-rate headroom, or a 30 FPS limit. It needs
   two files of AMD's model from your own copy of AMD's upscaler DLL

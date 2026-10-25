@@ -11,6 +11,7 @@ Measured on an Apple M3 Pro (18-core GPU, 18 GB) with a 1080p output, on the cur
 | The same | MoltenVK | FSR 3.1 *Balanced* | 27.6 |
 | The same | Metal | Native 1080p, no upscaler | 38.2–39.6 |
 | The same | Metal | FSR 3.1 *Balanced* | 36.2 |
+| The same | Metal | MetalFX *Quality* / *Balanced* | 31.7 / 33.5 |
 | A new game, 3 h 26 min of play | Metal | Native 1080p, no upscaler | median 42.2 (37 or more 90% of the time) |
 
 - The upscalers do not make the game faster at 1080p any more: native rendering got faster with
