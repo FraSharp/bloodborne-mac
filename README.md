@@ -1,6 +1,6 @@
 <h1 align="center">bloodborne-mac</h1>
 
-<p align="center"><a href="https://discord.gg/EyyQ23sTBg"><img src="https://img.shields.io/badge/Discord-join%20the%20server-5865F2?logo=discord&logoColor=white" alt="Discord"></a></p>
+<p align="center"><a href="https://discord.gg/QS6vHz45xA"><img src="https://img.shields.io/badge/Discord-join%20the%20server-5865F2?logo=discord&logoColor=white" alt="Discord"></a></p>
 
 <p align="center">
   <strong>Bloodborne, running natively on Apple Silicon.</strong><br>
