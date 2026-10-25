@@ -22,7 +22,7 @@ gpudir=$runtime/out/gpu-arm64
 # The app's own bash and Python (the runtime's scripts/macos/build-deps.sh builds what is missing).
 [[ -x $deps/app-runtime/bin/bash && -x $deps/app-runtime/python/bin/python3 ]] ||
     (cd "$runtime" && BB_ARCH=$arch bash scripts/macos/build-deps.sh)
-for f in "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib"; do
+for f in "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib" "$deps/lib/libvulkan.1.dylib"; do
     [[ -f $f ]] || { echo "Missing $f: build first (BB_ARCH=$arch bash runtime/build.sh)" >&2; exit 1; }
 done
 # The real path: the libraries are referenced by it when deps/ is a symbolic link.
@@ -72,6 +72,9 @@ copy_deps() { # copy_deps FILE: the non-system libraries FILE links against, rec
 }
 for f in "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/libbbgpu.dylib"; do copy_deps "$f"; done
 install -m755 "$(realpath "$deps/lib/libMoltenVK.dylib")" "$frameworks/libMoltenVK.dylib"
+install -m755 "$(realpath "$deps/lib/libvulkan.1.dylib")" "$frameworks/libvulkan.1.dylib"
+copy_deps "$frameworks/libMoltenVK.dylib"
+copy_deps "$frameworks/libvulkan.1.dylib"
 cat > "$game/share/vulkan/icd.d/MoltenVK_icd.json" <<'EOF'
 {
     "file_format_version": "1.0.0",

@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What development main has, what is open, and how to pick each thread up. Updated 2026-10-22.
+What development main has, what is open, and how to pick each thread up. Updated 2026-10-25.
 The plan as a checklist is the [roadmap](ROADMAP.md).
 
 ## Releases
@@ -24,7 +24,7 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 |---|---|
 | bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse. Next: online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
-| Metal renderer | The frame draws through Metal behind Advanced → Renderer (65.5/61.7 against 58.0/58.1 FPS on MoltenVK); it runs with the recompiled library. The repeatable native-1080p GX worker crash is fixed. MetalFX is an optional upscaler on either renderer |
+| Metal renderer | Native Metal is the default on Apple Silicon; MoltenVK remains selectable until M4 acceptance. The native path links or maps neither Vulkan nor MoltenVK. In one copied-save A/B pair it measured 34.4 FPS versus 33.2 on main, with the same 28.2 ms median and 32.1 versus 35.4 ms p90. M1/M2 capability comparisons and the maintainer's release-candidate play session remain |
 | FSR 4.1.1 on Metal | AMD's neural upscaler in Metal on Apple Silicon (runtime #1, from fsr4-native-macos), offered when the Mac can run it and the player has added AMD's model files from their own DLL. M3 Pro, 1080p Balanced: 4.2–4.8 ms of GPU time a frame, a few FPS below FSR 3.1 |
 | High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs. On main they are freed again over the critical memory mark (memory before lighting); native 1440p on the 18 GB M3 Pro stays about 2.4 GB below it |
 | Trophy notifications | The game draws notices in its ImGui overlay after a persisted unlock; the launcher imports and lists unlocked trophies |
@@ -44,29 +44,16 @@ Pro in both 0.8.0 and current main. The reporter's check on 0.8.2 is needed.
 Check the frame-rate hooks in play (running above 90 FPS, cloth, Laurence's cinematic; needs a
 save near it).
 
-**Metal renderer, next.** The
+**Metal renderer, M4 pending acceptance.** The
 [render adapter](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/RENDER_ADAPTER.md)
-is approved: the renderer moves onto the project's own GPU interface (steps A0–A6, Vulkan
-backend), then a Metal backend creates every resource in Metal and MoltenVK leaves the macOS
-build (M1–M4). A0–A6 are done: the renderer runs on the adapter with the Vulkan backend
-(its own vocabulary, resources, commands, pipelines that hold their shaders, the host passes,
-frames, the swapchain interface and the upscalers' images). M1 is done too: with
-`BB_GFX_BACKEND=metal` every buffer and image is made in Metal and handed to MoltenVK, at the
-same frame time. M2's first step is done: everything both backends run records through the
-adapter, at M1's speed (4.04–4.17 µs per draw against 4.05–5.01). With the Metal frame
-(`BB_METAL_FRAME=1`) the commands are now encoded into Metal directly (step 2), pipelines and
-shaders are built only in Metal (step 3), the window is presented and drawn through Metal with
-the upscaler's own passes (step 4; FSR 3.1's library and DLSS still Vulkan), and every
-submission is committed in Metal (~433 a second, none through MoltenVK). **M2 is done**
-(accepted 2026-10-25): 36.2 FPS on the Metal frame against 27.6 on MoltenVK (FSR 3.1 Balanced,
-the test save's place), and a 3.4-hour new game at native 1080p without faults. **M3**
-is done: the upscaler is off by default (no upscaler beat native 1080p), and the Metal renderer
-offers MetalFX only; FSR 3.1, FSR 4.1.1 and DLSS stay with the Vulkan backend for other
-platforms. **M4** is in progress: Metal is the default renderer on Apple Silicon (MoltenVK
-selectable), buffers and images are made in Metal, and no Vulkan call reaches MoltenVK per frame
-any more (an inventory, `BB_METAL_INVENTORY=1`, counts what still does: image views and the
-device, made once). A leak of Metal-made images' textures is fixed. Next: images and views made
-only in Metal, then the macOS build without MoltenVK.
+runs Metal natively on macOS without linking or mapping the Vulkan loader or MoltenVK. The
+Metal backend now owns the device, queue, resources, synchronization, submissions and MetalFX.
+The MoltenVK renderer remains in the app as a fallback and loads the Vulkan driver only when
+selected. Linux keeps its Vulkan backend. In one copied-save A/B pair (native 1080p, upscaler
+off), the new path measured 34.4 FPS versus 33.2 on main; median 28.2 ms both, p90 32.1 versus
+35.4 ms. A separate save and a MetalFX Balanced run reached gameplay without faults. The
+capability comparisons on M1 and M2 Macs and the maintainer's release-candidate play session
+are still required to accept M4.
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
 tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/bloodborne-macos/commit/0f0cf54),
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)

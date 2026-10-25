@@ -10,7 +10,7 @@ How the app is put together. Each part has its own docs; this page says which pa
 |---|---|---|
 | **bloodborne-mac** (this one) | | Packages the macOS app and its DMG, publishes releases, holds the player guides and the roadmap |
 | [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher) | `launcher/` | The launcher (Tauri: React and Rust): profiles, saves, settings, mods, patches, starting the game and tracking trophies |
-| [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | `runtime/` | Runs the game: loads its executable, provides the PS4 system libraries, draws its graphics (Vulkan on MoltenVK, or Metal directly) |
+| [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | `runtime/` | Runs the game: loads its executable, provides the PS4 system libraries, draws on native Metal by default or MoltenVK as a fallback |
 | [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) | `runtime/recomp/` | bbcpu, which runs the game's x86-64 code on arm64, and the recompiler that turns it into native code ahead of time |
 
 The runtime is built on [bbport](https://github.com/deadinside28/bloodborne_pc), the native Linux
@@ -23,7 +23,7 @@ port this project started from, and on [shadPS4](https://github.com/shadps4-emu/
 | In the bundle | |
 |---|---|
 | `Contents/MacOS/` | the launcher, `bb-probe` (the game), `bb-gpu-capabilities`, bash |
-| `Contents/Frameworks/` | the runtime's GPU library, MoltenVK, the Vulkan loader, SDL3, FFmpeg |
+| `Contents/Frameworks/` | the runtime's GPU library, SDL3, FFmpeg, plus MoltenVK and the Vulkan loader for the fallback only |
 | `Contents/Resources/game/` | `run.sh`, the runtime's scripts and patches, the Vulkan driver manifest |
 | `Contents/Resources/python/` | a standalone Python 3 |
 
@@ -35,7 +35,7 @@ macOS asks the player to allow it once). Nothing else needs installing.
 1. The launcher checks the game folder (the runtime's `game_check.py`: the 1.09 executable), and
    makes a backup of the active profile's saves.
 2. It writes `bbport.ini` from its settings database, sets the environment (the profile's folder,
-   the renderer, the frame-rate mode, ...) and starts `run.sh` with the app's bash.
+   the selected renderer and frame-rate mode, ...) and starts `run.sh` with the app's bash.
 3. `run.sh` links the game's modules into one image, applies the patches and mods (a merged view;
    the game folder is never changed), sizes memory for the output, and starts `bb-probe`.
 4. The game runs through bbcpu (or the recompiled library), on the runtime's PS4 libraries and
@@ -57,8 +57,9 @@ PS4's command format and MoltenVK. Two milestones replace that:
   compiled into a native library, checked against calls recorded from the original. Every
   function is generated and the game runs on them; making that code cheaper than the translator
   is next ([Recompilation](https://github.com/bloodborne-native/bloodborne-recomp/blob/main/docs/RECOMPILATION.md)).
-- **The native renderer** draws with each platform's own GPU API: a shared core with Vulkan and
-  Metal backends. The frame already draws through Metal behind an option; resources in Metal are
-  next ([Native renderer](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/NATIVE_RENDERER.md)).
+- **The native renderer** draws on Metal directly on macOS without loading Vulkan or MoltenVK;
+  the shared renderer still uses Vulkan types internally. The MoltenVK fallback remains selectable
+  until M4 acceptance. Linux keeps its Vulkan backend
+  ([Render adapter](https://github.com/bloodborne-native/bloodborne-runtime/blob/main/docs/RENDER_ADAPTER.md)).
 
 Only the tools are published, never the game's code.

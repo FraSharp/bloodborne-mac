@@ -164,20 +164,20 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
     replacing the Metal interception layer.
   - [x] Adapter A0–A6: the renderer moved onto it with the Vulkan backend, each step measured
     (runtime `d6e8199`).
-  - [ ] Adapter M1–M4: the Metal backend (resources created in Metal); then MoltenVK is left
-    out on macOS. M1 done (runtime `4ca9561`). M2 done (runtime `555ec75`, accepted
-    2026-10-25): with the Metal frame every command, pipeline, present and submission is
-    Metal's. M3 done: the upscaler off by default, MetalFX the Metal backend's only upscaler
-    (FSR stays with the Vulkan backend, for other platforms). Next M4.
+  - [ ] Adapter M1–M4: Metal resources, commands, native startup and synchronization are
+    implemented; the native path needs no Vulkan loader or MoltenVK. MoltenVK stays selectable
+    as a fallback until M4 is accepted. On an M3 Pro, one base-first A/B pair measured 34.4
+    against 33.2 FPS (median 28.2 ms both; p90 32.1 against 35.4 ms). M1/M2 capability
+    comparisons and the maintainer's release-candidate play session remain.
   - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
     pipelines point into them, and the pipeline cache keeps every program anyway).
 - [ ] Later: review other ideas from DiAvisoo/bbport-mac-optimized separately.
-- [ ] Later: improve MetalFX performance. It is slower than native 1080p today (33.5 against 39.0
-  FPS, Balanced, Metal renderer): it runs through the bridge written for MoltenVK, with copies, a
-  second Metal queue and CPU waits. A MetalFX native to the Metal backend, encoded in the frame's
-  own command buffer on its textures, removes them (runtime docs/RENDER_ADAPTER.md).
+- [x] MetalFX encodes on the native Metal frame's command buffer and textures without the
+  older export bridge. One M3 Pro copied-save pair measured 34.5 FPS against 30.8 through the
+  bridge; scene drift limits precision. MetalFX Balanced also passed a validated gameplay run
+  with a correct frame grab.
 
 ## 6. Visual bugs
 

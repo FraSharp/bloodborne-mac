@@ -87,6 +87,9 @@ renderer (median 42 over a 3-hour new game), and about 31 FPS with MoltenVK in t
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
+On main, Metal starts without loading Vulkan or MoltenVK. MoltenVK remains a selectable fallback
+until M4 passes checks on M1 and M2 Macs and a release-candidate play session.
+
 **New in 0.8.2:** clothing lighting at high render resolutions no longer disappears after texture
 collection. The fix was checked at native 1440p on Metal and MoltenVK.
 [0.8.2 release notes](docs/releases/v0.8.2.md).
@@ -128,7 +131,7 @@ The app is built from four repositories:
 |---|---|
 | **bloodborne-mac** (this one) | The macOS app: packaging, releases, player guides |
 | [bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher) | The independent launcher source, included here as `launcher/` |
-| [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | Loads the game: the PS4 system libraries and the Vulkan renderer (MoltenVK), here as `runtime/` |
+| [bloodborne-runtime](https://github.com/bloodborne-native/bloodborne-runtime) | Loads the game and PS4 system libraries; native Metal is the macOS default, with MoltenVK as a fallback, here as `runtime/` |
 | [bloodborne-recomp](https://github.com/bloodborne-native/bloodborne-recomp) | bbcpu, which translates the game's x86-64 code to arm64 as it runs, and the recompiler (`runtime/recomp/`) |
 
 **The recompiler** turns the game's code, from the player's own copy, into native code ahead of

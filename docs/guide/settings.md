@@ -62,7 +62,8 @@ Advanced options apply at the next start.
 - **Renderer** (Advanced → Performance): **Metal**, the default, draws with Apple's Metal directly
   and is about 25–30% faster than MoltenVK at native 1080p on an M3 Pro (about 39 against 31 FPS
   in the same place). MoltenVK stays available while Metal is new; switch to it if anything looks
-  wrong, and report it.
+  wrong, and report it. Native Metal does not load the Vulkan driver; selecting MoltenVK loads it
+  for that run.
 
 See [Performance](performance.md).
 
