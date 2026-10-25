@@ -44,9 +44,8 @@ Advanced options apply at the next start.
 
 ## Recommended settings
 
-On a Mac the game is limited by the GPU, so the upscaler matters most:
-
-- **Upscaler:** FSR 3.1 with the *Balanced* or *Performance* preset.
+- **Upscaler:** off (native resolution). In current builds FSR 3.1 is slower than native 1080p
+  on a Mac, on both renderers ([performance](performance.md)).
 - **AMD FSR 4.1.1 (Metal):** AMD's neural upscaler (its Lite model), run on the Mac's GPU. It
   costs more than FSR 3.1: on an M3 Pro at 1080p output (Balanced), 4.8 ms of GPU time a frame,
   about 40 instead of 46 FPS. It suits Macs with frame-rate headroom, or a 30 FPS limit. It needs
@@ -60,8 +59,8 @@ On a Mac the game is limited by the GPU, so the upscaler matters most:
   shows what the game will use against your Mac's memory, in amber above three quarters of it.
   Without an upscaler above 1440p, characters are drawn black (a known issue).
 - **Renderer** (Advanced → Performance): MoltenVK is the default. **Metal (experimental)** draws
-  with Apple's Metal directly and was about 10% faster on an M3 Pro; switch back if anything
-  looks wrong.
+  with Apple's Metal directly and is about 25–30% faster at native 1080p on an M3 Pro (about 39
+  against 31 FPS in the same place); switch back if anything looks wrong.
 
 See [Performance](performance.md).
 

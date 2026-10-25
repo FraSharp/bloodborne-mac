@@ -61,7 +61,7 @@
 - **Native on Apple Silicon:** the game's x86-64 code is translated to arm64 as it runs.
 - **One app, nothing else to install:** download, open, choose your game folder, play.
 - **A launcher** ([bloodborne-launcher](https://github.com/bloodborne-native/bloodborne-launcher)) with graphics, controls, game options, mods, patches and the game's log.
-- **AMD FSR 3.1 upscaling,** the biggest performance gain on Apple GPUs.
+- **Upscalers,** optional: Apple MetalFX and AMD FSR 3.1.
 - **An in-game settings menu** (F1, or L3 + R3 on a controller).
 - **Controllers, keyboard and mouse,** with mapping for all three; the mouse turns the camera and
   points in the game's menus.
@@ -82,8 +82,8 @@ The [installation guide](docs/guide/installation.md) has the details.
 ## Status
 
 **Experimental, playable.** The game boots, loads saves and plays with sound, controllers and
-saving. On an Apple M3 Pro at 1080p with FSR 3.1 it runs at about **60 FPS** in the Hunter's Dream
-and about **44 FPS** in the clinic at the start of the game
+saving. On an Apple M3 Pro at native 1080p it runs at about **40 FPS** in play with the Metal
+renderer (median 42 over a 3-hour new game), and about 31 FPS with MoltenVK in the same place
 ([performance](docs/guide/performance.md)). Only one machine has been tested so far: results on
 other Macs are welcome.
 
