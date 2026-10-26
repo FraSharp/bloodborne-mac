@@ -52,10 +52,11 @@ The MoltenVK renderer remains in the app as a fallback and loads the Vulkan driv
 selected. Linux keeps its Vulkan backend. In one copied-save A/B pair (native 1080p, upscaler
 off), the new path measured 34.4 FPS versus 33.2 on main; median 28.2 ms both, p90 32.1 versus
 35.4 ms. A separate save and a MetalFX Balanced run reached gameplay without faults. The
-manual Linux workflow [run 40310567847](https://github.com/bloodborne-native/bloodborne-runtime/actions/runs/40310567847)
+manual Linux workflow [run 40314805527](https://github.com/bloodborne-native/bloodborne-runtime/actions/runs/40314805527)
 built the Vulkan backend and passed its tests. An explicit native 1080p test override had
-selected the scaled UI path and exposed the item atlas; the runtime now ignores that redundant
-override. Normal native 1080p and 1440p copied-save Metal frames were clean. The
+selected the scaled UI path and exposed the item atlas; the renderer now treats that value as
+native. Copied-save frames were clean with the override on Metal and MoltenVK, and at normal
+native 1440p on Metal. The
 capability comparisons on M1 and M2 Macs and the maintainer's release-candidate play session
 are still required to accept M4.
 Shaders ahead of time follow (N2). The shader compiler, rewrites, pipeline cache and format/state
