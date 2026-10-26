@@ -18,7 +18,7 @@ arch=${BB_ARCH:-$( [[ $(sysctl -n hw.optional.arm64 2>/dev/null) == 1 ]] && echo
 # The game itself comes from the runtime/ submodule (bloodborne-runtime) and its build.
 runtime=$PWD/runtime
 deps=$runtime/deps/macos-$arch
-gpudir=$runtime/out/gpu-arm64
+gpudir=$runtime/out/gpu
 # The app's own bash and Python (the runtime's scripts/macos/build-deps.sh builds what is missing).
 [[ -x $deps/app-runtime/bin/bash && -x $deps/app-runtime/python/bin/python3 ]] ||
     (cd "$runtime" && BB_ARCH=$arch bash scripts/macos/build-deps.sh)
@@ -61,11 +61,12 @@ mkdir -p "$frameworks" "$game/share/vulkan/icd.d"
 install -m755 "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$deps/app-runtime/bin/bash" "$macos/"
 install -m755 "$gpudir/libbbgpu.dylib" "$frameworks/"
 copy_deps() { # copy_deps FILE: the non-system libraries FILE links against, recursively
-    local dep
-    for dep in $(otool -L "$1" | awk 'NR > 1 {print $1}' | grep "^$deps/lib/"); do
+    local dep src
+    for dep in $(otool -L "$1" | awk 'NR > 1 {print $1}' | grep -E "^$deps/lib/|^@rpath/"); do
+        case $dep in @rpath/*) src=$deps/lib/${dep#@rpath/} ;; *) src=$dep ;; esac
         local base=${dep##*/}
         if [[ ! -f $frameworks/$base ]]; then
-            install -m755 "$(realpath "$dep")" "$frameworks/$base"
+            install -m755 "$(realpath "$src")" "$frameworks/$base"
             copy_deps "$frameworks/$base"
         fi
     done
@@ -88,7 +89,7 @@ EOF
 
 relink() { # relink FILE RPATH: @rpath references, the build tree's search paths replaced
     local file=$1 dep old
-    for dep in $(otool -L "$file" | awk 'NR > 1 {print $1}' | grep "^$deps/lib/"); do
+    for dep in $(otool -L "$file" | awk 'NR > 1 {print $1}' | grep -E "^$deps/lib/|^@rpath/"); do
         install_name_tool -change "$dep" "@rpath/${dep##*/}" "$file" 2>/dev/null
     done
     if [[ $file == *.dylib ]]; then install_name_tool -id "@rpath/${file##*/}" "$file" 2>/dev/null; fi
