@@ -168,7 +168,10 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
     implemented; the native path needs no Vulkan loader or MoltenVK. MoltenVK stays selectable
     as a fallback until M4 is accepted. On an M3 Pro, one base-first A/B pair measured 34.4
     against 33.2 FPS (median 28.2 ms both; p90 32.1 against 35.4 ms). M1/M2 capability
-    comparisons and the maintainer's release-candidate play session remain.
+    comparisons and the maintainer's release-candidate play session remain. The Linux Vulkan
+    backend built and passed its workflow tests (runtime `02acec3`, workflow `40310567847`).
+    A forced native 1080p test override no longer enters the scaled UI path (runtime `c7604ce`);
+    normal native 1080p and 1440p copied-save Metal frames were clean.
   - [x] Pipelines created in Metal own their shaders (runtime `8c7fa5b`, `8f6e731`): with the
     Metal frame the device builds Metal pipelines only, holding their shaders, without MoltenVK
     modules or pipelines. The compiled forms stay for the session (the session's Metal
