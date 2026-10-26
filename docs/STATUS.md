@@ -84,9 +84,15 @@ dependencies in `deps/`, its hooks on our base, and the maintainer's decision on
   in-game menu (`MemoryEstimate` in `bbport_overlay.cpp`) estimate it the same way.
 - Settings the menu shows: the runtime's `bbport_settings.cpp` and the launcher's
   `settings_store.rs` (`GAME_SYNCED`).
-- Versions: the app and the launcher.
+- Versions: the app and the launcher, and the tag of a release. `bash packaging/version.sh X.Y.Z`
+  writes the number everywhere and `--check` compares the files (and the tag, in the workflow).
 
 ## Test notes
+
+- The build is `bash runtime/build.sh`, and `--test` runs the tests through `ctest`
+  (`docs/BUILDING.md`). Five GPU tests (motion-shader, scene-resolution, taa-shader,
+  camera-motion, translation-memory) stopped compiling when the code moved under them and are
+  listed in `runtime/gpu/CMakeLists.txt` rather than run: repairing them is open work.
 
 - Test games are background-only apps (`SDL_MAC_BACKGROUND_APP=1`): they never become the active
   app, so focus and Cmd+Q behave unlike a launcher game. `BB_BENCH_FOREGROUND=1` for a test the
