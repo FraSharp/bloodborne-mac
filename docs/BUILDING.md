@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- A Mac with Apple Silicon (macOS 15 or newer recommended).
+- A Mac with Apple Silicon (macOS 15 or newer: the minimum the app declares and is built for).
 - Xcode Command Line Tools and [Homebrew](https://brew.sh):
 
   ```bash

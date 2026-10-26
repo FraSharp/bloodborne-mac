@@ -5,8 +5,7 @@
 ## Requirements
 
 - A Mac with Apple Silicon (M1 or newer).
-- macOS 13 or newer. macOS 15 or newer is recommended: it lets the game keep its GPU memory
-  resident, which is faster.
+- macOS 15 or newer (the minimum the app declares and is built for).
 - Your own decrypted dump of Bloodborne with the 1.09 update. See [Game files](game-files.md).
 
 Nothing else is needed: the app includes everything it uses to run the game.
