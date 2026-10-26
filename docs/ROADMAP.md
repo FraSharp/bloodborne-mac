@@ -118,7 +118,8 @@ Features:
   mouse in the in-game menu and its on-screen keyboard (runtime `6dc0320`).
 - [ ] **Online (for 0.9.0 final; not in the release candidate):** Seamless Hunt and The Hunter's Dream on shadPS4 0.20's network code
   (`libbbnet20`; The Hunter's Dream part is GPL-3.0-or-later, so the module is too). Dependencies
-  in `build-deps.sh` (Protobuf with Abseil, nlohmann_json, OpenSSL, miniupnpc, epoll-shim); the
+  in `runtime/deps/packages.cmake` (Protobuf with Abseil, nlohmann_json, OpenSSL, miniupnpc,
+  epoll-shim), for Linux from shell.nix; the
   launcher's Online page. Decided (maintainer, 2026-10-26): a save marked as edited plays offline
   only; trophies stay local either way. The password is saved only after the player accepts a
   warning that it is stored unencrypted; otherwise the launcher asks for it at each launch.
