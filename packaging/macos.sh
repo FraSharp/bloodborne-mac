@@ -7,26 +7,22 @@
 #   Contents/Frameworks/        libbbgpu, MoltenVK, Vulkan loader, SDL3, FFmpeg
 #   Contents/Resources/game/    run.sh, scripts/, patches/, share/vulkan/icd.d/
 #   Contents/Resources/python/  standalone Python 3
-# Library references become @rpath ones and everything is signed again ad hoc (no Developer
-# ID: macOS asks the user to allow the app once). Version: $BB_VERSION, else `git describe`.
+# The game's half of that layout is runtime/CMakeLists.txt's install rules (`cmake --install`), which
+# also rewrites the libraries' references to @rpath; this script adds the launcher, signs everything
+# ad hoc (no Developer ID: macOS asks the user to allow the app once) and builds the DMG.
+# Version: $BB_VERSION, else `git describe`.
 #   bash packaging/macos.sh
 set -euo pipefail
 cd -- "$(dirname -- "$0")/.."
 [[ $(uname -s) == Darwin ]] || { echo 'macOS only' >&2; exit 1; }
 arch=${BB_ARCH:-$( [[ $(sysctl -n hw.optional.arm64 2>/dev/null) == 1 ]] && echo arm64 || echo x86_64 )}
 [[ $arch == arm64 ]] || { echo 'The app is built for Apple Silicon (arm64) only' >&2; exit 1; }
-# The game itself comes from the runtime/ submodule (bloodborne-runtime) and its build.
 runtime=$PWD/runtime
-deps=$runtime/deps/macos-$arch
-gpudir=$runtime/out/gpu
-# The app's own bash and Python (the runtime's scripts/macos/build-deps.sh builds what is missing).
-[[ -x $deps/app-runtime/bin/bash && -x $deps/app-runtime/python/bin/python3 ]] ||
-    (cd "$runtime" && BB_ARCH=$arch bash scripts/macos/build-deps.sh)
-for f in "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$gpudir/libbbgpu.dylib" "$deps/lib/libMoltenVK.dylib" "$deps/lib/libvulkan.1.dylib"; do
-    [[ -f $f ]] || { echo "Missing $f: build first (BB_ARCH=$arch bash runtime/build.sh)" >&2; exit 1; }
-done
-# The real path: the libraries are referenced by it when deps/ is a symbolic link.
-deps=$(cd "$deps" && pwd -P)
+build=$runtime/build/macos-$arch
+[[ -f $build/bb-probe ]] || { echo "Missing $build/bb-probe: run bash runtime/build.sh" >&2; exit 1; }
+# The build the bundle carries: configured and up to date (a no-op once build.sh has run), so the
+# install rules and the binaries are the same version.
+(cd "$runtime" && cmake --build --preset macos-$arch >/dev/null)
 version=${BB_VERSION:-$(git describe --tags --always --dirty 2>/dev/null || echo dev)}
 short_version=$(sed -E 's/^v//; s/[^0-9.].*$//' <<< "$version"); [[ -n $short_version ]] || short_version=0.0.0
 name=bloodborne_mac-$version-$arch
@@ -47,84 +43,47 @@ for value in sys.argv[1:]:
         shutil.rmtree(path)
 CLEANUP
 mkdir -p "$work"
-macos=$app/Contents/MacOS
-frameworks=$app/Contents/Frameworks
-game=$app/Contents/Resources/game
 
-# The launcher (Tauri: React interface, Rust backend), the bundle the rest goes into.
+# The launcher (Tauri: React interface, Rust backend) makes the bundle the game goes into.
 cmp runtime/gpu/shim/trophy_catalog.json launcher/src/lib/trophy-text/trophy_catalog.json
 (cd launcher && { [[ -d node_modules ]] || npm ci; } && npx tauri build --bundles app)
 cp -R launcher/src-tauri/target/release/bundle/macos/Bloodborne.app "$app"
 plutil -replace CFBundleShortVersionString -string "$short_version" "$app/Contents/Info.plist"
 plutil -replace CFBundleVersion -string "$version" "$app/Contents/Info.plist"
-mkdir -p "$frameworks" "$game/share/vulkan/icd.d"
-install -m755 "$runtime/out/bb-probe" "$runtime/out/bb-gpu-capabilities" "$deps/app-runtime/bin/bash" "$macos/"
-install -m755 "$gpudir/libbbgpu.dylib" "$frameworks/"
-copy_deps() { # copy_deps FILE: the non-system libraries FILE links against, recursively
-    local dep src
-    for dep in $(otool -L "$1" | awk 'NR > 1 {print $1}' | grep -E "^$deps/lib/|^@rpath/"); do
-        case $dep in @rpath/*) src=$deps/lib/${dep#@rpath/} ;; *) src=$dep ;; esac
-        local base=${dep##*/}
-        if [[ ! -f $frameworks/$base ]]; then
-            install -m755 "$(realpath "$src")" "$frameworks/$base"
-            copy_deps "$frameworks/$base"
-        fi
-    done
-}
-for f in "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/libbbgpu.dylib"; do copy_deps "$f"; done
-install -m755 "$(realpath "$deps/lib/libMoltenVK.dylib")" "$frameworks/libMoltenVK.dylib"
-install -m755 "$(realpath "$deps/lib/libvulkan.1.dylib")" "$frameworks/libvulkan.1.dylib"
-copy_deps "$frameworks/libMoltenVK.dylib"
-copy_deps "$frameworks/libvulkan.1.dylib"
-cat > "$game/share/vulkan/icd.d/MoltenVK_icd.json" <<'EOF'
-{
-    "file_format_version": "1.0.0",
-    "ICD": {
-        "library_path": "../../../../../Frameworks/libMoltenVK.dylib",
-        "api_version": "1.4.0",
-        "is_portability_driver": true
-    }
-}
-EOF
 
-relink() { # relink FILE RPATH: @rpath references, the build tree's search paths replaced
-    local file=$1 dep old
-    for dep in $(otool -L "$file" | awk 'NR > 1 {print $1}' | grep -E "^$deps/lib/|^@rpath/"); do
-        install_name_tool -change "$dep" "@rpath/${dep##*/}" "$file" 2>/dev/null
-    done
-    if [[ $file == *.dylib ]]; then install_name_tool -id "@rpath/${file##*/}" "$file" 2>/dev/null; fi
-    for old in $(otool -l "$file" | awk '/LC_RPATH/ {getline; getline; print $2}'); do
-        install_name_tool -delete_rpath "$old" "$file" 2>/dev/null
-    done
-    install_name_tool -add_rpath "$2" "$file" 2>/dev/null
-}
-relink "$macos/bb-probe" @executable_path/../Frameworks
-relink "$macos/bb-gpu-capabilities" @executable_path/../Frameworks
-for f in "$frameworks/"*.dylib; do relink "$f" @loader_path; done
-if leftovers=$(for f in "$macos/"* "$frameworks/"*.dylib; do otool -L "$f" | awk '!/:$/ {print $1}'; done |
+# The game: the executables, the libraries they link (their @rpath fixups included), the scripts and
+# the assets, and Python — runtime/CMakeLists.txt's install rules.
+cmake --install "$build" --prefix "$app"
+
+# Symbols and signatures: stripped, then signed from the inside out (ad hoc, this app has no
+# Developer ID).
+strip -x "$app/Contents/MacOS/bb-probe" "$app/Contents/MacOS/bb-gpu-capabilities" \
+    "$app/Contents/Frameworks/"*.dylib
+codesign --force --sign - "$app/Contents/Frameworks/"*.dylib
+codesign --force --sign - "$app/Contents/MacOS/"bb-probe "$app/Contents/MacOS/"bb-gpu-capabilities \
+    "$app/Contents/MacOS/"bash "$app/Contents/MacOS/"bloodborne-launcher
+find "$app/Contents/Resources/python" -type f \( -perm -u+x -o -name '*.so' -o -name '*.dylib' \) \
+    -exec sh -c 'file -b "$1" | grep -q Mach-O && codesign --force --sign - "$1"' _ {} \;
+codesign --force --sign - "$app"
+# --deep is deprecated and cannot be trusted for shipping: every binary is checked on its own, and
+# the bundle as a whole.
+codesign --verify --strict "$app"
+for f in "$app/Contents/MacOS/"* "$app/Contents/Frameworks/"*.dylib; do
+    codesign --verify --strict "$f"
+done
+# Nothing may point at the checkout, and nothing may be missing: the app has to run on a Mac that
+# has never seen this directory.
+if leftovers=$(for f in "$app/Contents/MacOS/"* "$app/Contents/Frameworks/"*.dylib; do
+                   otool -L "$f" | awk '!/:$/ {print $1}'; done |
                grep -v '^@\|^/usr/lib/\|^/System/' | sort -u) && [[ -n $leftovers ]]; then
     echo "References into the build tree remain:" >&2; echo "$leftovers" >&2; exit 1
 fi
-strip -x "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$frameworks/"*.dylib 2>/dev/null || true
-
-cp "$runtime/run.sh" LICENSE README.md "$game/"
-cp -R "$runtime/scripts" "$runtime/patches" "$game/"
-# FSR 4.1.1 on Metal: the kernels and model layouts runtime/'s build made (no sources, no tools;
-# AMD's initializers stay with the player).
-if [[ -d $runtime/out/fsr4_metal ]]; then
-    rsync -a --exclude .built "$runtime/out/fsr4_metal/" "$game/fsr4_metal/"
-    mkdir -p "$game/tools"
-    cp "$runtime/tools/fsr4_metal_initializers.sh" "$game/tools/"
+if missing=$(for f in "$app/Contents/MacOS/"* "$app/Contents/Frameworks/"*.dylib; do
+                  for ref in $(otool -L "$f" | awk '!/:$/ {print $1}' | grep '^@rpath/'); do
+                      [[ -f $app/Contents/Frameworks/${ref#@rpath/} ]] || echo "$f: $ref"
+                  done; done) && [[ -n $missing ]]; then
+    echo "Libraries the bundle does not carry:" >&2; echo "$missing" >&2; exit 1
 fi
-cp -R "$deps/app-runtime/python" "$app/Contents/Resources/python"
-find "$app" -name __pycache__ -type d -prune -exec rm -rf {} +
-# Ad-hoc signatures, inside out (libraries, helpers, Python's binaries, then the bundle).
-codesign --force --sign - "$frameworks/"*.dylib
-find "$app/Contents/Resources/python" -type f \( -perm -u+x -o -name '*.so' -o -name '*.dylib' \) \
-    -exec sh -c 'file -b "$1" | grep -q Mach-O && codesign --force --sign - "$1"' _ {} \;
-codesign --force --sign - "$macos/bb-probe" "$macos/bb-gpu-capabilities" "$macos/bash" "$macos/bloodborne-launcher"
-codesign --force --sign - "$app"
-codesign --verify --deep --strict "$app"
 
 ln -s /Applications "$work/Applications"
 cat > "$work/First start.txt" <<EOF
