@@ -1,16 +1,20 @@
 # Builds the game (the runtime/ submodule, bloodborne-runtime, with bloodborne-recomp inside it) for
 # Apple Silicon and packages it with the launcher as Bloodborne.app in a DMG (packaging/macos.sh).
-# A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package; a tag
-# with a suffix (v0.9.0-rc.1) is a pre-release, which the launcher's update check skips.
+# A tag v* (git tag v0.9.1 && git push origin v0.9.1): a GitHub release with the package; a tag with
+# a suffix (v0.9.0-rc.1) is a pre-release, which the launcher's update check skips.
 # A manual run (Actions → macOS → Run workflow, or gh workflow run macos.yml): the package as a
-# workflow artifact, e.g. a test build or a check of main before tagging. Pushes do not build:
-# the runtime and launcher have their own CI, and most pushes here are docs or pointer bumps.
+# workflow artifact, e.g. a test build or a check of main before tagging.
+# Pushes do not build (the runtime and the launcher have their own CI, and most pushes here are docs
+# or pointer bumps), so main is built weekly as well: a broken main shows up within a week instead of
+# at the next tag.
 name: macOS
 
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * 1' # Mondays, 04:17 UTC
 
 permissions:
   contents: write # releases
@@ -24,13 +28,16 @@ jobs:
     runs-on: macos-15 # Apple Silicon
     timeout-minutes: 240
     steps:
-      - uses: actions/checkout@v4
+      # Actions are pinned to the commit their tag points at, so a moved tag cannot change what runs.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           submodules: recursive
           fetch-depth: 0 # git describe for the version
 
-      # The newest Xcode on the image: the GPU library uses std::jthread and std::stop_token,
-      # which Xcode 16's libc++ keeps behind -fexperimental-library.
+      # The newest Xcode on the image: the GPU library uses std::jthread and std::stop_token, which
+      # Xcode 16's libc++ keeps behind -fexperimental-library. The SDK it carries is what the app is
+      # built against, and the packaging step fails if the binaries do not end up with the minimum
+      # macOS the app declares.
       - name: Xcode
         run: |
           ls -d /Applications/Xcode*.app
@@ -40,7 +47,7 @@ jobs:
           clang --version | head -1
 
       - name: Tools
-        run: brew install bash pkgconf glslang nasm cmake ninja spirv-tools clang-format
+        run: brew bundle install --file Brewfile
 
       # FSR 4.1.1 on Metal: its kernels need Xcode's Metal Toolchain, a separate component. The
       # runtime's build skips them, with a warning, when the download fails.
@@ -48,13 +55,13 @@ jobs:
         run: xcodebuild -downloadComponent MetalToolchain || echo "Metal Toolchain unavailable"
 
       # The launcher (launcher): Tauri needs Node and Rust.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: launcher/package-lock.json
 
-      - uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@5cb072d7354962be830356aa6b146f7612846014 # v2.7.5
         with:
           workspaces: launcher/src-tauri
 
@@ -66,23 +73,43 @@ jobs:
           cargo test --manifest-path src-tauri/Cargo.toml
           cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
 
-      # The libraries build-deps.sh builds (MoltenVK, SDL3, FFmpeg, ...): ~1 h without the cache.
-      - name: Dependency cache
-        uses: actions/cache@v4
+      # The archives the dependency build downloads (runtime/deps/packages.cmake): with them a fresh
+      # deps/macos-arm64 takes about five minutes instead of an hour. What they build is not cached:
+      # it lives inside deps/macos-arm64 with the stamps that decide what is installed.
+      - name: Dependency archives
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
-          path: runtime/deps/macos-arm64
-          key: deps-macos-arm64-${{ hashFiles('runtime/scripts/macos/build-deps.sh') }}
+          path: runtime/build/deps-arm64/download
+          key: deps-download-${{ hashFiles('runtime/deps/packages.cmake') }}
 
-      - name: Build
-        run: BB_ARCH=arm64 bash runtime/build.sh
+      - name: Build and test
+        run: bash runtime/build.sh --test
+
+      - name: Version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            bash packaging/version.sh --check "$GITHUB_REF_NAME"
+          else
+            bash packaging/version.sh --check
+          fi
 
       - name: Package
         run: |
           if [[ $GITHUB_REF == refs/tags/v* ]]; then export BB_VERSION=${GITHUB_REF_NAME}; fi
           bash packaging/macos.sh
-          echo "PACKAGE=$(ls dist/bloodborne_mac-*.dmg)" >> "$GITHUB_ENV"
+          dmg=$(ls dist/bloodborne_mac-*.dmg)
+          echo "PACKAGE=$dmg" >> "$GITHUB_ENV"
+          # The app promises a minimum macOS: it has to be the one the binaries carry, whatever SDK
+          # the runner happened to have.
+          app=$(ls -d dist/bloodborne_mac-*/Bloodborne.app)
+          for binary in "$app/Contents/MacOS/bb-probe" "$app/Contents/Frameworks/libbbgpu.dylib"; do
+            minos=$(otool -l "$binary" | awk '/minos/ {print $2; exit}')
+            echo "$(basename "$binary"): minos $minos"
+            [[ $minos == 15.0 ]] || { echo "Expected a minimum of 15.0" >&2; exit 1; }
+          done
+          du -h "$dmg"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: bloodborne_mac-arm64
           path: ${{ env.PACKAGE }}
