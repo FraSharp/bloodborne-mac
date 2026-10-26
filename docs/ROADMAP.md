@@ -113,12 +113,21 @@ Features:
 - [x] **Keyboard and mouse:** mouse camera without the stick's limits, a menu pointer, a Dark Souls
   III layout with chords, the movement-key ramp, the port's cursor; the mouse-capture jump and the
   Escape double toggle fixed. The launcher's Controls page shows the new defaults (Run, Dodge).
-  [ ] Button prompts for the device in use; [ ] assigning mouse buttons and chords in the launcher.
-- [ ] **Online:** Seamless Hunt with BBSC seamless co-op, and The Hunter's Dream, on shadPS4 0.20's
-  network code (`libbbnet20`). Dependencies in `build-deps.sh` (Protobuf with Abseil,
-  nlohmann_json, OpenSSL, miniupnpc, epoll-shim); its game hooks on `InstallGuestCodeHook`;
-  the launcher's Online page. Decision (maintainer): may a save marked as edited go online?
-  Trophies stay local either way. Tests with real accounts.
+  [x] Button prompts for the device in use, on Metal and MoltenVK (runtime `bcf71cc`); [x] chords
+  with Shift, Ctrl or Alt in the input capture (runtime `bcf71cc`); [x] keyboard hints and the
+  mouse in the in-game menu and its on-screen keyboard (runtime `6dc0320`).
+- [ ] **Online (for 0.9.0 final; not in the release candidate):** Seamless Hunt and The Hunter's Dream on shadPS4 0.20's network code
+  (`libbbnet20`; The Hunter's Dream part is GPL-3.0-or-later, so the module is too). Dependencies
+  in `build-deps.sh` (Protobuf with Abseil, nlohmann_json, OpenSSL, miniupnpc, epoll-shim); the
+  launcher's Online page. Decided (maintainer, 2026-10-26): a save marked as edited plays offline
+  only; trophies stay local either way. The password is saved only after the player accepts a
+  warning that it is stored unencrypted; otherwise the launcher asks for it at each launch.
+  Tests with real accounts on both pools.
+- [ ] **Seamless co-op (BBSC):** not supported for now (maintainer, 2026-10-26). BBSC's code is
+  built on the game's internals (addresses, structures, decompiled behaviour), which no repository
+  here may carry. The launcher's Online page says so. Planned depending on further development and
+  talks with BBSC's developer: for example a separately built and hosted module that the runtime
+  loads through a plugin interface, accepting only tested versions, on Seamless Hunt only.
 - [ ] Real occlusion queries counted at the game's resolution (part of their new memory model:
   check against ours).
 

@@ -35,9 +35,9 @@ Please do not report problems with this port to shadPS4 or to bbport.
 
 ## Good to know
 
-- **The Metal renderer is experimental.** If the picture or stability is wrong with it, switch
-  back to MoltenVK (Advanced → Renderer) and report what you saw.
-- **Offline only:** online play is not available on macOS yet.
+- **The Metal renderer is new** (the default since 0.9.0 RC 1). If the picture or stability is
+  wrong with it, switch to MoltenVK (Advanced → Renderer) and report what you saw.
+- **Offline only:** online play is not available on macOS yet; it is planned for 0.9.0.
 - *The Old Hunters*: the Game of the Year editions include it; add-on packages in
   `user/addcont/` are not tested on macOS.
 

@@ -28,7 +28,7 @@ Saves · Backups shows the save's size and date, and its backups.
 
 - A backup is made automatically **before every launch**. **Back up** makes another.
 - **Restore** (then confirm) replaces the save with a backup; the current save is backed up first.
-- **Show in Finder** opens the save or backup folder. Backups are kept until you delete them.
+- **Show the folder** opens the save or backup folder. Backups are kept until you delete them.
 
 The Saves page also previews each readable character's name, level, attributes, Blood Echoes,
 Insight, playtime and journey. **Edit character** changes Vitality (7–99), Endurance (8–99)
@@ -64,7 +64,7 @@ In `~/Library/Application Support/bloodborne_mac/`:
 
 ## If profiles cannot load
 
-The launcher shows the error with **Retry** and **Show in Finder**. Free disk space, fix
+The launcher shows the error with **Retry** and **Show the folder**. Free disk space, fix
 permissions or close another launcher, then retry. If it says the database is from a newer
 launcher, install the latest version.
 

@@ -1,6 +1,7 @@
 # Builds the game (the runtime/ submodule, bloodborne-runtime, with bloodborne-recomp inside it) for
 # Apple Silicon and packages it with the launcher as Bloodborne.app in a DMG (packaging/macos.sh).
-# A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package.
+# A tag v* (git tag v0.1.0 && git push origin v0.1.0): a GitHub release with the package; a tag
+# with a suffix (v0.9.0-rc.1) is a pre-release, which the launcher's update check skips.
 # A manual run (Actions → macOS → Run workflow, or gh workflow run macos.yml): the package as a
 # workflow artifact, e.g. a test build or a check of main before tagging. Pushes do not build:
 # the runtime and launcher have their own CI, and most pushes here are docs or pointer bumps.
@@ -106,8 +107,9 @@ jobs:
           `First start.txt` in the DMG.
           EOF
           fi
+          prerelease=(); [[ $GITHUB_REF_NAME == *-* ]] && prerelease=(--prerelease)
           gh release create "$GITHUB_REF_NAME" "$PACKAGE" --title "bloodborne-mac $GITHUB_REF_NAME" \
-            --notes-file "$notes"
+            --notes-file "$notes" "${prerelease[@]}"
 
       # The release in the Discord server's #releases channel, from its notes (not the generic ones).
       - name: Discord

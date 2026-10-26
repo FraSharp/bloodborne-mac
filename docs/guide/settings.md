@@ -26,9 +26,11 @@ runs.
 ![The in-game settings menu](../screenshots/game-menu.jpg)
 
 Press **F1** on the keyboard, or **L3 + R3** on a controller. The menu has the launcher's
-Graphics, Game and Advanced tabs. **L1/R1** switch tabs and **Circle** closes it. Most settings
+Graphics, Game and Advanced tabs. **L1/R1** (keyboard: **Q/E**) switch tabs and **Circle**
+(**Escape**) goes back; the hints at the bottom follow the device you used last. Most settings
 apply at once; those that need a restart say so, and **Restart** applies them. A controller can
-type text (the character's name) on an on-screen keyboard.
+type text (the character's name) on an on-screen keyboard, and the mouse can click its keys
+(right click cancels).
 
 ## What applies at once
 
@@ -112,4 +114,9 @@ inside menus), **G** gestures. Click into the window to give it the mouse; **F1*
 
 The mouse turns the camera directly (no stick dead zone or speed limit), and points and clicks
 in the game's menus: hover selects, left click confirms, right click goes back, the wheel
-scrolls. Every key can be remapped on the **Controls** tab.
+scrolls. Every key can be remapped on the **Controls** tab, also to a combination with Shift,
+Ctrl or Alt.
+
+**Button prompts** follow the device you used last: with the keyboard and mouse the game's own
+hints ("Examine", item pick-ups, tutorials) show the bound key or mouse button, with an Xbox or
+another controller that controller's buttons, with a PlayStation controller the game's icons.

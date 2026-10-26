@@ -2,7 +2,7 @@
 
 [← Documentation](README.md)
 
-What development main has, what is open, and how to pick each thread up. Updated 2026-10-25.
+What development main has, what is open, and how to pick each thread up. Updated 2026-10-26.
 The plan as a checklist is the [roadmap](ROADMAP.md).
 
 ## Releases
@@ -22,13 +22,14 @@ Imported bbport compatibility: 0.51, plus parts of 0.6 (below).
 
 | Area | State |
 |---|---|
-| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse. Next: online ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
+| bbport 0.6 | Ported: renderer fixes, the present's wait, frame rate through hooks (no measurable cost; F3 for 30 FPS), Laurence's cinematic fixes, live effects, aspect ratios, keyboard and mouse, button prompts for the device in use. Next: online for 0.9.0 final, without seamless co-op (BBSC) ([roadmap](ROADMAP.md#3-bbport-06-before-the-next-release)) |
 | Hooks in the game's code | bbport's `InstallGuestCodeHook` interface on bbcpu: a stub `int3; replaced instructions; jmp back`, every register available to the hook |
-| Metal renderer | Native Metal is the default on Apple Silicon; MoltenVK remains selectable until M4 acceptance. The native path links or maps neither Vulkan nor MoltenVK. In one copied-save A/B pair it measured 34.4 FPS versus 33.2 on main, with the same 28.2 ms median and 32.1 versus 35.4 ms p90. M1/M2 capability comparisons and the maintainer's release-candidate play session remain |
+| Metal renderer | Native Metal is the default on Apple Silicon; MoltenVK remains selectable until M4 acceptance. The native path links or maps neither Vulkan nor MoltenVK. In one copied-save A/B pair it measured 34.4 FPS versus 33.2 on main, with the same 28.2 ms median and 32.1 versus 35.4 ms p90. The maintainer's play sessions passed (2026-10-26); acceptance waits for players' reports on the 0.9.0 release candidate, including M1/M2 capability comparisons |
 | FSR 4.1.1 on Metal | AMD's neural upscaler in Metal on Apple Silicon (runtime #1, from fsr4-native-macos), offered when the Mac can run it and the player has added AMD's model files from their own DLL. M3 Pro, 1080p Balanced: 4.2–4.8 ms of GPU time a frame, a few FPS below FSR 3.1 |
 | High-resolution character lighting | 0.8.2 keeps GPU-written images whose contents cannot safely be downloaded. Native 1440p clothing highlights returned on Metal and MoltenVK in copied-save runs. On main they are freed again over the critical memory mark (memory before lighting); native 1440p on the 18 GB M3 Pro stays about 2.4 GB below it |
 | Trophy notifications | The game draws notices in its ImGui overlay after a persisted unlock; the launcher imports and lists unlocked trophies |
 | Save editor | The launcher previews characters and edits all six attributes, Blood Echoes and Insight in a backed-up, staged save set; level and saved HP or stamina follow attribute changes. Max all reaches level 544. Edited saves cannot earn new trophies |
+| Launcher | Platform-neutral: system differences in `platform.rs` (macOS, Linux, Windows; CI on all three), texts that never name a system, a layout from phone width up. The Online page is in, hidden until the online module ships |
 | Docs | One English set per repository; wikis mirror them |
 
 ## Open threads
