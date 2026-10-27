@@ -65,11 +65,12 @@ tables came from [Huax-1839/bloodborne-macos](https://github.com/Huax-1839/blood
 through [Wooloomooloo2/bloodborne_mac_port](https://github.com/Wooloomooloo2/bloodborne_mac_port)
 (we took `0b50589` and `78b59f5`; its "M2" `3ee456f` creates resources in Metal).
 
-**Recompiled code speed (R3).** The library runs the whole game with less CPU time than the
-translator: 344% of one core against 402% at the 1st Floor Sickroom lamp, 357% against 392% at
-the test save's place in Cathedral Ward (bloodborne-recomp #9–#12, 2026-10-25), at the same frame
-rate. Making it cheaper still is R3's work; candidates are listed in bloodborne-recomp's CLAUDE.md. The launcher does not
-offer it yet (a "CPU: Translator / Recompiled" option is a candidate).
+**Recompiled code speed (R3, done).** The library runs the whole game with less CPU time than
+the translator: 344% of one core against 402% at the 1st Floor Sickroom lamp, 357% against 392%
+at the test save's place in Cathedral Ward (bloodborne-recomp #9–#12, 2026-10-25), at the same
+frame rate. R3's follow-ups (plain accesses to a function's own frame, the calls still going into
+the translator, a 0.5 FPS gap at the Sickroom) are in bloodborne-recomp's docs. The launcher does
+not offer the library yet (a "CPU: Translator / Recompiled" option is a candidate).
 
 **Watch list.** A short white flash in the opening video and an enemy's body drawn as colour
 noise have not recurred in recent play. Neither has a confirmed fix. Older rare assertions are in
