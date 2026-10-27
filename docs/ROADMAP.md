@@ -224,6 +224,40 @@ choice for laptops with two GPUs, the old shadNet module (shadPS4's server refus
 - [ ] **Background shader compilation:** a missing pipeline compiles on a worker and its draw is
   skipped until ready (no hitches the first time an area is seen), behind a setting.
 
+## 8. After 0.9.0 final
+
+Decided 2026-10-27, in this order.
+
+- [ ] **The recompiled library from the launcher.** A "CPU: Translated / Recompiled" choice;
+  Translated (bbcpu's JIT) stays the default, and Recompiled can be chosen once the library is
+  built. The launcher explains it plainly: the game's code compiled for this Mac once, from the
+  player's own copy, instead of translated while playing; less CPU time (about 14% at the 1st
+  Floor Sickroom) at about the same frame rate, since frames on the Mac are bound by rendering.
+  It does not call it native: the compiled code still keeps x86 behaviour (memory ordering, flags,
+  registers in memory).
+  - The build: prepare (extract the executable, scan, generate the C; seconds), compile (383
+    files, about 12 minutes on an M3 Pro), link, verify. A progress bar counts the files compiled;
+    an interrupted build resumes with the files left.
+  - The compiler: the launcher downloads a trimmed LLVM toolchain (clang, `ld64.lld`, clang's
+    headers; from an official LLVM release, Apache-2.0 with LLVM exception), hosted as a release
+    asset and checked against a SHA-256 pinned in the launcher, and deletes it after the build.
+    The library is built freestanding (`-ffreestanding -fno-stack-protector`, `-undefined
+    dynamic_lookup`): it needs no macOS SDK, since its few unresolved helpers come from the game
+    process. First step: a prototype build with only that toolchain, run in the game, to measure
+    the download and build time.
+  - The library and generated C stay in the player's data folder and are never uploaded (they
+    are game code). The launcher records the recompiler version and the executable's hash; a
+    stale or missing library falls back to Translated with the reason shown.
+- [ ] **R4 for the render boundary, then N6.** Names, objects and call sites for the engine's
+  render functions first (not every function), so the native renderer can take the engine's
+  draws instead of decoding PS4 command buffers: what limits the frame rate on the Mac.
+  Synchronization primitives next, signatures for the hottest functions after.
+- [ ] **The generator's CPU work, alongside:** flags only where they are read; a function's own
+  stack frame as host locals when its address never escapes; memory ordering kept only for the
+  engine's synchronization (from R4's names). These matter most on CPUs weaker than the Mac's.
+- N5's acceptance (M1/M2 capability comparisons, the maintainer's release-candidate session)
+  stays open alongside, as in section 5.
+
 ## Not taken
 
 - Online for shadPS4's public server (0.51's module): the server accepts only shadPS4's own
