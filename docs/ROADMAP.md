@@ -258,6 +258,29 @@ Decided 2026-10-27, in this order.
 - N5's acceptance (M1/M2 capability comparisons, the maintainer's release-candidate session)
   stays open alongside, as in section 5.
 
+## 9. Other platforms: iOS
+
+The proof of concept (2026-10-26/27, iPhone 17 Pro Max, free Apple ID): the game plays at 23 FPS at
+960×540 with all effects on, bound by the CPU (no JIT on iOS: what the recompiled library does not
+cover is interpreted). Branches `ios-poc` in bloodborne-runtime and bloodborne-recomp, write-up in
+the runtime's [`docs/IOS_POC.md`](https://github.com/bloodborne-native/bloodborne-runtime/blob/ios-poc/docs/IOS_POC.md).
+Organized as [Architecture](ARCHITECTURE.md) says ("Where code lives"):
+
+- [ ] **The general fixes to `main`, each measured on the Mac:** the game's mutex as host code,
+  natives called without the translator (recomp), the jump-table recognition once its generator
+  bug is fixed, bbcpu's no-JIT build option, the UI scale.
+- [ ] **The iOS platform code into the runtime's platform layer,** behind an `ios-arm64` CMake
+  preset (after the CMake build, runtime PR #4) and a compile-only CI job: the compact memory layout
+  as a named mode (Android will need it too), the system call and Metal format differences.
+- [ ] **The runtime as a library** with a small C API, `bb-probe` a thin program around it, and
+  what `run.sh` and the Python scripts do moved into the runtime or the launcher. The Mac gains
+  too (no bundled bash or Python).
+- [ ] **bloodborne-ios:** the app shell, the build, signing and install scripts, touch controls;
+  private while it is a proof of concept (sideloading only).
+- [ ] **Toward 30 FPS on the phone:** thread QoS (the game's main and render threads on the fast
+  cores), the PS4's own libraries through the recompiler, other spinning waits, MetalFX at a lower
+  render resolution.
+
 ## Not taken
 
 - Online for shadPS4's public server (0.51's module): the server accepts only shadPS4's own

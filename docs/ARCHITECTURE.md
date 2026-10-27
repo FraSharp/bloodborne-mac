@@ -16,6 +16,30 @@ How the app is put together. Each part has its own docs; this page says which pa
 The runtime is built on [bbport](https://github.com/deadinside28/bloodborne_pc), the native Linux
 port this project started from, and on [shadPS4](https://github.com/shadps4-emu/shadPS4).
 
+## Where code lives
+
+Code lives where it changes, not where it was first needed (decided 2026-10-27, after the iOS
+proof of concept):
+
+- **The runtime and the recompiler know every platform the game can run on:** macOS, Linux and
+  iOS each behind the runtime's platform layer, selected by the build (a CMake preset), not
+  scattered through the code. A fix that one platform exposed but that is not about that platform
+  (the game's mutex, a recompiler pattern, a UI scale) goes to `main` for all of them, measured on
+  each. There are no per-platform forks of the runtime.
+- **A platform's app repository is the app on that platform:** its shell, build and signing
+  scripts, packaging, CI and releases, and what being an app there means (touch controls, file
+  sharing, system integration). bloodborne-mac is that for macOS; an iOS app would be
+  bloodborne-ios.
+- **The launcher is one codebase for every platform:** its layout already works on phone-sized
+  screens.
+
+The iOS proof of concept (the `ios-poc` branches of bloodborne-runtime and bloodborne-recomp, its
+[write-up](https://github.com/bloodborne-native/bloodborne-runtime/blob/ios-poc/docs/IOS_POC.md))
+also showed what keeps the runtime from being embedded: it is a program (`bb-probe`) started by
+`run.sh`, which prepares the game with bash and Python. iOS allows one process and neither tool,
+so the runtime has to become a library with a small C API, with the preparation in the runtime or
+the launcher. The steps are in the [roadmap](ROADMAP.md).
+
 ## The app
 
 `packaging/macos.sh` builds `Bloodborne.app` from the runtime's build and the launcher:
@@ -55,8 +79,8 @@ PS4's command format and MoltenVK. Two milestones replace that:
 
 - **The recompiler** turns the game's functions, from the player's own executable, into C
   compiled into a native library, checked against calls recorded from the original. Every
-  function is generated and the game runs on them; making that code cheaper than the translator
-  is next ([Recompilation](https://github.com/bloodborne-native/bloodborne-recomp/blob/main/docs/RECOMPILATION.md)).
+  function is generated and the game runs on them, with less CPU time than the translator;
+  building it from the launcher is next ([Recompilation](https://github.com/bloodborne-native/bloodborne-recomp/blob/main/docs/RECOMPILATION.md)).
 - **The native renderer** draws on Metal directly on macOS without loading Vulkan or MoltenVK;
   the shared renderer still uses Vulkan types internally. The MoltenVK fallback remains selectable
   until M4 acceptance. Linux keeps its Vulkan backend
