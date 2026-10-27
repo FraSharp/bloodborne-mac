@@ -277,7 +277,11 @@ Organized as [Architecture](ARCHITECTURE.md) says ("Where code lives"):
   what `run.sh` and the Python scripts do moved into the runtime or the launcher. The Mac gains
   too (no bundled bash or Python).
 - [ ] **bloodborne-ios:** the app shell, the build, signing and install scripts, touch controls;
-  private while it is a proof of concept (sideloading only).
+  private while it is a proof of concept (sideloading only). Created 2026-10-27 with the PoC's
+  shell and scripts (runtime `ios-poc` keeps the iOS builds of its own parts; no FSR on iOS,
+  runtime `BB_FSR`). Next: the launcher as its interface (Tauri on iOS, the game started in the
+  same process), game files and saves on the phone, touch controls (after Bloodborne-Android's
+  on-screen controller, GPL-2.0).
 - [ ] **Toward 30 FPS on the phone:** thread QoS (the game's main and render threads on the fast
   cores), the PS4's own libraries through the recompiler, other spinning waits, MetalFX at a lower
   render resolution.
