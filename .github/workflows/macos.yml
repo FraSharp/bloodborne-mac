@@ -75,15 +75,24 @@ jobs:
 
       # The archives the dependency build downloads (runtime/deps/packages.cmake): with them a fresh
       # deps/macos-arm64 takes about five minutes instead of an hour. What they build is not cached:
-      # it lives inside deps/macos-arm64 with the stamps that decide what is installed.
+      # it lives inside deps/macos-arm64 with the stamps that decide what is installed. Restore and
+      # save are separate steps so a failed run keeps the downloads it made.
       - name: Dependency archives
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        id: deps-archives
+        uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: runtime/build/deps-arm64/download
           key: deps-download-${{ hashFiles('runtime/deps/packages.cmake') }}
 
       - name: Build and test
         run: bash runtime/build.sh --test
+
+      - name: Save dependency archives
+        if: always() && steps.deps-archives.outputs.cache-hit != 'true'
+        uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: runtime/build/deps-arm64/download
+          key: deps-download-${{ hashFiles('runtime/deps/packages.cmake') }}
 
       - name: Version
         run: |
