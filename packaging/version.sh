@@ -34,29 +34,25 @@ def read_versions():
     found["tauri.conf.json"] = json.loads(files["tauri.conf.json"].read_text())["version"]
     return found
 
+# The version line and nothing else: these files are hand formatted (tauri.conf.json keeps one-line
+# objects), so they are rewritten by pattern rather than through a JSON parser, and a file whose
+# shape changed stops the script instead of being reformatted.
+def replace(path, pattern, version):
+    text = files[path].read_text()
+    changed, found = re.subn(pattern, rf"\g<1>{version}\g<2>", text, count=1, flags=re.M | re.S)
+    if found != 1:
+        raise SystemExit(f"{path}: no version line where it was expected, not touching it")
+    files[path].write_text(changed)
+
 def write(version):
-    package = json.loads(files["package.json"].read_text())
-    package["version"] = version
-    files["package.json"].write_text(json.dumps(package, indent=2) + "\n")
-
-    lock = json.loads(files["package-lock.json"].read_text())
-    lock["version"] = version
-    lock["packages"][""]["version"] = version
-    files["package-lock.json"].write_text(json.dumps(lock, indent=2) + "\n")
-
-    cargo = files["Cargo.toml"].read_text()
-    files["Cargo.toml"].write_text(re.sub(
-        r'(^\[package\].*?^version = ")[^"]+(")', rf'\g<1>{version}\g<2>', cargo, count=1,
-        flags=re.M | re.S))
-
-    cargolock = files["Cargo.lock"].read_text()
-    files["Cargo.lock"].write_text(re.sub(
-        r'(^name = "bloodborne-launcher"\nversion = ")[^"]+(")', rf'\g<1>{version}\g<2>', cargolock,
-        count=1, flags=re.M))
-
-    tauri = json.loads(files["tauri.conf.json"].read_text())
-    tauri["version"] = version
-    files["tauri.conf.json"].write_text(json.dumps(tauri, indent=2) + "\n")
+    replace("package.json", r'^(\s*"version": ")[^"]+(")', version)
+    replace("package-lock.json", r'(^  "name": "bloodborne-launcher",\n  "version": ")[^"]+(")',
+            version)
+    replace("package-lock.json", r'(^      "name": "bloodborne-launcher",\n      "version": ")[^"]+(")',
+            version)
+    replace("Cargo.toml", r'(^\[package\].*?^version = ")[^"]+(")', version)
+    replace("Cargo.lock", r'(^name = "bloodborne-launcher"\nversion = ")[^"]+(")', version)
+    replace("tauri.conf.json", r'^(\s*"version": ")[^"]+(")', version)
 
 args = sys.argv[1:]
 if not args:
@@ -69,12 +65,14 @@ if args[0] == "--check":
             print(f"  {n}: {versions[n]}")
         raise SystemExit("the launcher's version differs between these files")
     version = versions[names[0]]
-    # A pre-release tag (v0.9.0-rc.1) keeps the release version in the files: the app and its
-    # launcher carry 0.9.0, and the tag is what makes it a candidate.
-    tag = args[1].lstrip("v")
-    release = re.sub(r"-(rc|beta|alpha)\.\d+$", "", tag)
-    if len(args) > 1 and version not in (tag, release):
-        raise SystemExit(f"the tag says {tag}, the files say {version}")
+    # With a tag: an exact match, or its release version, because a pre-release tag (v0.9.0-rc.1)
+    # keeps 0.9.0 in the files (the app and its launcher carry the release) and the tag is what
+    # makes it a candidate. Without one (manual and scheduled runs) the files only have to agree.
+    if len(args) > 1:
+        tag = args[1].lstrip("v")
+        release = re.sub(r"-(rc|beta|alpha)\.\d+$", "", tag)
+        if version not in (tag, release):
+            raise SystemExit(f"the tag says {tag}, the files say {version}")
     print(version)
 else:
     write(args[0].lstrip("v"))
